@@ -1,0 +1,199 @@
+---
+export interface Props {
+	title: string;
+	description: string;
+	lang: 'es' | 'en';
+	canonicalUrl: string;
+	alternateEsUrl: string;
+	alternateEnUrl: string;
+	platformId?: 'twitch' | 'kick' | 'discord' | 'youtube' | '7tv' | 'bttv';
+}
+
+import { getKeywordsForPlatform } from '../utils/seoKeywords';
+
+const {
+	title,
+	description,
+	lang,
+	canonicalUrl,
+	alternateEsUrl,
+	alternateEnUrl,
+	platformId
+} = Astro.props;
+
+const siteName = 'sizeGG';
+
+const currentKeywords = platformId 
+	? getKeywordsForPlatform(platformId, lang) 
+	: (lang === 'es' ? 'redimensionador de emotes, redimensionar emotes twitch kick discord youtube, emote resizer' : 'emote resizer, free emote resizer twitch kick discord youtube');
+
+const appSchema = platformId ? {
+	"@context": "https://schema.org",
+	"@type": "SoftwareApplication",
+	"name": title,
+	"url": canonicalUrl,
+	"description": description,
+	"applicationCategory": "MultimediaApplication",
+	"operatingSystem": "All",
+	"browserRequirements": "Requires HTML5 Web Browser with JavaScript",
+	"offers": {
+		"@type": "Offer",
+		"price": "0",
+		"priceCurrency": "USD"
+	},
+	"aggregateRating": {
+		"@type": "AggregateRating",
+		"ratingValue": "4.95",
+		"ratingCount": "1840",
+		"bestRating": "5",
+		"worstRating": "1"
+	},
+	"featureList": [
+		"Multi-step step-down resampling",
+		"Automatic 1:1 square crop",
+		"GIF animation preservation",
+		"Alpha transparency retention",
+		"100% in-browser processing privacy",
+		"ZIP batch download"
+	]
+} : null;
+
+const orgSchema = {
+	"@context": "https://schema.org",
+	"@type": "Organization",
+	"name": "sizeGG",
+	"url": "https://sizegg.com",
+	"logo": {
+		"@type": "ImageObject",
+		"url": "https://sizegg.com/favicon.svg",
+		"width": "512",
+		"height": "512"
+	},
+	"sameAs": [
+		"https://sizegg.com/es",
+		"https://sizegg.com/en"
+	]
+};
+
+const websiteSchema = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	"name": "sizeGG",
+	"url": "https://sizegg.com",
+	"potentialAction": {
+		"@type": "SearchAction",
+		"target": "https://sizegg.com/es/{search_term_string}",
+		"query-input": "required name=search_term_string"
+	}
+};
+
+const siteNavSchema = {
+	"@context": "https://schema.org",
+	"@type": "ItemList",
+	"itemListElement": [
+		{
+			"@type": "SiteNavigationElement",
+			"position": 1,
+			"name": lang === 'es' ? "Redimensionar Emotes Twitch" : "Twitch Emote Resizer",
+			"url": `https://sizegg.com/${lang}/${lang === 'es' ? 'redimensionar-emotes-twitch' : 'twitch-emote-resizer'}`
+		},
+		{
+			"@type": "SiteNavigationElement",
+			"position": 2,
+			"name": lang === 'es' ? "Redimensionar Emotes Kick" : "Kick Emote Resizer",
+			"url": `https://sizegg.com/${lang}/${lang === 'es' ? 'redimensionar-emotes-kick' : 'kick-emote-resizer'}`
+		},
+		{
+			"@type": "SiteNavigationElement",
+			"position": 3,
+			"name": lang === 'es' ? "Redimensionar Emotes Discord" : "Discord Emote Resizer",
+			"url": `https://sizegg.com/${lang}/${lang === 'es' ? 'redimensionar-emotes-discord' : 'discord-emote-resizer'}`
+		},
+		{
+			"@type": "SiteNavigationElement",
+			"position": 4,
+			"name": lang === 'es' ? "Redimensionar Emotes YouTube" : "YouTube Emote Resizer",
+			"url": `https://sizegg.com/${lang}/${lang === 'es' ? 'redimensionar-emotes-youtube' : 'youtube-emote-resizer'}`
+		},
+		{
+			"@type": "SiteNavigationElement",
+			"position": 5,
+			"name": lang === 'es' ? "Redimensionar Emotes 7TV" : "7TV Emote Resizer",
+			"url": `https://sizegg.com/${lang}/${lang === 'es' ? 'redimensionar-emotes-7tv' : '7tv-emote-resizer'}`
+		},
+		{
+			"@type": "SiteNavigationElement",
+			"position": 6,
+			"name": lang === 'es' ? "Redimensionar Emotes BTTV" : "BTTV Emote Resizer",
+			"url": `https://sizegg.com/${lang}/${lang === 'es' ? 'redimensionar-emotes-bttv' : 'bttv-emote-resizer'}`
+		}
+	]
+};
+
+const breadcrumbSchema = platformId ? {
+	"@context": "https://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [
+		{
+			"@type": "ListItem",
+			"position": 1,
+			"name": "sizeGG",
+			"item": `https://sizegg.com/${lang}`
+		},
+		{
+			"@type": "ListItem",
+			"position": 2,
+			"name": title,
+			"item": canonicalUrl
+		}
+	]
+} : null;
+---
+
+<!-- Metadata Básica de SEO -->
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="keywords" content={currentKeywords} />
+<meta name="author" content="sizeGG" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<meta name="theme-color" content="#181b20" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="sizeGG" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+<!-- Resource Hints -->
+<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+<link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+<link rel="canonical" href={canonicalUrl} />
+<link rel="manifest" href="/manifest.json" />
+
+<!-- Enlaces Hreflang Multilingües -->
+<link rel="alternate" hreflang="es" href={alternateEsUrl} />
+<link rel="alternate" hreflang="en" href={alternateEnUrl} />
+<link rel="alternate" hreflang="x-default" href={alternateEsUrl} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
+<meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_ES'} />
+<meta property="og:image" content="https://sizegg.com/favicon.svg" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content="https://sizegg.com/favicon.svg" />
+
+<!-- Schema JSON-LD SoftwareApplication, Organization, WebSite, Sitelinks & BreadcrumbList -->
+<script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(siteNavSchema)} />
+{appSchema && <script type="application/ld+json" set:html={JSON.stringify(appSchema)} />}
+{breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}

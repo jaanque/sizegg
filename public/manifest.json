@@ -1,0 +1,16 @@
+{
+  "name": "sizeGG - Free Emote Resizer",
+  "short_name": "sizeGG",
+  "description": "Free online emote resizer for Twitch, Kick, Discord, YouTube, 7TV and BTTV.",
+  "start_url": "/es",
+  "display": "standalone",
+  "background_color": "#111317",
+  "theme_color": "#181b20",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

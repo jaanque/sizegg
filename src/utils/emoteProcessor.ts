@@ -1,0 +1,253 @@
+import JSZip from 'jszip';
+
+export interface ResizedItem {
+	name: string;
+	blob: Blob;
+	width: number;
+	height: number;
+	previewUrl: string;
+}
+
+export interface ProcessedFile {
+	file: File;
+	items: ResizedItem[];
+	error?: string;
+}
+
+export interface PlatformConfig {
+	id: 'twitch' | 'kick' | 'discord' | 'youtube' | '7tv' | 'bttv';
+	sizes: { width: number; height: number; suffix?: string }[];
+	outputFormat?: 'png' | 'webp'; // default auto
+}
+
+export const platformConfigs: Record<string, PlatformConfig> = {
+	twitch: {
+		id: 'twitch',
+		sizes: [
+			{ width: 112, height: 112, suffix: '_112x112' },
+			{ width: 56, height: 56, suffix: '_56x56' },
+			{ width: 28, height: 28, suffix: '_28x28' }
+		]
+	},
+	kick: {
+		id: 'kick',
+		sizes: [
+			{ width: 500, height: 500, suffix: '_500x500' }
+		]
+	},
+	discord: {
+		id: 'discord',
+		sizes: [
+			{ width: 128, height: 128, suffix: '_128x128' }
+		]
+	},
+	youtube: {
+		id: 'youtube',
+		sizes: [
+			{ width: 480, height: 480, suffix: '_480x480' }
+		]
+	},
+	'7tv': {
+		id: '7tv',
+		sizes: [
+			{ width: 128, height: 128, suffix: '_128x128' }
+		],
+		outputFormat: 'webp'
+	},
+	bttv: {
+		id: 'bttv',
+		sizes: [
+			{ width: 112, height: 112, suffix: '_112x112' },
+			{ width: 56, height: 56, suffix: '_56x56' },
+			{ width: 28, height: 28, suffix: '_28x28' }
+		]
+	}
+};
+
+/**
+ * Redimensiona una imagen usando escalado profesional por etapas (Step-Down Resampling)
+ * Preserva transparencias alpha y elimina el desenfoque o pixelado en tamaños pequeños (28x28, 56x56, 112x112).
+ */
+export async function resizeImage(
+	file: File,
+	targetWidth: number,
+	targetHeight: number,
+	mimeType: string = 'image/png'
+): Promise<Blob> {
+	return new Promise((resolve, reject) => {
+		const img = new Image();
+		const url = URL.createObjectURL(file);
+
+		img.onload = () => {
+			URL.revokeObjectURL(url);
+
+			const srcW = img.naturalWidth || img.width;
+			const srcH = img.naturalHeight || img.height;
+
+			// Recorte Cuadrado Automático 1:1 centrado para evitar deformaciones
+			const minDim = Math.min(srcW, srcH);
+			const sx = (srcW - minDim) / 2;
+			const sy = (srcH - minDim) / 2;
+
+			// Canvas inicial con recorte 1:1 de alta calidad
+			let currentCanvas = document.createElement('canvas');
+			currentCanvas.width = minDim;
+			currentCanvas.height = minDim;
+			let ctx = currentCanvas.getContext('2d');
+			if (!ctx) {
+				return reject(new Error('Canvas 2D context not available'));
+			}
+
+			ctx.clearRect(0, 0, minDim, minDim);
+			ctx.imageSmoothingEnabled = true;
+			ctx.imageSmoothingQuality = 'high';
+			ctx.drawImage(img, sx, sy, minDim, minDim, 0, 0, minDim, minDim);
+
+			let currentW = minDim;
+			let currentH = minDim;
+
+			// Algoritmo por Etapas (Step-Down Scaling / Halving)
+			// Reduce las dimensiones progresivamente a la mitad hasta acercarse al tamaño objetivo.
+			// Evita el aliasing y borrosidad de los escalados de un solo paso de los navegadores.
+			while (currentW / 2 >= targetWidth && currentH / 2 >= targetHeight) {
+				const nextW = Math.floor(currentW / 2);
+				const nextH = Math.floor(currentH / 2);
+
+				const stepCanvas = document.createElement('canvas');
+				stepCanvas.width = nextW;
+				stepCanvas.height = nextH;
+				const stepCtx = stepCanvas.getContext('2d');
+				if (stepCtx) {
+					stepCtx.clearRect(0, 0, nextW, nextH);
+					stepCtx.imageSmoothingEnabled = true;
+					stepCtx.imageSmoothingQuality = 'high';
+					stepCtx.drawImage(currentCanvas, 0, 0, currentW, currentH, 0, 0, nextW, nextH);
+				}
+				currentCanvas = stepCanvas;
+				currentW = nextW;
+				currentH = nextH;
+			}
+
+			// Paso final: Escalado fino al tamaño de píxel exacto exigido por la plataforma
+			const finalCanvas = document.createElement('canvas');
+			finalCanvas.width = targetWidth;
+			finalCanvas.height = targetHeight;
+			const finalCtx = finalCanvas.getContext('2d');
+			if (!finalCtx) {
+				return reject(new Error('Final Canvas 2D context not available'));
+			}
+
+			finalCtx.clearRect(0, 0, targetWidth, targetHeight);
+			finalCtx.imageSmoothingEnabled = true;
+			finalCtx.imageSmoothingQuality = 'high';
+			finalCtx.drawImage(currentCanvas, 0, 0, currentW, currentH, 0, 0, targetWidth, targetHeight);
+
+			finalCanvas.toBlob(
+				(blob) => {
+					if (blob) {
+						resolve(blob);
+					} else {
+						reject(new Error('Error generating image blob'));
+					}
+				},
+				mimeType,
+				0.98
+			);
+		};
+
+		img.onerror = () => {
+			URL.revokeObjectURL(url);
+			reject(new Error('Failed to load image file'));
+		};
+
+		img.src = url;
+	});
+}
+
+/**
+ * Procesa un archivo individual según la plataforma objetivo
+ */
+export async function processEmoteFile(
+	file: File,
+	platformId: string
+): Promise<ProcessedFile> {
+	const config = platformConfigs[platformId] || platformConfigs['twitch'];
+	const baseName = file.name.replace(/\.[^/.]+$/, '');
+	const isGif = file.type === 'image/gif' || file.name.toLowerCase().endsWith('.gif');
+
+	const items: ResizedItem[] = [];
+
+	// Si es GIF animado, mantenemos el Blob original para garantizar que la animación GIF se reproduzca limpia y en movimiento en la pantalla
+	if (isGif) {
+		for (const s of config.sizes) {
+			const suffix = s.suffix || `_${s.width}x${s.height}`;
+			const filename = `${baseName}${suffix}.gif`;
+			const previewUrl = URL.createObjectURL(file);
+
+			items.push({
+				name: filename,
+				blob: file,
+				width: s.width,
+				height: s.height,
+				previewUrl
+			});
+		}
+		return { file, items };
+	}
+
+	// Imágenes estáticas (PNG, JPG, WebP, BMP, etc.)
+	const outputMime = config.outputFormat === 'webp' ? 'image/webp' : 'image/png';
+	const ext = config.outputFormat === 'webp' ? 'webp' : 'png';
+
+	for (const s of config.sizes) {
+		const suffix = s.suffix || `_${s.width}x${s.height}`;
+		const filename = `${baseName}${suffix}.${ext}`;
+
+		try {
+			const blob = await resizeImage(file, s.width, s.height, outputMime);
+			const previewUrl = URL.createObjectURL(blob);
+
+			items.push({
+				name: filename,
+				blob,
+				width: s.width,
+				height: s.height,
+				previewUrl
+			});
+		} catch (err: any) {
+			return {
+				file,
+				items: [],
+				error: err.message || 'Error processing file'
+			};
+		}
+	}
+
+	return { file, items };
+}
+
+/**
+ * Genera y descarga un archivo .ZIP con todos los emotes procesados,
+ * organizados en subcarpetas/directorios por cada imagen de origen.
+ */
+export async function downloadAllAsZip(processedFiles: ProcessedFile[], zipName: string = 'emotes.zip') {
+	const zip = new JSZip();
+
+	processedFiles.forEach((pf) => {
+		// Crear carpeta por cada archivo usando el nombre base sin extensión
+		const folderName = pf.file.name.replace(/\.[^/.]+$/, '');
+		const folder = zip.folder(folderName) || zip;
+
+		pf.items.forEach((item) => {
+			folder.file(item.name, item.blob);
+		});
+	});
+
+	const content = await zip.generateAsync({ type: 'blob' });
+	const a = document.createElement('a');
+	a.href = URL.createObjectURL(content);
+	a.download = zipName;
+	document.body.appendChild(a);
+	a.click();
+	document.body.removeChild(a);
+}

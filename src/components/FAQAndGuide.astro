@@ -1,0 +1,456 @@
+---
+interface FAQItem {
+	question: string;
+	answer: string;
+}
+
+interface StepItem {
+	number: string;
+	title: string;
+	desc: string;
+}
+
+interface Props {
+	lang?: 'es' | 'en';
+	platformId?: string;
+	accentColor?: string;
+}
+
+const { lang = 'es', platformId = 'twitch', accentColor } = Astro.props;
+
+const platformColors: Record<string, string> = {
+	twitch: '#a970ff',
+	kick: '#53fc18',
+	discord: '#5865f2',
+	youtube: '#ff0000',
+	'7tv': '#38bdf8',
+	bttv: '#f97316'
+};
+
+const finalAccentColor = accentColor || platformColors[platformId] || '#a970ff';
+
+const platformNames: Record<string, string> = {
+	twitch: 'Twitch',
+	kick: 'Kick',
+	discord: 'Discord',
+	youtube: 'YouTube',
+	'7tv': '7TV',
+	bttv: 'BTTV'
+};
+
+const pName = platformNames[platformId] || 'Twitch';
+
+const faqs: FAQItem[] = lang === 'es' ? [
+	{
+		question: `¿Por qué mi emote de ${pName} se ve borroso al subirlo?`,
+		answer: `Normalmente sucede si el archivo original se escala con interpolación de baja calidad o sin relación 1:1. sizeGG aplica escalado de alta densidad e interpolación preservando la transparencia.`
+	},
+	{
+		question: `¿Cuál es el peso máximo y resolución requerida para ${pName}?`,
+		answer: platformId === 'discord' 
+			? "El tamaño máximo en Discord es de 256 KB por archivo y la resolución ideal es 128×128 px."
+			: platformId === 'kick'
+			? "Kick requiere una resolución cuadrada de 500×500 px con un peso máximo de 1 MB."
+			: platformId === '7tv'
+			? "7TV acepta imágenes de hasta 5 MB en formato 128×128 px."
+			: platformId === 'bttv'
+			? "BTTV admite hasta 3 MB por emote en tres tamaños: 112×112px, 56×56px y 28×28px."
+			: `En ${pName} el peso máximo es de 1 MB y la herramienta genera las medidas oficiales de 112×112px, 56×56px y 28×28px.`
+	},
+	{
+		question: `¿Cuánto tarda ${pName} en aprobar un nuevo emote?`,
+		answer: platformId === 'discord' || platformId === '7tv' || platformId === 'bttv'
+			? `En ${pName} la actualización y disponibilidad del emote en tu servidor o extensión es inmediata tras guardarlo.`
+			: `Suele tardar entre 24 y 48 horas en días laborables para nuevos creadores, y es instantáneo para canales verificados o con historial limpio.`
+	},
+	{
+		question: "¿Se conservan las transparencias PNG y animaciones GIF?",
+		answer: "Sí, sizeGG preserva automáticamente los canales alfa transparentes y mantiene la animación fluida en archivos GIF."
+	},
+	{
+		question: "¿Mis imágenes o GIFs se suben a algún servidor externo?",
+		answer: "No. En sizeGG todo el proceso de recorte, escalado y compresión se ejecuta 100% en tu propio navegador web. Tus archivos nunca salen de tu dispositivo, garantizando máxima velocidad y privacidad absoluta."
+	},
+	{
+		question: "¿sizeGG es 100% gratuito y sin marcas de agua?",
+		answer: "Sí, sizeGG es una herramienta completamente gratuita y libre de marcas de agua. Puedes redimensionar y convertir todos los emotes que desees sin restricciones."
+	}
+] : [
+	{
+		question: `Why does my ${pName} emote look blurry when uploaded?`,
+		answer: `This usually happens when low-quality scaling is used or when the ratio isn't 1:1. sizeGG applies high-density smoothing while preserving transparency.`
+	},
+	{
+		question: `What is the maximum file size and resolution for ${pName}?`,
+		answer: platformId === 'discord'
+			? "The maximum file size on Discord is 256 KB per image at 128×128 px."
+			: platformId === 'kick'
+			? "Kick requires a square 500×500 px resolution with a maximum size of 1 MB."
+			: platformId === '7tv'
+			? "7TV allows images up to 5 MB at 128×128 px resolution."
+			: platformId === 'bttv'
+			? "BTTV allows up to 3 MB per emote across 112×112px, 56×56px, and 28×28px dimensions."
+			: `On ${pName}, the maximum file size is 1 MB with official 112×112px, 56×56px, and 28×28px output dimensions.`
+	},
+	{
+		question: `How long does ${pName} take to approve a new emote?`,
+		answer: platformId === 'discord' || platformId === '7tv' || platformId === 'bttv'
+			? `On ${pName}, emotes become available immediately on your server or extension upon uploading.`
+			: `It typically takes 24 to 48 hours on business days for new creators, and is instant for partner/verified channels.`
+	},
+	{
+		question: "Are PNG transparency and GIF animations preserved?",
+		answer: "Yes, sizeGG retains alpha transparency channels on PNG/WebP files and preserves GIF animation frame rates."
+	},
+	{
+		question: "Are my images or GIFs uploaded to any external server?",
+		answer: "No. In sizeGG, all cropping, resizing, and compression happen 100% locally inside your web browser. No files ever leave your device, ensuring maximum speed and complete privacy."
+	},
+	{
+		question: "Is sizeGG 100% free without watermarks?",
+		answer: "Yes, sizeGG is a completely free online tool with no watermarks. You can resize and convert unlimited emotes without restrictions."
+	}
+];
+
+const steps: StepItem[] = lang === 'es' ? [
+	{
+		number: "1",
+		title: `Abre tu Panel en ${pName}`,
+		desc: `Inicia sesión en ${pName} y ve a la sección de administración de tu canal o servidor.`
+	},
+	{
+		number: "2",
+		title: "Navega a la sección de Emotes",
+		desc: platformId === 'discord'
+			? "Ve a Ajustes del Servidor > Emojis / Emotes."
+			: platformId === 'kick'
+			? "Accede a tu Panel de Creador > Emotes de Canal."
+			: "Selecciona Recompensas de Espectador > Emotes."
+	},
+	{
+		number: "3",
+		title: "Sube tus archivos de sizeGG",
+		desc: "Selecciona las dimensiones descargadas o la carpeta .ZIP empaquetada y guarda los cambios."
+	}
+] : [
+	{
+		number: "1",
+		title: `Open your ${pName} Dashboard`,
+		desc: `Log into ${pName} and navigate to your channel or server management area.`
+	},
+	{
+		number: "2",
+		title: "Go to Emote Settings",
+		desc: platformId === 'discord'
+			? "Navigate to Server Settings > Emoji / Emotes."
+			: platformId === 'kick'
+			? "Go to Creator Dashboard > Channel Emotes."
+			: "Select Viewer Rewards > Emotes."
+	},
+	{
+		number: "3",
+		title: "Upload your sizeGG files",
+		desc: "Select the generated dimensions or the packed .ZIP folder and save your changes."
+	}
+];
+
+// Schema Markup (Data Structuring for Google FAQ & HowTo Rich Results)
+const faqSchema = {
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	"mainEntity": faqs.map(item => ({
+		"@type": "Question",
+		"name": item.question,
+		"acceptedAnswer": {
+			"@type": "Answer",
+			"text": item.answer
+		}
+	}))
+};
+
+const howToSchema = {
+	"@context": "https://schema.org",
+	"@type": "HowTo",
+	"name": lang === 'es' ? `Cómo redimensionar emotes para ${pName}` : `How to resize emotes for ${pName}`,
+	"description": lang === 'es' 
+		? `Guía paso a paso para redimensionar y convertir imágenes o GIFs a los tamaños oficiales de ${pName}.`
+		: `Step-by-step guide to resize and convert images or GIFs to official ${pName} dimensions.`,
+	"step": steps.map(s => ({
+		"@type": "HowToStep",
+		"position": s.number,
+		"name": s.title,
+		"text": s.desc
+	}))
+};
+const slugMap: Record<'es' | 'en', Record<string, string>> = {
+	es: {
+		twitch: 'redimensionar-emotes-twitch',
+		kick: 'redimensionar-emotes-kick',
+		discord: 'redimensionar-emotes-discord',
+		youtube: 'redimensionar-emotes-youtube',
+		'7tv': 'redimensionar-emotes-7tv',
+		bttv: 'redimensionar-emotes-bttv',
+	},
+	en: {
+		twitch: 'twitch-emote-resizer',
+		kick: 'kick-emote-resizer',
+		discord: 'discord-emote-resizer',
+		youtube: 'youtube-emote-resizer',
+		'7tv': '7tv-emote-resizer',
+		bttv: 'bttv-emote-resizer',
+	}
+};
+---
+
+<!-- Structural JSON-LD for Google Rich Search Results -->
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+
+<div class="guide-faq-container" style={`--accent-color: ${finalAccentColor};`}>
+	<!-- Miniguía de Cómo subir tus emotes -->
+	<section class="how-to-guide">
+		<h2 class="section-title">
+			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+				<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+			</svg>
+			<span>{lang === 'es' ? 'Cómo subir tus emotes en 3 pasos' : 'How to upload your emotes in 3 steps'}</span>
+		</h2>
+
+		<div class="steps-grid">
+			{steps.map(step => (
+				<div class="step-card">
+					<div class="step-badge">{step.number}</div>
+					<div class="step-content">
+						<h3 class="step-title">{step.title}</h3>
+						<p class="step-desc">{step.desc}</p>
+					</div>
+				</div>
+			))}
+		</div>
+	</section>
+
+	<!-- Sección de Preguntas Frecuentes (FAQ Accordion) -->
+	<section class="faq-accordion-section">
+		<h2 class="section-title">
+			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="10"></circle>
+				<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+				<line x1="12" y1="17" x2="12.01" y2="17"></line>
+			</svg>
+			<span>{lang === 'es' ? 'Preguntas Frecuentes (FAQ)' : 'Frequently Asked Questions (FAQ)'}</span>
+		</h2>
+
+		<div class="accordion">
+			{faqs.map((faq, index) => (
+				<details class="accordion-item" open={index === 0}>
+					<summary class="accordion-header">
+						<span>{faq.question}</span>
+						<svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<polyline points="6 9 12 15 18 9"></polyline>
+						</svg>
+					</summary>
+					<div class="accordion-body">
+						<p>{faq.answer}</p>
+					</div>
+				</details>
+			))}
+		</div>
+	</section>
+
+	<!-- Sección SEO de enlaces cruzados entre herramientas -->
+	<section class="seo-crosslinks-section">
+		<h2 class="section-title">
+			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+				<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+			</svg>
+			<span>{lang === 'es' ? 'Redimensionar emotes para otras plataformas' : 'Resize emotes for other platforms'}</span>
+		</h2>
+		<div class="seo-links-grid">
+			{Object.entries(platformNames).filter(([id]) => id !== platformId).map(([id, name]) => (
+				<a href={`/${lang}/${slugMap[lang][id]}`} class="seo-link-card">
+					<span>{lang === 'es' ? `Redimensionar Emotes ${name}` : `${name} Emote Resizer`}</span>
+				</a>
+			))}
+		</div>
+	</section>
+</div>
+
+<style>
+	.guide-faq-container {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		width: 100%;
+		margin-top: 0.5rem;
+	}
+
+	.section-title {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 1.05rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		margin-bottom: 1rem;
+	}
+
+	.section-title svg {
+		color: var(--accent-color, #9146ff);
+	}
+
+	/* Steps Grid */
+	.how-to-guide {
+		background-color: var(--surface-card);
+		border: 1px solid var(--border-color);
+		border-radius: 12px;
+		padding: 1.25rem;
+	}
+
+	.steps-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 1rem;
+	}
+
+	.step-card {
+		background-color: var(--bg-body);
+		border: 1px solid var(--border-color);
+		border-radius: 10px;
+		padding: 1rem;
+		display: flex;
+		gap: 0.75rem;
+		align-items: flex-start;
+	}
+
+	.step-badge {
+		width: 28px;
+		height: 28px;
+		min-width: 28px;
+		border-radius: 50%;
+		background-color: var(--surface-hover);
+		color: var(--accent-color, #9146ff);
+		border: 1px solid var(--border-color);
+		font-weight: 800;
+		font-size: 0.85rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.step-content {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.step-title {
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: var(--text-primary);
+	}
+
+	.step-desc {
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		line-height: 1.4;
+		text-align: justify;
+	}
+
+	/* FAQ Accordion Section */
+	.faq-accordion-section {
+		background-color: var(--surface-card);
+		border: 1px solid var(--border-color);
+		border-radius: 12px;
+		padding: 1.25rem;
+	}
+
+	.accordion {
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+	}
+
+	.accordion-item {
+		background-color: var(--bg-body);
+		border: 1px solid var(--border-color);
+		border-radius: 8px;
+		overflow: hidden;
+		transition: border-color 0.15s ease;
+	}
+
+	.accordion-item[open] {
+		border-color: var(--border-color);
+	}
+
+	.accordion-header {
+		padding: 0.85rem 1rem;
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		user-select: none;
+		list-style: none;
+	}
+
+	.accordion-header::-webkit-details-marker {
+		display: none;
+	}
+
+	.accordion-chevron {
+		color: var(--text-muted);
+		transition: color 0.2s ease;
+	}
+
+	.accordion-item[open] .accordion-chevron {
+		color: var(--accent-color, #9146ff);
+	}
+
+	.accordion-body {
+		padding: 0 1rem 0.85rem 1rem;
+		font-size: 0.8rem;
+		color: var(--text-muted);
+		line-height: 1.5;
+		border-top: 1px solid rgba(255, 255, 255, 0.03);
+		padding-top: 0.6rem;
+		text-align: justify;
+	}
+
+	/* SEO Cross-Links Section */
+	.seo-crosslinks-section {
+		background-color: var(--surface-card);
+		border: 1px solid var(--border-color);
+		border-radius: 12px;
+		padding: 1.25rem;
+	}
+
+	.seo-links-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+		gap: 0.6rem;
+	}
+
+	.seo-link-card {
+		background-color: var(--bg-body);
+		border: 1px solid var(--border-color);
+		border-radius: 8px;
+		padding: 0.65rem 0.85rem;
+		text-decoration: none;
+		color: var(--text-primary);
+		font-size: 0.8rem;
+		font-weight: 600;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		transition: border-color 0.15s ease, background-color 0.15s ease;
+	}
+
+	.seo-link-card:hover {
+		border-color: var(--accent-color, #a970ff);
+		background-color: var(--surface-hover);
+	}
+</style>
