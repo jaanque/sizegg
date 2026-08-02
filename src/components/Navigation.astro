@@ -80,13 +80,27 @@ const targetLangUrl = `/${targetLang}${targetSlug ? `/${targetSlug}` : ''}`;
 ---
 
 <nav class="platform-nav">
-	<a href={`/${lang}`} class="nav-logo-tag" style={`--logo-accent: ${currentTheme.accent}; --logo-bg: ${currentTheme.bg}; --logo-border: ${currentTheme.border};`} title="sizeGG Home">
+	<a 
+		href={`/${lang}`} 
+		class="nav-logo-tag" 
+		id="nav-logo-tag"
+		data-default-accent={currentTheme.accent}
+		data-default-bg={currentTheme.bg}
+		data-default-border={currentTheme.border}
+		style={`--logo-accent: ${currentTheme.accent}; --logo-bg: ${currentTheme.bg}; --logo-border: ${currentTheme.border};`} 
+		title="sizeGG Home"
+	>
 		sizeGG
 	</a>
 
 	<div class="nav-links-right">
 		{mainPlatforms.map(p => (
-			<a href={`/${lang}/${slugMap[lang][p.id]}`} class={`nav-tab ${platform === p.id ? 'active' : ''}`}>
+			<a 
+				href={`/${lang}/${slugMap[lang][p.id]}`} 
+				class={`nav-tab ${platform === p.id ? 'active' : ''}`}
+				data-nav-platform={p.id}
+				style={`--tab-accent: ${platformColors[p.id].accent}; --tab-accent-bg: ${platformColors[p.id].bg};`}
+			>
 				<span class="tab-icon" set:html={p.svg} />
 				<span>{p.name}</span>
 			</a>
@@ -103,7 +117,12 @@ const targetLangUrl = `/${targetLang}${targetSlug ? `/${targetSlug}` : ''}`;
 
 			<div class="dropdown-menu">
 				{secondaryPlatforms.map(p => (
-					<a href={`/${lang}/${slugMap[lang][p.id]}`} class={`dropdown-item ${platform === p.id ? 'active' : ''}`}>
+					<a 
+						href={`/${lang}/${slugMap[lang][p.id]}`} 
+						class={`dropdown-item ${platform === p.id ? 'active' : ''}`}
+						data-nav-platform={p.id}
+						style={`--tab-accent: ${platformColors[p.id].accent}; --tab-accent-bg: ${platformColors[p.id].bg};`}
+					>
 						<span class="tab-icon" set:html={p.svg} />
 						<span>{p.name}</span>
 					</a>
@@ -160,12 +179,11 @@ const targetLangUrl = `/${targetLang}${targetSlug ? `/${targetSlug}` : ''}`;
 		letter-spacing: -0.01em;
 		display: inline-flex;
 		align-items: center;
-		transition: all 0.2s ease;
+		transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
 	}
 
 	.nav-logo-tag:hover {
 		border-color: var(--logo-accent);
-		box-shadow: 0 0 12px var(--logo-bg);
 	}
 
 	.nav-tab {
@@ -179,12 +197,13 @@ const targetLangUrl = `/${targetLang}${targetSlug ? `/${targetSlug}` : ''}`;
 		color: var(--text-muted);
 		text-decoration: none;
 		border: 1px solid transparent;
-		transition: all 0.15s ease;
+		transition: all 0.2s ease;
 	}
 
 	.nav-tab:hover {
-		color: var(--text-primary);
-		background-color: var(--surface-hover);
+		color: var(--tab-accent, var(--text-primary));
+		background-color: var(--tab-accent-bg, var(--surface-hover));
+		border-color: var(--tab-accent, var(--border-color));
 	}
 
 	.nav-tab.active {
@@ -259,7 +278,11 @@ const targetLangUrl = `/${targetLang}${targetSlug ? `/${targetSlug}` : ''}`;
 		transition: all 0.15s ease;
 	}
 
-	.dropdown-item:hover,
+	.dropdown-item:hover {
+		color: var(--tab-accent, var(--text-primary));
+		background-color: var(--tab-accent-bg, var(--surface-hover));
+	}
+
 	.dropdown-item.active {
 		color: var(--text-primary);
 		background-color: var(--surface-hover);
@@ -313,5 +336,45 @@ const targetLangUrl = `/${targetLang}${targetSlug ? `/${targetSlug}` : ''}`;
 	document.addEventListener('click', () => {
 		platformsWrapper?.classList.remove('open');
 		langWrapper?.classList.remove('open');
+	});
+
+	// Dynamic Hover Effect for Navigation Logo & Platform Tabs
+	const navLogoTag = document.getElementById('nav-logo-tag');
+	const navPlatformItems = document.querySelectorAll('[data-nav-platform]');
+
+	const defaultNavAccent = navLogoTag?.getAttribute('data-default-accent') || '#a970ff';
+	const defaultNavBg = navLogoTag?.getAttribute('data-default-bg') || 'rgba(169, 112, 255, 0.1)';
+	const defaultNavBorder = navLogoTag?.getAttribute('data-default-border') || 'rgba(169, 112, 255, 0.3)';
+
+	const platformColorsMap: Record<string, { accent: string; bg: string }> = {
+		twitch: { accent: '#a970ff', bg: 'rgba(169, 112, 255, 0.1)' },
+		kick: { accent: '#53fc18', bg: 'rgba(83, 252, 24, 0.1)' },
+		discord: { accent: '#5865f2', bg: 'rgba(88, 101, 242, 0.1)' },
+		youtube: { accent: '#ff0000', bg: 'rgba(255, 0, 0, 0.1)' },
+		'7tv': { accent: '#38bdf8', bg: 'rgba(56, 189, 248, 0.1)' },
+		bttv: { accent: '#f97316', bg: 'rgba(249, 115, 22, 0.1)' }
+	};
+
+	navPlatformItems.forEach(item => {
+		const pId = item.getAttribute('data-nav-platform');
+		if (!pId || !platformColorsMap[pId]) return;
+
+		const colorConfig = platformColorsMap[pId];
+
+		item.addEventListener('mouseenter', () => {
+			if (navLogoTag) {
+				navLogoTag.style.color = colorConfig.accent;
+				navLogoTag.style.backgroundColor = colorConfig.bg;
+				navLogoTag.style.borderColor = colorConfig.accent;
+				}
+		});
+
+		item.addEventListener('mouseleave', () => {
+			if (navLogoTag) {
+				navLogoTag.style.color = defaultNavAccent;
+				navLogoTag.style.backgroundColor = defaultNavBg;
+				navLogoTag.style.borderColor = defaultNavBorder;
+			}
+		});
 	});
 </script>
