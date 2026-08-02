@@ -10,6 +10,7 @@ export interface Props {
 }
 
 import { getKeywordsForPlatform } from '../utils/seoKeywords';
+import Analytics from '@vercel/analytics/astro';
 
 const {
 	title,
@@ -197,3 +198,6 @@ const breadcrumbSchema = platformId ? {
 <script type="application/ld+json" set:html={JSON.stringify(siteNavSchema)} />
 {appSchema && <script type="application/ld+json" set:html={JSON.stringify(appSchema)} />}
 {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
+
+<!-- Vercel Analytics -->
+<Analytics />
