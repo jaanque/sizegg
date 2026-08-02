@@ -453,4 +453,30 @@ const slugMap: Record<'es' | 'en', Record<string, string>> = {
 		border-color: var(--accent-color, #a970ff);
 		background-color: var(--surface-hover);
 	}
+
+	/* ── Responsive ── */
+	@media (max-width: 500px) {
+		.steps-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.seo-links-grid {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		.section-title {
+			font-size: 0.95rem;
+		}
+
+		.accordion-header {
+			font-size: 0.82rem;
+			padding: 0.75rem 0.85rem;
+		}
+	}
+
+	@media (max-width: 360px) {
+		.seo-links-grid {
+			grid-template-columns: 1fr;
+		}
+	}
 </style>

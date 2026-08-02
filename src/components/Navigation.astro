@@ -299,6 +299,53 @@ const targetLangUrl = `/${targetLang}${targetSlug ? `/${targetSlug}` : ''}`;
 	.lang-menu {
 		min-width: 110px;
 	}
+
+	/* ── Responsive ── */
+	@media (max-width: 520px) {
+		.nav-links-right {
+			gap: 0.15rem;
+		}
+
+		/* Ocultar texto de los tabs, mostrar solo icono */
+		.nav-tab span:not(.tab-icon) {
+			display: none;
+		}
+
+		.nav-tab {
+			padding: 0.4rem 0.5rem;
+			gap: 0;
+		}
+
+		.nav-logo-tag {
+			font-size: 0.8rem;
+			padding: 0.28rem 0.6rem;
+			margin-right: 0.15rem;
+		}
+
+		.dropdown-btn {
+			padding: 0.4rem 0.5rem;
+			font-size: 0.8rem;
+		}
+
+		.lang-btn {
+			padding: 0.35rem 0.5rem;
+		}
+	}
+
+	@media (max-width: 360px) {
+		.nav-logo-tag {
+			font-size: 0.75rem;
+			padding: 0.25rem 0.5rem;
+		}
+
+		.nav-tab {
+			padding: 0.35rem 0.4rem;
+		}
+
+		.dropdown-btn {
+			padding: 0.35rem 0.4rem;
+		}
+	}
 </style>
 
 <script>
