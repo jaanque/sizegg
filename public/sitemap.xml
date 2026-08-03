@@ -1,100 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://sizegg.com/es</loc>
+    <loc>https://sizegg.com/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://sizegg.com/es" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/en" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sizegg.com/" />
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://sizegg.com/en</loc>
+    <loc>https://sizegg.com/es</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://sizegg.com/es" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/en" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sizegg.com/" />
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://sizegg.com/es/redimensionar-emotes-twitch</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://sizegg.com/es/redimensionar-emotes-twitch" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/en/twitch-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/twitch-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sizegg.com/twitch-emote-resizer" />
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://sizegg.com/en/twitch-emote-resizer</loc>
+    <loc>https://sizegg.com/twitch-emote-resizer</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://sizegg.com/es/redimensionar-emotes-twitch" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/en/twitch-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/twitch-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sizegg.com/twitch-emote-resizer" />
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://sizegg.com/es/redimensionar-emotes-kick</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://sizegg.com/es/redimensionar-emotes-kick" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/en/kick-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/kick-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sizegg.com/kick-emote-resizer" />
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://sizegg.com/en/kick-emote-resizer</loc>
+    <loc>https://sizegg.com/kick-emote-resizer</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://sizegg.com/es/redimensionar-emotes-kick" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/en/kick-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/kick-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sizegg.com/kick-emote-resizer" />
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://sizegg.com/es/redimensionar-emotes-discord</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://sizegg.com/es/redimensionar-emotes-discord" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/en/discord-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/discord-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sizegg.com/discord-emote-resizer" />
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://sizegg.com/en/discord-emote-resizer</loc>
+    <loc>https://sizegg.com/discord-emote-resizer</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://sizegg.com/es/redimensionar-emotes-discord" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/en/discord-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/discord-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sizegg.com/discord-emote-resizer" />
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://sizegg.com/es/redimensionar-emotes-youtube</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://sizegg.com/es/redimensionar-emotes-youtube" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/en/youtube-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/youtube-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sizegg.com/youtube-emote-resizer" />
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://sizegg.com/en/youtube-emote-resizer</loc>
+    <loc>https://sizegg.com/youtube-emote-resizer</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://sizegg.com/es/redimensionar-emotes-youtube" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/en/youtube-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/youtube-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sizegg.com/youtube-emote-resizer" />
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://sizegg.com/es/redimensionar-emotes-7tv</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://sizegg.com/es/redimensionar-emotes-7tv" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/en/7tv-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/7tv-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sizegg.com/7tv-emote-resizer" />
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://sizegg.com/en/7tv-emote-resizer</loc>
+    <loc>https://sizegg.com/7tv-emote-resizer</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://sizegg.com/es/redimensionar-emotes-7tv" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/en/7tv-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/7tv-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sizegg.com/7tv-emote-resizer" />
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://sizegg.com/es/redimensionar-emotes-bttv</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://sizegg.com/es/redimensionar-emotes-bttv" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/en/bttv-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/bttv-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sizegg.com/bttv-emote-resizer" />
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://sizegg.com/en/bttv-emote-resizer</loc>
+    <loc>https://sizegg.com/bttv-emote-resizer</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://sizegg.com/es/redimensionar-emotes-bttv" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/en/bttv-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sizegg.com/bttv-emote-resizer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sizegg.com/bttv-emote-resizer" />
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>

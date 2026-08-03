@@ -1,10 +1,10 @@
 ---
-import Navigation from '../../components/Navigation.astro';
-import EmoteDropzone from '../../components/EmoteDropzone.astro';
-import FAQAndGuide from "../../components/FAQAndGuide.astro";
-import SEOContentSection from '../../components/SEOContentSection.astro';
-import SEO from '../../components/SEO.astro';
-import Footer from '../../components/Footer.astro';
+import Navigation from '../components/Navigation.astro';
+import EmoteDropzone from '../components/EmoteDropzone.astro';
+import FAQAndGuide from "../components/FAQAndGuide.astro";
+import SEOContentSection from '../components/SEOContentSection.astro';
+import SEO from '../components/SEO.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <html lang="en">
@@ -12,13 +12,13 @@ import Footer from '../../components/Footer.astro';
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<SEO
-			title="YouTube Emote Resizer - sizeGG"
-			description="Resize channel emotes and member badges for YouTube for free online. Converts images to exact 480×480px specifications for static PNG and animated GIFs."
+			title="Kick Emote Resizer - sizeGG"
+			description="Resize emotes for Kick online for free. Automatically converts and scales images to 500×500px, strictly optimized under Kick's file size limits."
 			lang="en"
-			canonicalUrl="https://sizegg.com/en/youtube-emote-resizer"
-			alternateEsUrl="https://sizegg.com/es/redimensionar-emotes-youtube"
-			alternateEnUrl="https://sizegg.com/en/youtube-emote-resizer"
-			platformId="youtube"
+			canonicalUrl="https://sizegg.com/kick-emote-resizer"
+			alternateEsUrl="https://sizegg.com/es/redimensionar-emotes-kick"
+			alternateEnUrl="https://sizegg.com/kick-emote-resizer"
+			platformId="kick"
 		/>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,34 +28,17 @@ import Footer from '../../components/Footer.astro';
 		<div class="layout">
 			<!-- Header -->
 			<header class="header">
-				<Navigation lang="en" platform="youtube" />
+				<Navigation lang="en" platform="kick" />
 			</header>
 
 			<!-- Interactive Content -->
 			<main class="main-content">
-				<h1 class="page-title">YouTube Emote Resizer</h1>
-				<EmoteDropzone lang="en" platformId="youtube" accentColor="#ff0000" />
-				<SEOContentSection lang="en" platformId="youtube" />
+				<h1 class="page-title">Kick Emote Resizer</h1>
+				<EmoteDropzone lang="en" platformId="kick" accentColor="#53fc18" />
+				<SEOContentSection lang="en" platformId="kick" />
 
-				<!-- Info Card -->
-				<div class="info-card">
-					<div class="info-header">
-						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="info-icon">
-							<circle cx="12" cy="12" r="10"></circle>
-							<line x1="12" y1="16" x2="12" y2="12"></line>
-							<line x1="12" y1="8" x2="12.01" y2="8"></line>
-						</svg>
-						<span>YouTube emote requirements & format specs</span>
-					</div>
-					<ul class="info-list">
-						<li><strong>Upload extensions:</strong> <code>.png</code>, <code>.jpg</code>, <code>.jpeg</code>, <code>.webp</code>, <code>.gif</code>, <code>.bmp</code></li>
-						<li><strong>Output formats (YouTube):</strong> <code>.png</code> or <code>.gif</code> (1:1 square).</li>
-						<li><strong>Recommended dimensions:</strong> 480×480px.</li>
-						<li><strong>Max file size:</strong> 1 MB per file.</li>
-					</ul>
-				</div>
 				<!-- Mini Guide & FAQ (FAQ + Schema Markup) -->
-				<FAQAndGuide lang="en" platformId="youtube" />
+				<FAQAndGuide lang="en" platformId="kick" />
 			</main>
 
 			<Footer lang="en" />
@@ -63,14 +46,14 @@ import Footer from '../../components/Footer.astro';
 
 		<style>
 			:root {
-				--bg-body: #0f0f0f;
-				--surface-card: #181818;
-				--surface-hover: #222222;
-				--border-color: #2a2a2a;
-				--text-primary: #f1f1f1;
-				--text-muted: #aaaaaa;
-				--accent-youtube: #ff0000;
-				--accent-youtube-bg: rgba(255, 0, 0, 0.08);
+				--bg-body: #0d0f12;
+				--surface-card: #15181e;
+				--surface-hover: #1c2028;
+				--border-color: #272c35;
+				--text-primary: #f1f3f5;
+				--text-muted: #808a9a;
+				--accent-kick: #53fc18;
+				--accent-kick-bg: rgba(83, 252, 24, 0.06);
 			}
 
 			* {
@@ -167,7 +150,7 @@ import Footer from '../../components/Footer.astro';
 			}
 
 			.info-icon {
-				color: var(--accent-youtube);
+				color: var(--accent-kick);
 			}
 
 			.info-list {
@@ -186,7 +169,7 @@ import Footer from '../../components/Footer.astro';
 
 			.info-list li::before {
 				content: "•";
-				color: var(--accent-youtube);
+				color: var(--accent-kick);
 				position: absolute;
 				left: -1rem;
 				font-weight: bold;

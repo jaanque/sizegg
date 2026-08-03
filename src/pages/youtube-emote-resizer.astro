@@ -1,10 +1,10 @@
 ---
-import Navigation from '../../components/Navigation.astro';
-import EmoteDropzone from '../../components/EmoteDropzone.astro';
-import FAQAndGuide from "../../components/FAQAndGuide.astro";
-import SEOContentSection from '../../components/SEOContentSection.astro';
-import SEO from '../../components/SEO.astro';
-import Footer from '../../components/Footer.astro';
+import Navigation from '../components/Navigation.astro';
+import EmoteDropzone from '../components/EmoteDropzone.astro';
+import FAQAndGuide from "../components/FAQAndGuide.astro";
+import SEOContentSection from '../components/SEOContentSection.astro';
+import SEO from '../components/SEO.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <html lang="en">
@@ -12,13 +12,13 @@ import Footer from '../../components/Footer.astro';
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<SEO
-			title="BTTV Emote Resizer - sizeGG"
-			description="Resize emotes for BetterTTV (BTTV) online for free. Instantly generates 112×112px, 56×56px, and 28×28px resolutions in PNG and GIF."
+			title="YouTube Emote Resizer - sizeGG"
+			description="Resize channel emotes and member badges for YouTube for free online. Converts images to exact 480×480px specifications for static PNG and animated GIFs."
 			lang="en"
-			canonicalUrl="https://sizegg.com/en/bttv-emote-resizer"
-			alternateEsUrl="https://sizegg.com/es/redimensionar-emotes-bttv"
-			alternateEnUrl="https://sizegg.com/en/bttv-emote-resizer"
-			platformId="bttv"
+			canonicalUrl="https://sizegg.com/youtube-emote-resizer"
+			alternateEsUrl="https://sizegg.com/es/redimensionar-emotes-youtube"
+			alternateEnUrl="https://sizegg.com/youtube-emote-resizer"
+			platformId="youtube"
 		/>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,14 +28,14 @@ import Footer from '../../components/Footer.astro';
 		<div class="layout">
 			<!-- Header -->
 			<header class="header">
-				<Navigation lang="en" platform="bttv" />
+				<Navigation lang="en" platform="youtube" />
 			</header>
 
 			<!-- Interactive Content -->
 			<main class="main-content">
-				<h1 class="page-title">BTTV Emote Resizer</h1>
-				<EmoteDropzone lang="en" platformId="bttv" accentColor="#f97316" />
-				<SEOContentSection lang="en" platformId="bttv" />
+				<h1 class="page-title">YouTube Emote Resizer</h1>
+				<EmoteDropzone lang="en" platformId="youtube" accentColor="#ff0000" />
+				<SEOContentSection lang="en" platformId="youtube" />
 
 				<!-- Info Card -->
 				<div class="info-card">
@@ -45,17 +45,17 @@ import Footer from '../../components/Footer.astro';
 							<line x1="12" y1="16" x2="12" y2="12"></line>
 							<line x1="12" y1="8" x2="12.01" y2="8"></line>
 						</svg>
-						<span>BTTV emote requirements & format specs</span>
+						<span>YouTube emote requirements & format specs</span>
 					</div>
 					<ul class="info-list">
 						<li><strong>Upload extensions:</strong> <code>.png</code>, <code>.jpg</code>, <code>.jpeg</code>, <code>.webp</code>, <code>.gif</code>, <code>.bmp</code></li>
-						<li><strong>Output formats (BTTV):</strong> <code>.png</code> (static images) and <code>.gif</code> (animated).</li>
-						<li><strong>Standard dimensions:</strong> 112×112px, 56×56px and 28×28px.</li>
-						<li><strong>Max file size:</strong> 3 MB per file.</li>
+						<li><strong>Output formats (YouTube):</strong> <code>.png</code> or <code>.gif</code> (1:1 square).</li>
+						<li><strong>Recommended dimensions:</strong> 480×480px.</li>
+						<li><strong>Max file size:</strong> 1 MB per file.</li>
 					</ul>
 				</div>
 				<!-- Mini Guide & FAQ (FAQ + Schema Markup) -->
-				<FAQAndGuide lang="en" platformId="bttv" />
+				<FAQAndGuide lang="en" platformId="youtube" />
 			</main>
 
 			<Footer lang="en" />
@@ -63,14 +63,14 @@ import Footer from '../../components/Footer.astro';
 
 		<style>
 			:root {
-				--bg-body: #101418;
-				--surface-card: #171d22;
-				--surface-hover: #20272e;
-				--border-color: #2b343d;
-				--text-primary: #f0f4f8;
-				--text-muted: #8896a4;
-				--accent-bttv: #f97316;
-				--accent-bttv-bg: rgba(249, 115, 22, 0.08);
+				--bg-body: #0f0f0f;
+				--surface-card: #181818;
+				--surface-hover: #222222;
+				--border-color: #2a2a2a;
+				--text-primary: #f1f1f1;
+				--text-muted: #aaaaaa;
+				--accent-youtube: #ff0000;
+				--accent-youtube-bg: rgba(255, 0, 0, 0.08);
 			}
 
 			* {
@@ -167,7 +167,7 @@ import Footer from '../../components/Footer.astro';
 			}
 
 			.info-icon {
-				color: var(--accent-bttv);
+				color: var(--accent-youtube);
 			}
 
 			.info-list {
@@ -186,7 +186,7 @@ import Footer from '../../components/Footer.astro';
 
 			.info-list li::before {
 				content: "•";
-				color: var(--accent-bttv);
+				color: var(--accent-youtube);
 				position: absolute;
 				left: -1rem;
 				font-weight: bold;

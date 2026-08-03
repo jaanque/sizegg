@@ -1,10 +1,10 @@
 ---
-import Navigation from '../../components/Navigation.astro';
-import EmoteDropzone from '../../components/EmoteDropzone.astro';
-import FAQAndGuide from "../../components/FAQAndGuide.astro";
-import SEOContentSection from '../../components/SEOContentSection.astro';
-import SEO from '../../components/SEO.astro';
-import Footer from '../../components/Footer.astro';
+import Navigation from '../components/Navigation.astro';
+import EmoteDropzone from '../components/EmoteDropzone.astro';
+import FAQAndGuide from "../components/FAQAndGuide.astro";
+import SEOContentSection from '../components/SEOContentSection.astro';
+import SEO from '../components/SEO.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <html lang="en">
@@ -12,13 +12,13 @@ import Footer from '../../components/Footer.astro';
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<SEO
-			title="Twitch Emote Resizer - sizeGG"
-			description="Resize and convert emotes for Twitch instantly for free online. Automatically outputs 112×112px, 56×56px, and 28×28px in static PNG and animated GIF."
+			title="BTTV Emote Resizer - sizeGG"
+			description="Resize emotes for BetterTTV (BTTV) online for free. Instantly generates 112×112px, 56×56px, and 28×28px resolutions in PNG and GIF."
 			lang="en"
-			canonicalUrl="https://sizegg.com/en/twitch-emote-resizer"
-			alternateEsUrl="https://sizegg.com/es/redimensionar-emotes-twitch"
-			alternateEnUrl="https://sizegg.com/en/twitch-emote-resizer"
-			platformId="twitch"
+			canonicalUrl="https://sizegg.com/bttv-emote-resizer"
+			alternateEsUrl="https://sizegg.com/es/redimensionar-emotes-bttv"
+			alternateEnUrl="https://sizegg.com/bttv-emote-resizer"
+			platformId="bttv"
 		/>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,17 +28,34 @@ import Footer from '../../components/Footer.astro';
 		<div class="layout">
 			<!-- Header -->
 			<header class="header">
-				<Navigation lang="en" platform="twitch" />
+				<Navigation lang="en" platform="bttv" />
 			</header>
 
 			<!-- Interactive Content -->
 			<main class="main-content">
-				<h1 class="page-title">Twitch Emote Resizer</h1>
-				<EmoteDropzone lang="en" platformId="twitch" accentColor="#a970ff" />
-				<SEOContentSection lang="en" platformId="twitch" />
+				<h1 class="page-title">BTTV Emote Resizer</h1>
+				<EmoteDropzone lang="en" platformId="bttv" accentColor="#f97316" />
+				<SEOContentSection lang="en" platformId="bttv" />
 
+				<!-- Info Card -->
+				<div class="info-card">
+					<div class="info-header">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="info-icon">
+							<circle cx="12" cy="12" r="10"></circle>
+							<line x1="12" y1="16" x2="12" y2="12"></line>
+							<line x1="12" y1="8" x2="12.01" y2="8"></line>
+						</svg>
+						<span>BTTV emote requirements & format specs</span>
+					</div>
+					<ul class="info-list">
+						<li><strong>Upload extensions:</strong> <code>.png</code>, <code>.jpg</code>, <code>.jpeg</code>, <code>.webp</code>, <code>.gif</code>, <code>.bmp</code></li>
+						<li><strong>Output formats (BTTV):</strong> <code>.png</code> (static images) and <code>.gif</code> (animated).</li>
+						<li><strong>Standard dimensions:</strong> 112×112px, 56×56px and 28×28px.</li>
+						<li><strong>Max file size:</strong> 3 MB per file.</li>
+					</ul>
+				</div>
 				<!-- Mini Guide & FAQ (FAQ + Schema Markup) -->
-				<FAQAndGuide lang="en" platformId="twitch" />
+				<FAQAndGuide lang="en" platformId="bttv" />
 			</main>
 
 			<Footer lang="en" />
@@ -46,14 +63,14 @@ import Footer from '../../components/Footer.astro';
 
 		<style>
 			:root {
-				--bg-body: #111317;
-				--surface-card: #181b20;
-				--surface-hover: #1f2329;
-				--border-color: #2b3038;
-				--text-primary: #f1f3f5;
-				--text-muted: #8c95a3;
-				--accent-twitch: #a970ff;
-				--accent-twitch-bg: rgba(169, 112, 255, 0.08);
+				--bg-body: #101418;
+				--surface-card: #171d22;
+				--surface-hover: #20272e;
+				--border-color: #2b343d;
+				--text-primary: #f0f4f8;
+				--text-muted: #8896a4;
+				--accent-bttv: #f97316;
+				--accent-bttv-bg: rgba(249, 115, 22, 0.08);
 			}
 
 			* {
@@ -150,7 +167,7 @@ import Footer from '../../components/Footer.astro';
 			}
 
 			.info-icon {
-				color: var(--accent-twitch);
+				color: var(--accent-bttv);
 			}
 
 			.info-list {
@@ -169,7 +186,7 @@ import Footer from '../../components/Footer.astro';
 
 			.info-list li::before {
 				content: "•";
-				color: var(--accent-twitch);
+				color: var(--accent-bttv);
 				position: absolute;
 				left: -1rem;
 				font-weight: bold;

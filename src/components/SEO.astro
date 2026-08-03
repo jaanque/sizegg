@@ -71,8 +71,8 @@ const orgSchema = {
 		"height": "512"
 	},
 	"sameAs": [
-		"https://sizegg.com/es",
-		"https://sizegg.com/en"
+		"https://sizegg.com/",
+		"https://sizegg.com/es"
 	]
 };
 
@@ -96,37 +96,37 @@ const siteNavSchema = {
 			"@type": "SiteNavigationElement",
 			"position": 1,
 			"name": lang === 'es' ? "Redimensionar Emotes Twitch" : "Twitch Emote Resizer",
-			"url": `https://sizegg.com/${lang}/${lang === 'es' ? 'redimensionar-emotes-twitch' : 'twitch-emote-resizer'}`
+			"url": lang === 'es' ? "https://sizegg.com/es/redimensionar-emotes-twitch" : "https://sizegg.com/twitch-emote-resizer"
 		},
 		{
 			"@type": "SiteNavigationElement",
 			"position": 2,
 			"name": lang === 'es' ? "Redimensionar Emotes Kick" : "Kick Emote Resizer",
-			"url": `https://sizegg.com/${lang}/${lang === 'es' ? 'redimensionar-emotes-kick' : 'kick-emote-resizer'}`
+			"url": lang === 'es' ? "https://sizegg.com/es/redimensionar-emotes-kick" : "https://sizegg.com/kick-emote-resizer"
 		},
 		{
 			"@type": "SiteNavigationElement",
 			"position": 3,
 			"name": lang === 'es' ? "Redimensionar Emotes Discord" : "Discord Emote Resizer",
-			"url": `https://sizegg.com/${lang}/${lang === 'es' ? 'redimensionar-emotes-discord' : 'discord-emote-resizer'}`
+			"url": lang === 'es' ? "https://sizegg.com/es/redimensionar-emotes-discord" : "https://sizegg.com/discord-emote-resizer"
 		},
 		{
 			"@type": "SiteNavigationElement",
 			"position": 4,
 			"name": lang === 'es' ? "Redimensionar Emotes YouTube" : "YouTube Emote Resizer",
-			"url": `https://sizegg.com/${lang}/${lang === 'es' ? 'redimensionar-emotes-youtube' : 'youtube-emote-resizer'}`
+			"url": lang === 'es' ? "https://sizegg.com/es/redimensionar-emotes-youtube" : "https://sizegg.com/youtube-emote-resizer"
 		},
 		{
 			"@type": "SiteNavigationElement",
 			"position": 5,
 			"name": lang === 'es' ? "Redimensionar Emotes 7TV" : "7TV Emote Resizer",
-			"url": `https://sizegg.com/${lang}/${lang === 'es' ? 'redimensionar-emotes-7tv' : '7tv-emote-resizer'}`
+			"url": lang === 'es' ? "https://sizegg.com/es/redimensionar-emotes-7tv" : "https://sizegg.com/7tv-emote-resizer"
 		},
 		{
 			"@type": "SiteNavigationElement",
 			"position": 6,
 			"name": lang === 'es' ? "Redimensionar Emotes BTTV" : "BTTV Emote Resizer",
-			"url": `https://sizegg.com/${lang}/${lang === 'es' ? 'redimensionar-emotes-bttv' : 'bttv-emote-resizer'}`
+			"url": lang === 'es' ? "https://sizegg.com/es/redimensionar-emotes-bttv" : "https://sizegg.com/bttv-emote-resizer"
 		}
 	]
 };
@@ -139,7 +139,7 @@ const breadcrumbSchema = platformId ? {
 			"@type": "ListItem",
 			"position": 1,
 			"name": "sizeGG",
-			"item": `https://sizegg.com/${lang}`
+			"item": lang === 'es' ? "https://sizegg.com/es" : "https://sizegg.com"
 		},
 		{
 			"@type": "ListItem",
@@ -187,7 +187,7 @@ const breadcrumbSchema = platformId ? {
 <!-- Enlaces Hreflang Multilingües -->
 <link rel="alternate" hreflang="es" href={alternateEsUrl} />
 <link rel="alternate" hreflang="en" href={alternateEnUrl} />
-<link rel="alternate" hreflang="x-default" href={alternateEsUrl} />
+<link rel="alternate" hreflang="x-default" href={alternateEnUrl} />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />

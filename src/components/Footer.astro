@@ -26,12 +26,12 @@ const platformLinks: Record<'es' | 'en', Array<{ id: string; name: string; href:
 		{ id: 'bttv', name: 'BTTV', href: '/es/redimensionar-emotes-bttv' }
 	],
 	en: [
-		{ id: 'twitch', name: 'Twitch', href: '/en/twitch-emote-resizer' },
-		{ id: 'kick', name: 'Kick', href: '/en/kick-emote-resizer' },
-		{ id: 'discord', name: 'Discord', href: '/en/discord-emote-resizer' },
-		{ id: 'youtube', name: 'YouTube', href: '/en/youtube-emote-resizer' },
-		{ id: '7tv', name: '7TV', href: '/en/7tv-emote-resizer' },
-		{ id: 'bttv', name: 'BTTV', href: '/en/bttv-emote-resizer' }
+		{ id: 'twitch', name: 'Twitch', href: '/twitch-emote-resizer' },
+		{ id: 'kick', name: 'Kick', href: '/kick-emote-resizer' },
+		{ id: 'discord', name: 'Discord', href: '/discord-emote-resizer' },
+		{ id: 'youtube', name: 'YouTube', href: '/youtube-emote-resizer' },
+		{ id: '7tv', name: '7TV', href: '/7tv-emote-resizer' },
+		{ id: 'bttv', name: 'BTTV', href: '/bttv-emote-resizer' }
 	]
 };
 
@@ -50,7 +50,7 @@ const text = {
 <footer class="footer">
 	<div class="footer-main">
 		<div class="footer-left">
-			<a href={`/${lang}`} class="brand-link">
+			<a href={lang === 'es' ? '/es' : '/'} class="brand-link">
 				<span class="footer-logo">sizeGG</span>
 			</a>
 			<p class="footer-desc">{text.desc}</p>

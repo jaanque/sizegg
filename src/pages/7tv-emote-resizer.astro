@@ -1,10 +1,10 @@
 ---
-import Navigation from '../../components/Navigation.astro';
-import EmoteDropzone from '../../components/EmoteDropzone.astro';
-import FAQAndGuide from "../../components/FAQAndGuide.astro";
-import SEOContentSection from '../../components/SEOContentSection.astro';
-import SEO from '../../components/SEO.astro';
-import Footer from '../../components/Footer.astro';
+import Navigation from '../components/Navigation.astro';
+import EmoteDropzone from '../components/EmoteDropzone.astro';
+import FAQAndGuide from "../components/FAQAndGuide.astro";
+import SEOContentSection from '../components/SEOContentSection.astro';
+import SEO from '../components/SEO.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <html lang="en">
@@ -12,13 +12,13 @@ import Footer from '../../components/Footer.astro';
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<SEO
-			title="Discord Emote Resizer - sizeGG"
-			description="Resize custom emojis and stickers for Discord servers for free online. Auto-resizes images to 128×128px with compression optimized under 256 KB."
+			title="7TV Emote Resizer - sizeGG"
+			description="Resize and convert emotes for 7TV for free online. Auto-scales images to 128×128px in WebP and animated GIF formats."
 			lang="en"
-			canonicalUrl="https://sizegg.com/en/discord-emote-resizer"
-			alternateEsUrl="https://sizegg.com/es/redimensionar-emotes-discord"
-			alternateEnUrl="https://sizegg.com/en/discord-emote-resizer"
-			platformId="discord"
+			canonicalUrl="https://sizegg.com/7tv-emote-resizer"
+			alternateEsUrl="https://sizegg.com/es/redimensionar-emotes-7tv"
+			alternateEnUrl="https://sizegg.com/7tv-emote-resizer"
+			platformId="7tv"
 		/>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,14 +28,14 @@ import Footer from '../../components/Footer.astro';
 		<div class="layout">
 			<!-- Header -->
 			<header class="header">
-				<Navigation lang="en" platform="discord" />
+				<Navigation lang="en" platform="7tv" />
 			</header>
 
 			<!-- Interactive Content -->
 			<main class="main-content">
-				<h1 class="page-title">Discord Emote Resizer</h1>
-				<EmoteDropzone lang="en" platformId="discord" accentColor="#5865f2" />
-				<SEOContentSection lang="en" platformId="discord" />
+				<h1 class="page-title">7TV Emote Resizer</h1>
+				<EmoteDropzone lang="en" platformId="7tv" accentColor="#38bdf8" />
+				<SEOContentSection lang="en" platformId="7tv" />
 
 				<!-- Info Card -->
 				<div class="info-card">
@@ -45,17 +45,17 @@ import Footer from '../../components/Footer.astro';
 							<line x1="12" y1="16" x2="12" y2="12"></line>
 							<line x1="12" y1="8" x2="12.01" y2="8"></line>
 						</svg>
-						<span>Discord emote requirements & format specs</span>
+						<span>7TV emote requirements & format specs</span>
 					</div>
 					<ul class="info-list">
 						<li><strong>Upload extensions:</strong> <code>.png</code>, <code>.jpg</code>, <code>.jpeg</code>, <code>.webp</code>, <code>.gif</code>, <code>.bmp</code></li>
-						<li><strong>Output formats (Discord):</strong> <code>.png</code> (standard emotes) and <code>.gif</code> (Nitro animated emotes).</li>
-						<li><strong>Recommended dimensions:</strong> 128×128px (optimal processing).</li>
-						<li><strong>Max file size:</strong> 256 KB per file.</li>
+						<li><strong>Output formats (7TV):</strong> Preferred <code>.webp</code> or <code>.gif</code> (high fidelity animated).</li>
+						<li><strong>Recommended dimensions:</strong> 128×128px (auto-scaled 1x, 2x, 3x, 4x).</li>
+						<li><strong>Max file size:</strong> 5 MB per file.</li>
 					</ul>
 				</div>
 				<!-- Mini Guide & FAQ (FAQ + Schema Markup) -->
-				<FAQAndGuide lang="en" platformId="discord" />
+				<FAQAndGuide lang="en" platformId="7tv" />
 			</main>
 
 			<Footer lang="en" />
@@ -63,14 +63,14 @@ import Footer from '../../components/Footer.astro';
 
 		<style>
 			:root {
-				--bg-body: #101216;
-				--surface-card: #17191e;
-				--surface-hover: #1f2229;
-				--border-color: #2b2f38;
-				--text-primary: #f1f3f5;
-				--text-muted: #8a93a0;
-				--accent-discord: #5865f2;
-				--accent-discord-bg: rgba(88, 101, 242, 0.08);
+				--bg-body: #0d1117;
+				--surface-card: #161b22;
+				--surface-hover: #21262d;
+				--border-color: #30363d;
+				--text-primary: #f0f6fc;
+				--text-muted: #8b949e;
+				--accent-7tv: #38bdf8;
+				--accent-7tv-bg: rgba(56, 189, 248, 0.08);
 			}
 
 			* {
@@ -167,7 +167,7 @@ import Footer from '../../components/Footer.astro';
 			}
 
 			.info-icon {
-				color: var(--accent-discord);
+				color: var(--accent-7tv);
 			}
 
 			.info-list {
@@ -186,7 +186,7 @@ import Footer from '../../components/Footer.astro';
 
 			.info-list li::before {
 				content: "•";
-				color: var(--accent-discord);
+				color: var(--accent-7tv);
 				position: absolute;
 				left: -1rem;
 				font-weight: bold;

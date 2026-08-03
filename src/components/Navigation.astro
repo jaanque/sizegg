@@ -76,12 +76,14 @@ const isSecondaryActive = secondaryPlatforms.some(p => p.id === platform);
 const moreLabel = lang === 'es' ? 'Más' : 'More';
 const targetLang = lang === 'es' ? 'en' : 'es';
 const targetSlug = platform ? slugMap[targetLang][platform] : '';
-const targetLangUrl = `/${targetLang}${targetSlug ? `/${targetSlug}` : ''}`;
+const targetLangUrl = targetLang === 'es' 
+	? `/es${targetSlug ? `/${targetSlug}` : ''}`
+	: `/${targetSlug}`;
 ---
 
 <nav class="platform-nav">
 	<a 
-		href={`/${lang}`} 
+		href={lang === 'es' ? '/es' : '/'} 
 		class="nav-logo-tag" 
 		id="nav-logo-tag"
 		data-default-accent={currentTheme.accent}
@@ -96,7 +98,7 @@ const targetLangUrl = `/${targetLang}${targetSlug ? `/${targetSlug}` : ''}`;
 	<div class="nav-links-right">
 		{mainPlatforms.map(p => (
 			<a 
-				href={`/${lang}/${slugMap[lang][p.id]}`} 
+				href={lang === 'es' ? `/es/${slugMap.es[p.id]}` : `/${slugMap.en[p.id]}`} 
 				class={`nav-tab ${platform === p.id ? 'active' : ''}`}
 				data-nav-platform={p.id}
 				style={`--tab-accent: ${platformColors[p.id].accent}; --tab-accent-bg: ${platformColors[p.id].bg};`}
@@ -118,7 +120,7 @@ const targetLangUrl = `/${targetLang}${targetSlug ? `/${targetSlug}` : ''}`;
 			<div class="dropdown-menu">
 				{secondaryPlatforms.map(p => (
 					<a 
-						href={`/${lang}/${slugMap[lang][p.id]}`} 
+						href={lang === 'es' ? `/es/${slugMap.es[p.id]}` : `/${slugMap.en[p.id]}`} 
 						class={`dropdown-item ${platform === p.id ? 'active' : ''}`}
 						data-nav-platform={p.id}
 						style={`--tab-accent: ${platformColors[p.id].accent}; --tab-accent-bg: ${platformColors[p.id].bg};`}
@@ -143,7 +145,7 @@ const targetLangUrl = `/${targetLang}${targetSlug ? `/${targetSlug}` : ''}`;
 				<a href={`/es${platform ? `/${slugMap.es[platform]}` : ''}`} class={`dropdown-item ${lang === 'es' ? 'active' : ''}`} data-set-lang="es">
 					<span>Español</span>
 				</a>
-				<a href={`/en${platform ? `/${slugMap.en[platform]}` : ''}`} class={`dropdown-item ${lang === 'en' ? 'active' : ''}`} data-set-lang="en">
+				<a href={platform ? `/${slugMap.en[platform]}` : '/'} class={`dropdown-item ${lang === 'en' ? 'active' : ''}`} data-set-lang="en">
 					<span>English</span>
 				</a>
 			</div>

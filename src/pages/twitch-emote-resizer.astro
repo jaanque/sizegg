@@ -1,10 +1,10 @@
 ---
-import Navigation from '../../components/Navigation.astro';
-import EmoteDropzone from '../../components/EmoteDropzone.astro';
-import FAQAndGuide from "../../components/FAQAndGuide.astro";
-import SEOContentSection from '../../components/SEOContentSection.astro';
-import SEO from '../../components/SEO.astro';
-import Footer from '../../components/Footer.astro';
+import Navigation from '../components/Navigation.astro';
+import EmoteDropzone from '../components/EmoteDropzone.astro';
+import FAQAndGuide from "../components/FAQAndGuide.astro";
+import SEOContentSection from '../components/SEOContentSection.astro';
+import SEO from '../components/SEO.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <html lang="en">
@@ -12,13 +12,13 @@ import Footer from '../../components/Footer.astro';
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<SEO
-			title="Kick Emote Resizer - sizeGG"
-			description="Resize emotes for Kick online for free. Automatically converts and scales images to 500×500px, strictly optimized under Kick's file size limits."
+			title="Twitch Emote Resizer - sizeGG"
+			description="Resize and convert emotes for Twitch instantly for free online. Automatically outputs 112×112px, 56×56px, and 28×28px in static PNG and animated GIF."
 			lang="en"
-			canonicalUrl="https://sizegg.com/en/kick-emote-resizer"
-			alternateEsUrl="https://sizegg.com/es/redimensionar-emotes-kick"
-			alternateEnUrl="https://sizegg.com/en/kick-emote-resizer"
-			platformId="kick"
+			canonicalUrl="https://sizegg.com/twitch-emote-resizer"
+			alternateEsUrl="https://sizegg.com/es/redimensionar-emotes-twitch"
+			alternateEnUrl="https://sizegg.com/twitch-emote-resizer"
+			platformId="twitch"
 		/>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,17 +28,17 @@ import Footer from '../../components/Footer.astro';
 		<div class="layout">
 			<!-- Header -->
 			<header class="header">
-				<Navigation lang="en" platform="kick" />
+				<Navigation lang="en" platform="twitch" />
 			</header>
 
 			<!-- Interactive Content -->
 			<main class="main-content">
-				<h1 class="page-title">Kick Emote Resizer</h1>
-				<EmoteDropzone lang="en" platformId="kick" accentColor="#53fc18" />
-				<SEOContentSection lang="en" platformId="kick" />
+				<h1 class="page-title">Twitch Emote Resizer</h1>
+				<EmoteDropzone lang="en" platformId="twitch" accentColor="#a970ff" />
+				<SEOContentSection lang="en" platformId="twitch" />
 
 				<!-- Mini Guide & FAQ (FAQ + Schema Markup) -->
-				<FAQAndGuide lang="en" platformId="kick" />
+				<FAQAndGuide lang="en" platformId="twitch" />
 			</main>
 
 			<Footer lang="en" />
@@ -46,14 +46,14 @@ import Footer from '../../components/Footer.astro';
 
 		<style>
 			:root {
-				--bg-body: #0d0f12;
-				--surface-card: #15181e;
-				--surface-hover: #1c2028;
-				--border-color: #272c35;
+				--bg-body: #111317;
+				--surface-card: #181b20;
+				--surface-hover: #1f2329;
+				--border-color: #2b3038;
 				--text-primary: #f1f3f5;
-				--text-muted: #808a9a;
-				--accent-kick: #53fc18;
-				--accent-kick-bg: rgba(83, 252, 24, 0.06);
+				--text-muted: #8c95a3;
+				--accent-twitch: #a970ff;
+				--accent-twitch-bg: rgba(169, 112, 255, 0.08);
 			}
 
 			* {
@@ -150,7 +150,7 @@ import Footer from '../../components/Footer.astro';
 			}
 
 			.info-icon {
-				color: var(--accent-kick);
+				color: var(--accent-twitch);
 			}
 
 			.info-list {
@@ -169,7 +169,7 @@ import Footer from '../../components/Footer.astro';
 
 			.info-list li::before {
 				content: "•";
-				color: var(--accent-kick);
+				color: var(--accent-twitch);
 				position: absolute;
 				left: -1rem;
 				font-weight: bold;
