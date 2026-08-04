@@ -3,6 +3,8 @@ export interface Props {
 	lang?: 'es' | 'en';
 }
 
+import Analytics from '@vercel/analytics/astro';
+
 const { lang = 'es' } = Astro.props;
 
 const currentYear = new Date().getFullYear();
@@ -70,6 +72,9 @@ const text = {
 		<p>© {currentYear} sizeGG. {text.rights}</p>
 	</div>
 </footer>
+
+<!-- Vercel Analytics -->
+<Analytics />
 
 <style>
 	.footer {

@@ -10,7 +10,6 @@ export interface Props {
 }
 
 import { getKeywordsForPlatform } from '../utils/seoKeywords';
-import Analytics from '@vercel/analytics/astro';
 
 const {
 	title,
@@ -212,8 +211,7 @@ const breadcrumbSchema = platformId ? {
 {appSchema && <script type="application/ld+json" set:html={JSON.stringify(appSchema)} />}
 {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
 
-<!-- Vercel Analytics -->
-<Analytics />
+
 
 <!-- Cloudflare Web Analytics -->
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a240a91b86834e6bbc75487f8d596625"}'></script>
