@@ -27,6 +27,47 @@ const currentKeywords = platformId
 	? getKeywordsForPlatform(platformId, lang) 
 	: (lang === 'es' ? 'redimensionador de emotes, redimensionar emotes twitch kick discord youtube, emote resizer' : 'emote resizer, free emote resizer twitch kick discord youtube');
 
+const webPageSchema = {
+	"@context": "https://schema.org",
+	"@type": "WebPage",
+	"name": title,
+	"url": canonicalUrl,
+	"description": description,
+	"inLanguage": lang === 'es' ? "es-ES" : "en-US",
+	"isPartOf": {
+		"@type": "WebSite",
+		"name": "sizeGG",
+		"url": "https://sizegg.com"
+	}
+};
+
+const howToSchema = platformId ? {
+	"@context": "https://schema.org",
+	"@type": "HowTo",
+	"name": lang === 'es' ? `Cómo redimensionar emotes para ${platformId.toUpperCase()}` : `How to resize emotes for ${platformId.toUpperCase()}`,
+	"description": description,
+	"step": [
+		{
+			"@type": "HowToStep",
+			"position": 1,
+			"name": lang === 'es' ? "Subir imagen" : "Upload image",
+			"text": lang === 'es' ? "Arrastra y suelta tu archivo de imagen (PNG, JPG, WebP, GIF, SVG) en la zona de carga." : "Drag and drop your image file (PNG, JPG, WebP, GIF, SVG) into the dropzone."
+		},
+		{
+			"@type": "HowToStep",
+			"position": 2,
+			"name": lang === 'es' ? "Procesamiento automático" : "Automatic processing",
+			"text": lang === 'es' ? "sizeGG redimensiona la imagen automáticamente a las resoluciones exactas exigidas." : "sizeGG automatically resizes the image to the exact required resolutions."
+		},
+		{
+			"@type": "HowToStep",
+			"position": 3,
+			"name": lang === 'es' ? "Descargar paquete" : "Download package",
+			"text": lang === 'es' ? "Haz clic en Descargar todo (.ZIP) o guarda las resoluciones individuales al instante." : "Click Download All (.ZIP) or save individual resolutions instantly."
+		}
+	]
+} : null;
+
 const appSchema = platformId ? {
 	"@context": "https://schema.org",
 	"@type": "SoftwareApplication",
@@ -40,13 +81,6 @@ const appSchema = platformId ? {
 		"@type": "Offer",
 		"price": "0",
 		"priceCurrency": "USD"
-	},
-	"aggregateRating": {
-		"@type": "AggregateRating",
-		"ratingValue": "4.95",
-		"ratingCount": "1840",
-		"bestRating": "5",
-		"worstRating": "1"
 	},
 	"featureList": [
 		"Multi-step step-down resampling",
@@ -148,21 +182,127 @@ const breadcrumbSchema = platformId ? {
 		}
 	]
 } : null;
+
+const faqSchema = platformId ? {
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	"mainEntity": lang === 'es' ? [
+		{
+			"@type": "Question",
+			"name": `¿Por qué mi emote se ve borroso al subirlo a ${platformId.toUpperCase()}?`,
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Normalmente sucede si el archivo original se escala sin interpolación de calidad o fuera de relación 1:1. sizeGG aplica escalado bicúbico de alta densidad preservando las transparencias alfa y nitidez."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": `¿Cuáles son los tamaños oficiales y límites para ${platformId.toUpperCase()}?`,
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "sizeGG convierte tus imágenes automáticamente a las medidas requeridas sin pérdida de calidad manteniendo el peso del archivo por debajo del máximo permitido por la plataforma."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "¿Se conservan las transparencias PNG y animaciones GIF?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Sí, sizeGG preserva los canales de transparencia alfa en PNG/WebP y mantiene los fotogramas y velocidad en GIFs animados."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "¿Mis imágenes se suben a un servidor externo?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "No. En sizeGG todo el proceso de recorte y redimensionado ocurre 100% en el navegador de tu dispositivo de forma privada e instantánea."
+			}
+		}
+	] : [
+		{
+			"@type": "Question",
+			"name": `Why does my emote look blurry when uploaded to ${platformId.toUpperCase()}?`,
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "This occurs when scaling is done without proper bicubic resampling or square ratio preservation. sizeGG uses multi-step resampling to maintain crispness and alpha transparency."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": `What are the official sizes for ${platformId.toUpperCase()} emotes?`,
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "sizeGG automatically resizes and formats your graphics to the exact dimensions and file size limits specified by the platform."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "Are PNG transparency and GIF animations preserved?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Yes, sizeGG retains alpha transparency channels on PNG/WebP files and preserves GIF animation frame rates."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "Are my images uploaded to external servers?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "No. All cropping, scaling, and compression happen 100% inside your browser locally for total privacy and maximum speed."
+			}
+		}
+	]
+} : null;
 ---
 
-<!-- Metadata Básica de SEO -->
+<!-- Metadata Básica de SEO e Indexación Global -->
 <title>{title}</title>
 <meta name="description" content={description} />
 <meta name="keywords" content={currentKeywords} />
 <meta name="author" content="sizeGG" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-<meta name="theme-color" content="#181b20" />
+<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+<meta name="googlebot-news" content="index, follow" />
+<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+<meta name="yandex" content="index, follow" />
+<meta name="duckduckbot" content="index, follow" />
+<meta name="slurp" content="index, follow" />
+<meta name="baidu-site-verification" content="sizegg" />
+
+<!-- Geo & Target Audience Metadata -->
+<meta name="rating" content="general" />
+<meta name="distribution" content="global" />
+<meta name="coverage" content="Worldwide" />
+<meta name="language" content={lang === 'es' ? 'Spanish' : 'English'} />
+<meta name="target" content="all" />
+<meta name="audience" content="all" />
+
+<!-- App & Browser Settings -->
+<meta name="theme-color" content="#101216" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="sizeGG" />
 <meta name="format-detection" content="telephone=no" />
 <meta name="referrer" content="no-referrer-when-downgrade" />
+
+<!-- Resource Hints & Preconnects -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://www.googletagmanager.com" />
+<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+<link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+<link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+<link rel="dns-prefetch" href="https://static.cloudflareinsights.com" />
+
+<link rel="canonical" href={canonicalUrl} />
+<link rel="manifest" href="/manifest.json" />
+
+<!-- Enlaces Hreflang Multilingües -->
+<link rel="alternate" hreflang="es" href={alternateEsUrl} />
+<link rel="alternate" hreflang="en" href={alternateEnUrl} />
+<link rel="alternate" hreflang="x-default" href={alternateEnUrl} />
 
 <!-- Google tag (gtag.js) -->
 <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-G72DC1VFBD"></script>
@@ -177,17 +317,6 @@ const breadcrumbSchema = platformId ? {
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-<!-- Resource Hints -->
-<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-<link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-<link rel="canonical" href={canonicalUrl} />
-<link rel="manifest" href="/manifest.json" />
-
-<!-- Enlaces Hreflang Multilingües -->
-<link rel="alternate" hreflang="es" href={alternateEsUrl} />
-<link rel="alternate" hreflang="en" href={alternateEnUrl} />
-<link rel="alternate" hreflang="x-default" href={alternateEnUrl} />
-
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonicalUrl} />
@@ -197,19 +326,27 @@ const breadcrumbSchema = platformId ? {
 <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
 <meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_ES'} />
 <meta property="og:image" content="https://sizegg.com/favicon.svg" />
+<meta property="og:image:type" content="image/svg+xml" />
+<meta property="og:image:width" content="512" />
+<meta property="og:image:height" content="512" />
+<meta property="og:image:alt" content="sizeGG Emote Resizer Logo" />
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content="https://sizegg.com/favicon.svg" />
+<meta name="twitter:image:alt" content="sizeGG Emote Resizer Logo" />
 
-<!-- Schema JSON-LD SoftwareApplication, Organization, WebSite, Sitelinks & BreadcrumbList -->
+<!-- Schema JSON-LD SoftwareApplication, Organization, WebSite, Sitelinks, FAQ, HowTo & BreadcrumbList -->
 <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
 <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 <script type="application/ld+json" set:html={JSON.stringify(siteNavSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
 {appSchema && <script type="application/ld+json" set:html={JSON.stringify(appSchema)} />}
+{howToSchema && <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />}
 {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
+{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
 
 
 

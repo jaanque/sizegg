@@ -12641,5 +12641,5 @@ export const platformKeywords: Record<string, { es: string[]; en: string[] }> = 
 export function getKeywordsForPlatform(platformId: string, lang: 'es' | 'en'): string {
 	const platform = platformKeywords[platformId] || platformKeywords.twitch;
 	const list = lang === 'es' ? platform.es : platform.en;
-	return list.join(', ');
+	return list.slice(0, 10).join(', ');
 }

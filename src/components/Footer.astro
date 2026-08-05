@@ -58,9 +58,13 @@ const text = {
 			<p class="footer-desc">{text.desc}</p>
 		</div>
 
-		<nav class="footer-links">
+		<nav class="footer-links" aria-label={lang === 'es' ? 'Navegación de plataformas' : 'Platform navigation'}>
 			{platformLinks[lang].map(link => (
-				<a href={link.href} class="footer-link">
+				<a 
+					href={link.href} 
+					class="footer-link" 
+					title={lang === 'es' ? `Redimensionar emotes para ${link.name}` : `Resize emotes for ${link.name}`}
+				>
 					<span class="link-icon" set:html={platformSvgs[link.id]} />
 					<span>{link.name}</span>
 				</a>

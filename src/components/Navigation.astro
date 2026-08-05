@@ -95,12 +95,13 @@ const targetLangUrl = targetLang === 'es'
 		sizeGG
 	</a>
 
-	<div class="nav-links-right">
+	<div class="nav-links-right" role="menubar" aria-label={lang === 'es' ? 'Plataformas principales' : 'Main platforms'}>
 		{mainPlatforms.map(p => (
 			<a 
 				href={lang === 'es' ? `/es/${slugMap.es[p.id]}` : `/${slugMap.en[p.id]}`} 
 				class={`nav-tab ${platform === p.id ? 'active' : ''}`}
 				data-nav-platform={p.id}
+				title={lang === 'es' ? `Redimensionar emotes para ${p.name}` : `Resize emotes for ${p.name}`}
 				style={`--tab-accent: ${platformColors[p.id].accent}; --tab-accent-bg: ${platformColors[p.id].bg};`}
 			>
 				<span class="tab-icon" set:html={p.svg} />
@@ -110,7 +111,7 @@ const targetLangUrl = targetLang === 'es'
 
 		<!-- Desplegable para plataformas secundarias -->
 		<div class="dropdown-wrapper" id="platforms-dropdown-wrapper">
-			<button class={`dropdown-btn ${isSecondaryActive ? 'active' : ''}`} id="more-platforms-btn">
+			<button class={`dropdown-btn ${isSecondaryActive ? 'active' : ''}`} id="more-platforms-btn" aria-label={moreLabel}>
 				<span>{moreLabel}</span>
 				<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
 					<path d="m6 9 6 6 6-6"/>
@@ -123,6 +124,7 @@ const targetLangUrl = targetLang === 'es'
 						href={lang === 'es' ? `/es/${slugMap.es[p.id]}` : `/${slugMap.en[p.id]}`} 
 						class={`dropdown-item ${platform === p.id ? 'active' : ''}`}
 						data-nav-platform={p.id}
+						title={lang === 'es' ? `Redimensionar emotes para ${p.name}` : `Resize emotes for ${p.name}`}
 						style={`--tab-accent: ${platformColors[p.id].accent}; --tab-accent-bg: ${platformColors[p.id].bg};`}
 					>
 						<span class="tab-icon" set:html={p.svg} />

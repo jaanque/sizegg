@@ -6,6 +6,9 @@ export interface Props {
 
 const { lang, platformId } = Astro.props;
 
+const allImagesTextEs = '.png, .jpg, .jpeg, .webp, .gif, .svg, .bmp, .ico, .avif, .heic, .heif, .tiff, .tif';
+const allImagesTextEn = '.png, .jpg, .jpeg, .webp, .gif, .svg, .bmp, .ico, .avif, .heic, .heif, .tiff, .tif';
+
 const platformSpecs: Record<string, {
 	name: string;
 	sizes: string;
@@ -20,7 +23,7 @@ const platformSpecs: Record<string, {
 		sizes: '112×112px, 56×56px y 28×28px',
 		maxSize: '1 MB',
 		formats: 'PNG (estático) / GIF (animado)',
-		allowedInput: '.png, .jpg, .jpeg, .webp, .gif, .bmp',
+		allowedInput: lang === 'es' ? allImagesTextEs : allImagesTextEn,
 		detailsEs: 'Herramienta online gratuita para redimensionar emotes de Twitch en los 3 tamaños oficiales exigidos (112×112px, 56×56px y 28×28px). Nuestro motor de procesamiento por etapas aplica escalado bicúbico de alta densidad con preservación estricta de transparencia alfa (PNG) y velocidad de animación GIF sin borrosidad.',
 		detailsEn: 'Free online tool to resize emotes for Twitch into all 3 official required sizes (112×112px, 56×56px, and 28×28px). Our multi-step resampling engine applies high-density bicubic scaling with strict alpha transparency preservation (PNG) and crisp GIF animation frame rates.'
 	},
@@ -29,7 +32,7 @@ const platformSpecs: Record<string, {
 		sizes: '500×500px',
 		maxSize: '1 MB',
 		formats: 'PNG / GIF / WebP',
-		allowedInput: '.png, .jpg, .jpeg, .webp, .gif, .bmp',
+		allowedInput: lang === 'es' ? allImagesTextEs : allImagesTextEn,
 		detailsEs: 'Redimensiona y convierte tus imágenes para los emotes de canal en Kick.com a 500×500px. sizeGG ajusta automáticamente la relación de aspecto 1:1 y comprime archivos sin pérdidas por debajo del límite máximo de 1 MB.',
 		detailsEn: 'Resize and convert images for Kick.com channel emotes to exact 500×500px specifications. sizeGG automatically adjusts the 1:1 aspect ratio and compresses files losslessly below Kick\'s 1 MB maximum limit.'
 	},
@@ -38,7 +41,7 @@ const platformSpecs: Record<string, {
 		sizes: '128×128px',
 		maxSize: '256 KB',
 		formats: 'PNG / GIF / WebP',
-		allowedInput: '.png, .jpg, .jpeg, .webp, .gif, .bmp',
+		allowedInput: lang === 'es' ? allImagesTextEs : allImagesTextEn,
 		detailsEs: 'Redimensionador de emojis y stickers para servidores de Discord. Ajusta cualquier avatar, imagen o meme al formato estándar de 128×128px con optimización automática por debajo de 256 KB.',
 		detailsEn: 'Emoji and sticker resizer for Discord servers. Convert and scale any avatar, picture, or meme to the standard 128×128px format with automatic compression below 256 KB.'
 	},
@@ -47,7 +50,7 @@ const platformSpecs: Record<string, {
 		sizes: '480×480px',
 		maxSize: '1 MB',
 		formats: 'PNG / GIF',
-		allowedInput: '.png, .jpg, .jpeg, .webp, .gif, .bmp',
+		allowedInput: lang === 'es' ? allImagesTextEs : allImagesTextEn,
 		detailsEs: 'Redimensionador de emotes de chat e insignias de lealtad para miembros en YouTube. Convierte tus gráficos a 480×480px en alta resolución manteniendo transparencias en PNG y GIF animado.',
 		detailsEn: 'Emote and member loyalty badge resizer for YouTube streams. Converts your graphics to 480×480px high resolution while maintaining transparent PNGs and smooth animated GIFs.'
 	},
@@ -56,7 +59,7 @@ const platformSpecs: Record<string, {
 		sizes: '128×128px (escalado 1x-4x)',
 		maxSize: '5 MB',
 		formats: 'WebP / GIF / PNG',
-		allowedInput: '.png, .jpg, .jpeg, .webp, .gif, .bmp',
+		allowedInput: lang === 'es' ? allImagesTextEs : allImagesTextEn,
 		detailsEs: 'Redimensiona y convierte emotes para la extensión 7TV en resoluciones de 128×128px. Optimizado para WebP y GIF animados con soporte total de transparencia avanzada.',
 		detailsEn: 'Resize and convert emotes for the 7TV extension to 128×128px resolutions. Optimized for WebP and animated GIFs with full support for advanced alpha transparency.'
 	},
@@ -65,7 +68,7 @@ const platformSpecs: Record<string, {
 		sizes: '112×112px, 56×56px y 28×28px',
 		maxSize: '3 MB',
 		formats: 'PNG / GIF / WebP',
-		allowedInput: '.png, .jpg, .jpeg, .webp, .gif, .bmp',
+		allowedInput: lang === 'es' ? allImagesTextEs : allImagesTextEn,
 		detailsEs: 'Generador de emotes para BetterTTV (BTTV). Obtén en 1 clic los 3 formatos oficiales de 112px, 56px y 28px listos para subir a tu panel de creador.',
 		detailsEn: 'BetterTTV (BTTV) emote generator. Get all 3 official formats (112px, 56px, and 28px) in 1 click ready for your creator dashboard.'
 	}
@@ -82,7 +85,16 @@ const platformColors: Record<string, string> = {
 
 const spec = platformSpecs[platformId] || platformSpecs.twitch;
 const finalAccentColor = platformColors[platformId] || '#a970ff';
+
+const tableSchema = {
+	"@context": "https://schema.org",
+	"@type": "Table",
+	"about": lang === 'es' ? `Especificaciones técnicas de emotes para ${spec.name}` : `Emote technical specifications for ${spec.name}`,
+	"name": lang === 'es' ? `Requisitos oficiales de ${spec.name}` : `Official ${spec.name} Requirements`
+};
 ---
+
+<script type="application/ld+json" set:html={JSON.stringify(tableSchema)} />
 
 <section class="seo-guide-block" style={`--accent-color: ${finalAccentColor};`}>
 	<div class="guide-card">
@@ -99,22 +111,22 @@ const finalAccentColor = platformColors[platformId] || '#a970ff';
 			{lang === 'es' ? spec.detailsEs : spec.detailsEn}
 		</p>
 
-		<div class="specs-list">
-			<div class="spec-row">
-				<span class="spec-label">{lang === 'es' ? 'Archivos que puedes subir:' : 'Supported upload files:'}</span>
-				<span class="spec-value"><code>{spec.allowedInput}</code></span>
+		<div class="specs-list" role="table" aria-label={lang === 'es' ? `Especificaciones de ${spec.name}` : `${spec.name} Specifications`}>
+			<div class="spec-row" role="row">
+				<span class="spec-label" role="columnheader">{lang === 'es' ? 'Archivos que puedes subir:' : 'Supported upload files:'}</span>
+				<span class="spec-value" role="cell"><code>{spec.allowedInput}</code></span>
 			</div>
-			<div class="spec-row">
-				<span class="spec-label">{lang === 'es' ? 'Formatos de salida generados:' : 'Generated output formats:'}</span>
-				<span class="spec-value">{spec.formats}</span>
+			<div class="spec-row" role="row">
+				<span class="spec-label" role="columnheader">{lang === 'es' ? 'Formatos de salida generados:' : 'Generated output formats:'}</span>
+				<span class="spec-value" role="cell">{spec.formats}</span>
 			</div>
-			<div class="spec-row">
-				<span class="spec-label">{lang === 'es' ? 'Dimensiones oficiales:' : 'Official dimensions:'}</span>
-				<span class="spec-value">{spec.sizes}</span>
+			<div class="spec-row" role="row">
+				<span class="spec-label" role="columnheader">{lang === 'es' ? 'Dimensiones oficiales:' : 'Official dimensions:'}</span>
+				<span class="spec-value" role="cell">{spec.sizes}</span>
 			</div>
-			<div class="spec-row">
-				<span class="spec-label">{lang === 'es' ? 'Peso máximo por imagen:' : 'Max file size:'}</span>
-				<span class="spec-value">{spec.maxSize}</span>
+			<div class="spec-row" role="row">
+				<span class="spec-label" role="columnheader">{lang === 'es' ? 'Peso máximo por imagen:' : 'Max file size:'}</span>
+				<span class="spec-value" role="cell">{spec.maxSize}</span>
 			</div>
 		</div>
 	</div>
@@ -154,11 +166,11 @@ const finalAccentColor = platformColors[platformId] || '#a970ff';
 	}
 
 	.guide-text {
-		font-size: 0.82rem;
+		font-size: 0.9rem;
 		color: var(--text-muted);
-		line-height: 1.5;
+		line-height: 1.6;
 		margin: 0;
-		text-align: justify;
+		text-align: left;
 	}
 
 	.specs-list {
@@ -181,13 +193,13 @@ const finalAccentColor = platformColors[platformId] || '#a970ff';
 	}
 
 	.spec-label {
-		font-size: 0.8rem;
+		font-size: 0.85rem;
 		font-weight: 600;
 		color: var(--text-muted);
 	}
 
 	.spec-value {
-		font-size: 0.82rem;
+		font-size: 0.88rem;
 		font-weight: 700;
 		color: var(--text-primary);
 		text-align: right;

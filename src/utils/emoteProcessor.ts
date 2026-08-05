@@ -74,6 +74,117 @@ export async function resizeImage(
 	targetHeight: number,
 	mimeType: string = 'image/png'
 ): Promise<Blob> {
+	const isSvg = file.type === 'image/svg+xml' || file.name.toLowerCase().endsWith('.svg');
+
+	// SI ES UN SVG: renderizado vectorial nativo de ultra-alta resolución (High-DPI Supersampling)
+	if (isSvg) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const text = await file.text();
+				const parser = new DOMParser();
+				const doc = parser.parseFromString(text, 'image/svg+xml');
+				const svgEl = doc.querySelector('svg');
+
+				if (!svgEl) {
+					return reject(new Error('Invalid SVG markup'));
+				}
+
+				// Obtener viewBox original o construirlo desde width/height/bounding box
+				let viewBox = svgEl.getAttribute('viewBox');
+				if (!viewBox) {
+					const w = parseFloat(svgEl.getAttribute('width') || '300');
+					const h = parseFloat(svgEl.getAttribute('height') || '300');
+					viewBox = `0 0 ${w} ${h}`;
+					svgEl.setAttribute('viewBox', viewBox);
+				}
+
+				const vbParts = viewBox.split(/[\s,]+/).map(Number);
+				const vbWidth = vbParts[2] || 300;
+				const vbHeight = vbParts[3] || 300;
+
+				// Renderizar primero a súper-alta densidad vectorial (mínimo 1024px o 4x el tamaño destino)
+				const supersampleDim = Math.max(1024, targetWidth * 4);
+				svgEl.setAttribute('width', supersampleDim.toString());
+				svgEl.setAttribute('height', supersampleDim.toString());
+
+				const serialized = new XMLSerializer().serializeToString(doc);
+				const svgBlob = new Blob([serialized], { type: 'image/svg+xml;charset=utf-8' });
+				const url = URL.createObjectURL(svgBlob);
+
+				const img = new Image();
+				img.onload = () => {
+					URL.revokeObjectURL(url);
+
+					// 1. Canvas súper-resolución donde el vector se dibuja 100% nítido a 1024px+
+					let canvas = document.createElement('canvas');
+					canvas.width = supersampleDim;
+					canvas.height = supersampleDim;
+					let ctx = canvas.getContext('2d');
+					if (!ctx) return reject(new Error('Canvas 2D context not available'));
+
+					ctx.clearRect(0, 0, supersampleDim, supersampleDim);
+					ctx.imageSmoothingEnabled = true;
+					ctx.imageSmoothingQuality = 'high';
+					ctx.drawImage(img, 0, 0, supersampleDim, supersampleDim);
+
+					let currentW = supersampleDim;
+					let currentH = supersampleDim;
+
+					// 2. Reduction paso a paso (Step-Down) desde los 1024px nítidos al tamaño objetivo
+					while (currentW / 2 >= targetWidth && currentH / 2 >= targetHeight) {
+						const nextW = Math.floor(currentW / 2);
+						const nextH = Math.floor(currentH / 2);
+
+						const stepCanvas = document.createElement('canvas');
+						stepCanvas.width = nextW;
+						stepCanvas.height = nextH;
+						const stepCtx = stepCanvas.getContext('2d');
+						if (stepCtx) {
+							stepCtx.clearRect(0, 0, nextW, nextH);
+							stepCtx.imageSmoothingEnabled = true;
+							stepCtx.imageSmoothingQuality = 'high';
+							stepCtx.drawImage(canvas, 0, 0, currentW, currentH, 0, 0, nextW, nextH);
+						}
+						canvas = stepCanvas;
+						currentW = nextW;
+						currentH = nextH;
+					}
+
+					// 3. Canvas final
+					const finalCanvas = document.createElement('canvas');
+					finalCanvas.width = targetWidth;
+					finalCanvas.height = targetHeight;
+					const finalCtx = finalCanvas.getContext('2d');
+					if (!finalCtx) return reject(new Error('Final Canvas context not available'));
+
+					finalCtx.clearRect(0, 0, targetWidth, targetHeight);
+					finalCtx.imageSmoothingEnabled = true;
+					finalCtx.imageSmoothingQuality = 'high';
+					finalCtx.drawImage(canvas, 0, 0, currentW, currentH, 0, 0, targetWidth, targetHeight);
+
+					finalCanvas.toBlob(
+						(blob) => {
+							if (blob) resolve(blob);
+							else reject(new Error('Error generating image blob from SVG'));
+						},
+						mimeType,
+						0.98
+					);
+				};
+
+				img.onerror = () => {
+					URL.revokeObjectURL(url);
+					reject(new Error('Failed to render SVG file'));
+				};
+
+				img.src = url;
+			} catch (err) {
+				reject(err);
+			}
+		});
+	}
+
+	// PARA RASTERES (PNG, JPG, WebP, etc.): Escalado por etapas (Step-Down Resampling)
 	return new Promise((resolve, reject) => {
 		const img = new Image();
 		const url = URL.createObjectURL(file);
@@ -107,8 +218,6 @@ export async function resizeImage(
 			let currentH = minDim;
 
 			// Algoritmo por Etapas (Step-Down Scaling / Halving)
-			// Reduce las dimensiones progresivamente a la mitad hasta acercarse al tamaño objetivo.
-			// Evita el aliasing y borrosidad de los escalados de un solo paso de los navegadores.
 			while (currentW / 2 >= targetWidth && currentH / 2 >= targetHeight) {
 				const nextW = Math.floor(currentW / 2);
 				const nextH = Math.floor(currentH / 2);

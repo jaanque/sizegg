@@ -14,9 +14,12 @@ interface Props {
 	lang?: 'es' | 'en';
 	platformId?: string;
 	accentColor?: string;
+	isGeneral?: boolean;
 }
 
-const { lang = 'es', platformId = 'twitch', accentColor } = Astro.props;
+const { lang = 'es', platformId, accentColor, isGeneral = false } = Astro.props;
+
+const effectivePlatformId = platformId || 'twitch';
 
 const platformColors: Record<string, string> = {
 	twitch: '#a970ff',
@@ -27,7 +30,7 @@ const platformColors: Record<string, string> = {
 	bttv: '#f97316'
 };
 
-const finalAccentColor = accentColor || platformColors[platformId] || '#a970ff';
+const finalAccentColor = accentColor || (platformId ? platformColors[platformId] : '#a970ff');
 
 const platformNames: Record<string, string> = {
 	twitch: 'Twitch',
@@ -38,79 +41,125 @@ const platformNames: Record<string, string> = {
 	bttv: 'BTTV'
 };
 
-const pName = platformNames[platformId] || 'Twitch';
+const pName = platformId ? (platformNames[platformId] || 'Twitch') : '';
 
-const faqs: FAQItem[] = lang === 'es' ? [
-	{
-		question: `¿Por qué mi emote de ${pName} se ve borroso al subirlo?`,
-		answer: `Normalmente sucede si el archivo original se escala con interpolación de baja calidad o sin relación 1:1. sizeGG aplica escalado de alta densidad e interpolación preservando la transparencia.`
-	},
-	{
-		question: `¿Cuál es el peso máximo y resolución requerida para ${pName}?`,
-		answer: platformId === 'discord' 
-			? "El tamaño máximo en Discord es de 256 KB por archivo y la resolución ideal es 128×128 px."
-			: platformId === 'kick'
-			? "Kick requiere una resolución cuadrada de 500×500 px con un peso máximo de 1 MB."
-			: platformId === '7tv'
-			? "7TV acepta imágenes de hasta 5 MB en formato 128×128 px."
-			: platformId === 'bttv'
-			? "BTTV admite hasta 3 MB por emote en tres tamaños: 112×112px, 56×56px y 28×28px."
-			: `En ${pName} el peso máximo es de 1 MB y la herramienta genera las medidas oficiales de 112×112px, 56×56px y 28×28px.`
-	},
-	{
-		question: `¿Cuánto tarda ${pName} en aprobar un nuevo emote?`,
-		answer: platformId === 'discord' || platformId === '7tv' || platformId === 'bttv'
-			? `En ${pName} la actualización y disponibilidad del emote en tu servidor o extensión es inmediata tras guardarlo.`
-			: `Suele tardar entre 24 y 48 horas en días laborables para nuevos creadores, y es instantáneo para canales verificados o con historial limpio.`
-	},
-	{
-		question: "¿Se conservan las transparencias PNG y animaciones GIF?",
-		answer: "Sí, sizeGG preserva automáticamente los canales alfa transparentes y mantiene la animación fluida en archivos GIF."
-	},
-	{
-		question: "¿Mis imágenes o GIFs se suben a algún servidor externo?",
-		answer: "No. En sizeGG todo el proceso de recorte, escalado y compresión se ejecuta 100% en tu propio navegador web. Tus archivos nunca salen de tu dispositivo, garantizando máxima velocidad y privacidad absoluta."
-	},
-	{
-		question: "¿sizeGG es 100% gratuito y sin marcas de agua?",
-		answer: "Sí, sizeGG es una herramienta completamente gratuita y libre de marcas de agua. Puedes redimensionar y convertir todos los emotes que desees sin restricciones."
-	}
-] : [
-	{
-		question: `Why does my ${pName} emote look blurry when uploaded?`,
-		answer: `This usually happens when low-quality scaling is used or when the ratio isn't 1:1. sizeGG applies high-density smoothing while preserving transparency.`
-	},
-	{
-		question: `What is the maximum file size and resolution for ${pName}?`,
-		answer: platformId === 'discord'
-			? "The maximum file size on Discord is 256 KB per image at 128×128 px."
-			: platformId === 'kick'
-			? "Kick requires a square 500×500 px resolution with a maximum size of 1 MB."
-			: platformId === '7tv'
-			? "7TV allows images up to 5 MB at 128×128 px resolution."
-			: platformId === 'bttv'
-			? "BTTV allows up to 3 MB per emote across 112×112px, 56×56px, and 28×28px dimensions."
-			: `On ${pName}, the maximum file size is 1 MB with official 112×112px, 56×56px, and 28×28px output dimensions.`
-	},
-	{
-		question: `How long does ${pName} take to approve a new emote?`,
-		answer: platformId === 'discord' || platformId === '7tv' || platformId === 'bttv'
-			? `On ${pName}, emotes become available immediately on your server or extension upon uploading.`
-			: `It typically takes 24 to 48 hours on business days for new creators, and is instant for partner/verified channels.`
-	},
-	{
-		question: "Are PNG transparency and GIF animations preserved?",
-		answer: "Yes, sizeGG retains alpha transparency channels on PNG/WebP files and preserves GIF animation frame rates."
-	},
-	{
-		question: "Are my images or GIFs uploaded to any external server?",
-		answer: "No. In sizeGG, all cropping, resizing, and compression happen 100% locally inside your web browser. No files ever leave your device, ensuring maximum speed and complete privacy."
-	},
-	{
-		question: "Is sizeGG 100% free without watermarks?",
-		answer: "Yes, sizeGG is a completely free online tool with no watermarks. You can resize and convert unlimited emotes without restrictions."
-	}
-];
+const faqs: FAQItem[] = lang === 'es' ? (
+	isGeneral || !platformId ? [
+		{
+			question: "¿Cómo redimensiono emotes para cualquier plataforma de streaming?",
+			answer: "Selecciona tu plataforma de destino (Twitch, Kick, Discord, YouTube, 7TV o BTTV) y sube tu archivo. sizeGG generará automáticamente todas las resoluciones oficiales en 1 clic."
+		},
+		{
+			question: "¿Qué resoluciones y pesos soporta sizeGG?",
+			answer: "sizeGG soporta todos los estándares oficiales: 112×112, 56×56 y 28×28 px para Twitch/BTTV, 500×500 px (máx 1 MB) para Kick, 128×128 px (máx 256 KB) para Discord, 480×480 px para YouTube y 128×128 px WebP para 7TV."
+		},
+		{
+			question: "¿Se conservan las transparencias PNG y animaciones GIF?",
+			answer: "Sí, sizeGG preserva automáticamente los canales alfa transparentes y mantiene la animación fluida en archivos GIF."
+		},
+		{
+			question: "¿Mis imágenes o GIFs se suben a algún servidor externo?",
+			answer: "No. En sizeGG todo el proceso de recorte, escalado y compresión se ejecuta 100% en tu propio navegador web. Tus archivos nunca salen de tu dispositivo, garantizando máxima velocidad y privacidad absoluta."
+		},
+		{
+			question: "¿sizeGG es 100% gratuito y sin marcas de agua?",
+			answer: "Sí, sizeGG es una herramienta completamente gratuita y libre de marcas de agua. Puedes redimensionar y convertir todos los emotes que desees sin restricciones."
+		}
+	] : [
+		{
+			question: `¿Por qué mi emote de ${pName} se ve borroso al subirlo?`,
+			answer: `Normalmente sucede si el archivo original se escala con interpolación de baja calidad o sin relación 1:1. sizeGG aplica escalado de alta densidad e interpolación preservando la transparencia.`
+		},
+		{
+			question: `¿Cuál es el peso máximo y resolución requerida para ${pName}?`,
+			answer: platformId === 'discord' 
+				? "El tamaño máximo en Discord es de 256 KB por archivo y la resolución ideal es 128×128 px."
+				: platformId === 'kick'
+				? "Kick requiere una resolución cuadrada de 500×500 px con un peso máximo de 1 MB."
+				: platformId === '7tv'
+				? "7TV acepta imágenes de hasta 5 MB en formato 128×128 px."
+				: platformId === 'bttv'
+				? "BTTV admite hasta 3 MB por emote en tres tamaños: 112×112px, 56×56px y 28×28px."
+				: `En ${pName} el peso máximo es de 1 MB y la herramienta genera las medidas oficiales de 112×112px, 56×56px y 28×28px.`
+		},
+		{
+			question: `¿Cuánto tarda ${pName} en aprobar un nuevo emote?`,
+			answer: platformId === 'discord' || platformId === '7tv' || platformId === 'bttv'
+				? `En ${pName} la actualización y disponibilidad del emote en tu servidor o extensión es inmediata tras guardarlo.`
+				: `Suele tardar entre 24 y 48 horas en días laborables para nuevos creadores, y es instantáneo para canales verificados o con historial limpio.`
+		},
+		{
+			question: "¿Se conservan las transparencias PNG y animaciones GIF?",
+			answer: "Sí, sizeGG preserva automáticamente los canales alfa transparentes y mantiene la animación fluida en archivos GIF."
+		},
+		{
+			question: "¿Mis imágenes o GIFs se suben a algún servidor externo?",
+			answer: "No. En sizeGG todo el proceso de recorte, escalado y compresión se ejecuta 100% en tu propio navegador web. Tus archivos nunca salen de tu dispositivo, garantizando máxima velocidad y privacidad absoluta."
+		},
+		{
+			question: "¿sizeGG es 100% gratuito y sin marcas de agua?",
+			answer: "Sí, sizeGG es una herramienta completamente gratuita y libre de marcas de agua. Puedes redimensionar y convertir todos los emotes que desees sin restricciones."
+		}
+	]
+) : (
+	isGeneral || !platformId ? [
+		{
+			question: "How do I resize emotes for any streaming platform?",
+			answer: "Select your target platform (Twitch, Kick, Discord, YouTube, 7TV, or BTTV) and upload your file. sizeGG will automatically generate all official sizes in 1 click."
+		},
+		{
+			question: "What dimensions and file limits are supported?",
+			answer: "sizeGG supports all official standards: 112×112, 56×56 & 28×28 px for Twitch/BTTV, 500×500 px (max 1 MB) for Kick, 128×128 px (max 256 KB) for Discord, 480×480 px for YouTube, and 128×128 px WebP for 7TV."
+		},
+		{
+			question: "Are PNG transparency and GIF animations preserved?",
+			answer: "Yes, sizeGG retains alpha transparency channels on PNG/WebP files and preserves GIF animation frame rates."
+		},
+		{
+			question: "Are my images or GIFs uploaded to any external server?",
+			answer: "No. In sizeGG, all cropping, resizing, and compression happen 100% locally inside your web browser. No files ever leave your device, ensuring maximum speed and complete privacy."
+		},
+		{
+			question: "Is sizeGG 100% free without watermarks?",
+			answer: "Yes, sizeGG is a completely free online tool with no watermarks. You can resize and convert unlimited emotes without restrictions."
+		}
+	] : [
+		{
+			question: `Why does my ${pName} emote look blurry when uploaded?`,
+			answer: `This usually happens when low-quality scaling is used or when the ratio isn't 1:1. sizeGG applies high-density smoothing while preserving transparency.`
+		},
+		{
+			question: `What is the maximum file size and resolution for ${pName}?`,
+			answer: platformId === 'discord'
+				? "The maximum file size on Discord is 256 KB per image at 128×128 px."
+				: platformId === 'kick'
+				? "Kick requires a square 500×500 px resolution with a maximum size of 1 MB."
+				: platformId === '7tv'
+				? "7TV allows images up to 5 MB at 128×128 px resolution."
+				: platformId === 'bttv'
+				? "BTTV allows up to 3 MB per emote across 112×112px, 56×56px, and 28×28px dimensions."
+				: `On ${pName}, the maximum file size is 1 MB with official 112×112px, 56×56px, and 28×28px output dimensions.`
+		},
+		{
+			question: `How long does ${pName} take to approve a new emote?`,
+			answer: platformId === 'discord' || platformId === '7tv' || platformId === 'bttv'
+				? `On ${pName}, emotes become available immediately on your server or extension upon uploading.`
+				: `It typically takes 24 to 48 hours on business days for new creators, and is instant for partner/verified channels.`
+		},
+		{
+			question: "Are PNG transparency and GIF animations preserved?",
+			answer: "Yes, sizeGG retains alpha transparency channels on PNG/WebP files and preserves GIF animation frame rates."
+		},
+		{
+			question: "Are my images or GIFs uploaded to any external server?",
+			answer: "No. In sizeGG, all cropping, resizing, and compression happen 100% locally inside your web browser. No files ever leave your device, ensuring maximum speed and complete privacy."
+		},
+		{
+			question: "Is sizeGG 100% free without watermarks?",
+			answer: "Yes, sizeGG is a completely free online tool with no watermarks. You can resize and convert unlimited emotes without restrictions."
+		}
+	]
+);
 
 const steps: StepItem[] = lang === 'es' ? [
 	{
@@ -171,10 +220,16 @@ const faqSchema = {
 const howToSchema = {
 	"@context": "https://schema.org",
 	"@type": "HowTo",
-	"name": lang === 'es' ? `Cómo redimensionar emotes para ${pName}` : `How to resize emotes for ${pName}`,
-	"description": lang === 'es' 
-		? `Guía paso a paso para redimensionar y convertir imágenes o GIFs a los tamaños oficiales de ${pName}.`
-		: `Step-by-step guide to resize and convert images or GIFs to official ${pName} dimensions.`,
+	"name": platformId
+		? (lang === 'es' ? `Cómo redimensionar emotes para ${pName}` : `How to resize emotes for ${pName}`)
+		: (lang === 'es' ? "Cómo redimensionar emotes para Twitch, Kick, Discord y YouTube" : "How to resize emotes for Twitch, Kick, Discord & YouTube"),
+	"description": platformId
+		? (lang === 'es' 
+			? `Guía paso a paso para redimensionar y convertir imágenes o GIFs a los tamaños oficiales de ${pName}.`
+			: `Step-by-step guide to resize and convert images or GIFs to official ${pName} dimensions.`)
+		: (lang === 'es'
+			? "Guía paso a paso para redimensionar y convertir emotes para cualquier plataforma de streaming."
+			: "Step-by-step guide to resize and convert emotes for any streaming platform."),
 	"step": steps.map(s => ({
 		"@type": "HowToStep",
 		"position": s.number,
@@ -269,7 +324,7 @@ const slugMap: Record<'es' | 'en', Record<string, string>> = {
 		</h2>
 		<div class="seo-links-grid">
 			{Object.entries(platformNames).filter(([id]) => id !== platformId).map(([id, name]) => (
-				<a href={`/${lang}/${slugMap[lang][id]}`} class="seo-link-card">
+				<a href={lang === 'es' ? `/es/${slugMap.es[id]}` : `/${slugMap.en[id]}`} class="seo-link-card">
 					<span>{lang === 'es' ? `Redimensionar Emotes ${name}` : `${name} Emote Resizer`}</span>
 				</a>
 			))}
@@ -412,12 +467,12 @@ const slugMap: Record<'es' | 'en', Record<string, string>> = {
 
 	.accordion-body {
 		padding: 0 1rem 0.85rem 1rem;
-		font-size: 0.8rem;
+		font-size: 0.88rem;
 		color: var(--text-muted);
-		line-height: 1.5;
+		line-height: 1.6;
 		border-top: 1px solid rgba(255, 255, 255, 0.03);
 		padding-top: 0.6rem;
-		text-align: justify;
+		text-align: left;
 	}
 
 	/* SEO Cross-Links Section */
