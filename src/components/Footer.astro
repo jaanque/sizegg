@@ -73,6 +73,13 @@ const text = {
 	</div>
 
 	<div class="footer-bottom">
+		<div class="footer-legal-links">
+			<a href={lang === 'es' ? '/es/privacidad' : '/privacy'} class="legal-link">{lang === 'es' ? 'Política de Privacidad' : 'Privacy Policy'}</a>
+			<span class="legal-dot">•</span>
+			<a href={lang === 'es' ? '/es/terminos' : '/terms'} class="legal-link">{lang === 'es' ? 'Términos de Servicio' : 'Terms of Service'}</a>
+			<span class="legal-dot">•</span>
+			<a href={lang === 'es' ? '/es/cookies' : '/cookies'} class="legal-link">{lang === 'es' ? 'Política de Cookies' : 'Cookie Policy'}</a>
+		</div>
 		<p>© {currentYear} sizeGG. {text.rights}</p>
 	</div>
 </footer>
@@ -179,7 +186,35 @@ const text = {
 	.footer-bottom {
 		padding-top: 1rem;
 		border-top: 1px solid rgba(255, 255, 255, 0.04);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		flex-wrap: wrap;
 		font-size: 0.75rem;
 		color: var(--text-muted);
+	}
+
+	.footer-legal-links {
+		display: flex;
+		align-items: center;
+		gap: 0.45rem;
+		flex-wrap: wrap;
+	}
+
+	.legal-link {
+		color: var(--text-muted);
+		text-decoration: none;
+		transition: color 0.15s ease;
+	}
+
+	.legal-link:hover {
+		color: var(--text-primary);
+		text-decoration: underline;
+	}
+
+	.legal-dot {
+		color: var(--border-color);
+		font-size: 0.65rem;
 	}
 </style>

@@ -1,0 +1,175 @@
+---
+import SEO from '../../components/SEO.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+
+const lang = 'es';
+---
+
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<SEO 
+			title="Pol&iacute;tica de Cookies | sizeGG" 
+			description="Consulta la Pol&iacute;tica de Cookies de sizeGG. Informaci&oacute;n sobre uso de cookies esenciales, anal&iacute;ticas y publicitarias de Google AdSense."
+			lang="es"
+			canonicalUrl="https://size.gg/es/cookies"
+			alternateEnUrl="https://size.gg/cookies"
+			alternateEsUrl="https://size.gg/es/cookies"
+		/>
+	</head>
+	<body>
+		<div class="layout">
+			<Navigation lang="es" />
+
+			<main class="main-content">
+				<div class="policy-card">
+					<h1 class="policy-title">Pol&iacute;tica de Cookies</h1>
+					<p class="policy-updated">&Uacute;ltima actualizaci&oacute;n: 6 de agosto de 2026</p>
+
+					<section class="policy-section">
+						<h2>1. &iquest;Qu&eacute; son las Cookies?</h2>
+						<p>
+							Las cookies son peque&ntilde;os archivos de texto que los sitios web almacenan en su navegador o dispositivo al visitarlos. Se utilizan ampliamente para hacer funcionar el sitio de manera eficiente y ofrecer informes sobre tr&aacute;fico o rendimiento publicitario.
+						</p>
+					</section>
+
+					<section class="policy-section">
+						<h2>2. C&oacute;mo Utilizamos las Cookies</h2>
+						<p>sizeGG utiliza cookies para los siguientes prop&oacute;sitos principales:</p>
+						<ul>
+							<li><strong>Cookies Esenciales:</strong> Necesarias para el correcto funcionamiento t&eacute;cnico de la aplicaci&oacute;n y la conservaci&oacute;n de preferencias de usuario.</li>
+							<li><strong>Cookies Anal&iacute;ticas:</strong> Proporcionadas por Google Analytics y Cloudflare para analizar estad&iacute;sticas an&oacute;nimas de tr&aacute;fico y rendimiento del sitio.</li>
+							<li><strong>Cookies Publicitarias (Google AdSense):</strong> Colocadas por redes de publicidad de terceros para mostrar anuncios relevantes basados en patrones de navegaci&oacute;n.</li>
+						</ul>
+					</section>
+
+					<section class="policy-section">
+						<h2>3. Cookies de Publicidad de Terceros (Google AdSense)</h2>
+						<p>
+							Google y otros proveedores de terceros utilizan cookies para publicar anuncios basados en sus visitas previas a sizeGG o a otros sitios de Internet. Puede gestionar sus preferencias publicitarias en cualquier momento a trav&eacute;s de la <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Configuraci&oacute;n de Anuncios de Google</a> o accediendo a <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">www.aboutads.info</a>.
+						</p>
+					</section>
+
+					<section class="policy-section">
+						<h2>4. Gesti&oacute;n y Desactivaci&oacute;n de Cookies</h2>
+						<p>
+							Usted puede restringir, bloquear o eliminar las cookies instaladas configurando las opciones de su navegador web. Tenga en cuenta que desactivar ciertas cookies puede influir en su experiencia en el sitio.
+						</p>
+					</section>
+
+					<section class="policy-section">
+						<h2>5. Contacto</h2>
+						<p>Si tiene dudas sobre nuestra Pol&iacute;tica de Cookies, comun&iacute;quese con: <a href="mailto:contact@size.gg">contact@size.gg</a></p>
+					</section>
+				</div>
+			</main>
+
+			<Footer lang="es" />
+		</div>
+
+		<style>
+			:root {
+				--bg-body: #101216;
+				--surface-card: #17191e;
+				--surface-hover: #1f2229;
+				--border-color: #2b2f38;
+				--text-primary: #f1f3f5;
+				--text-muted: #8a93a0;
+				--accent-color: #9146ff;
+			}
+
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+				background-color: var(--bg-body);
+				color: var(--text-primary);
+				min-height: 100vh;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				padding: 2rem 1rem;
+			}
+
+			@media (max-width: 520px) {
+				body {
+					padding: 1.5rem 0.75rem;
+					align-items: flex-start;
+				}
+			}
+
+			.layout {
+				margin-top: 3rem;
+				width: 100%;
+				max-width: 820px;
+				display: flex;
+				flex-direction: column;
+				gap: 1.25rem;
+			}
+
+			.main-content {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				gap: 1rem;
+			}
+
+			.policy-card {
+				background-color: var(--surface-card);
+				border: 1px solid var(--border-color);
+				border-radius: 22px;
+				padding: 1.75rem;
+				display: flex;
+				flex-direction: column;
+				gap: 1.25rem;
+			}
+
+			.policy-title {
+				font-size: 1.5rem;
+				font-weight: 800;
+				color: var(--text-primary);
+				letter-spacing: -0.02em;
+			}
+
+			.policy-updated {
+				font-size: 0.8rem;
+				color: var(--text-muted);
+				margin-top: -0.75rem;
+			}
+
+			.policy-section {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+			}
+
+			.policy-section h2 {
+				font-size: 1.05rem;
+				font-weight: 700;
+				color: var(--text-primary);
+			}
+
+			.policy-section p {
+				font-size: 0.88rem;
+				color: var(--text-muted);
+				line-height: 1.6;
+			}
+
+			.policy-section a {
+				color: var(--accent-color);
+				text-decoration: none;
+			}
+
+			.policy-section a:hover {
+				text-decoration: underline;
+			}
+		</style>
+	</body>
+</html>

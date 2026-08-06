@@ -1,0 +1,205 @@
+---
+import SEO from '../components/SEO.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+
+const lang = 'en';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<SEO 
+			title="Privacy Policy | sizeGG" 
+			description="Read sizeGG's Privacy Policy. Learn how we handle client-side image processing, cookies, Google AdSense, and data privacy."
+			lang="en"
+			canonicalUrl="https://size.gg/privacy"
+			alternateEnUrl="https://size.gg/privacy"
+			alternateEsUrl="https://size.gg/es/privacidad"
+		/>
+	</head>
+	<body>
+		<div class="layout">
+			<Navigation lang="en" />
+
+			<main class="main-content">
+				<div class="policy-card">
+					<h1 class="policy-title">Privacy Policy</h1>
+					<p class="policy-updated">Last Updated: August 6, 2026</p>
+
+					<section class="policy-section">
+						<h2>1. Introduction</h2>
+						<p>
+							Welcome to <strong>sizeGG</strong> ("we", "our", or "us"). We respect your privacy and are committed to protecting any information that may be collected through your use of our website at <a href="https://size.gg">size.gg</a>. This Privacy Policy explains our data practices, specifically regarding client-side processing, analytics, cookies, and third-party advertising partners like Google AdSense.
+						</p>
+					</section>
+
+					<section class="policy-section">
+						<h2>2. Client-Side Image Processing & Zero Image Storage</h2>
+						<p>
+							<strong>Your images never leave your browser.</strong> sizeGG performs 100% of image resizing, cropping, and conversion locally in your browser using HTML5 Canvas and JavaScript technology. We do not upload, store, transmit, or retain any of your uploaded images or emotes on remote servers.
+						</p>
+					</section>
+
+					<section class="policy-section">
+						<h2>3. Information We Collect</h2>
+						<p>We do not require user accounts or collect personal identification information (such as your name, email, or address) to use our service. However, like most websites, we automatically collect non-personal standard log data for operational purposes:</p>
+						<ul>
+							<li>Browser type, language preference, and device information.</li>
+							<li>IP address and approximate general location.</li>
+							<li>Referring site, date/time stamp, and pages visited.</li>
+						</ul>
+					</section>
+
+					<section class="policy-section">
+						<h2>4. Cookies & Third-Party Advertising (Google AdSense)</h2>
+						<p>
+							We use cookies to personalize content, analyze site traffic, and serve advertisements through third-party advertising partners, primarily <strong>Google AdSense</strong>.
+						</p>
+						<ul>
+							<li>Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to sizeGG or other websites.</li>
+							<li>Google's use of advertising cookies enables it and its partners to serve ads to users based on their visit to our site and/or other sites on the Internet.</li>
+							<li>Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings</a> or by visiting <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">www.aboutads.info</a>.</li>
+						</ul>
+					</section>
+
+					<section class="policy-section">
+						<h2>5. Analytics Services</h2>
+						<p>
+							We use Google Analytics and Cloudflare Web Analytics to understand how visitors interact with sizeGG. These services collect aggregated, anonymized information about page views, browser sessions, and performance metrics without identifying individual users.
+						</p>
+					</section>
+
+					<section class="policy-section">
+						<h2>6. Your Rights & Data Choices</h2>
+						<p>
+							Depending on your location (such as under the EU General Data Protection Regulation / GDPR or California Consumer Privacy Act / CCPA), you have rights regarding your personal data, including the right to manage your cookie preferences and opt out of targeted advertising. You can control or block cookies through your browser settings at any time.
+						</p>
+					</section>
+
+					<section class="policy-section">
+						<h2>7. Contact Us</h2>
+						<p>
+							If you have any questions or concerns regarding this Privacy Policy or our practices, please contact us at:
+						</p>
+						<p><strong>Email:</strong> <a href="mailto:contact@size.gg">contact@size.gg</a></p>
+					</section>
+				</div>
+			</main>
+
+			<Footer lang="en" />
+		</div>
+
+		<style>
+			:root {
+				--bg-body: #101216;
+				--surface-card: #17191e;
+				--surface-hover: #1f2229;
+				--border-color: #2b2f38;
+				--text-primary: #f1f3f5;
+				--text-muted: #8a93a0;
+				--accent-color: #9146ff;
+			}
+
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+				background-color: var(--bg-body);
+				color: var(--text-primary);
+				min-height: 100vh;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				padding: 2rem 1rem;
+			}
+
+			@media (max-width: 520px) {
+				body {
+					padding: 1.5rem 0.75rem;
+					align-items: flex-start;
+				}
+			}
+
+			.layout {
+				margin-top: 3rem;
+				width: 100%;
+				max-width: 820px;
+				display: flex;
+				flex-direction: column;
+				gap: 1.25rem;
+			}
+
+			.main-content {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				gap: 1rem;
+			}
+
+			.policy-card {
+				background-color: var(--surface-card);
+				border: 1px solid var(--border-color);
+				border-radius: 22px;
+				padding: 1.75rem;
+				display: flex;
+				flex-direction: column;
+				gap: 1.25rem;
+			}
+
+			.policy-title {
+				font-size: 1.5rem;
+				font-weight: 800;
+				color: var(--text-primary);
+				letter-spacing: -0.02em;
+			}
+
+			.policy-updated {
+				font-size: 0.8rem;
+				color: var(--text-muted);
+				margin-top: -0.75rem;
+			}
+
+			.policy-section {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+			}
+
+			.policy-section h2 {
+				font-size: 1.05rem;
+				font-weight: 700;
+				color: var(--text-primary);
+			}
+
+			.policy-section p {
+				font-size: 0.88rem;
+				color: var(--text-muted);
+				line-height: 1.6;
+			}
+
+			.policy-section ul {
+				padding-left: 1.25rem;
+				display: flex;
+				flex-direction: column;
+				gap: 0.35rem;
+				font-size: 0.88rem;
+				color: var(--text-muted);
+				line-height: 1.5;
+			}
+
+			.policy-section a {
+				color: var(--accent-color);
+				text-decoration: none;
+			}
+
+			.policy-section a:hover {
+				text-decoration: underline;
+			}
+		</style>
+	</body>
+</html>

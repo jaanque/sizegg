@@ -1,0 +1,184 @@
+---
+import SEO from '../../components/SEO.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+
+const lang = 'es';
+---
+
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<SEO 
+			title="T&eacute;rminos de Servicio | sizeGG" 
+			description="Consulta los T&eacute;rminos de Servicio de sizeGG. Informaci&oacute;n sobre uso aceptable, propiedad intelectual y condiciones del servicio."
+			lang="es"
+			canonicalUrl="https://size.gg/es/terminos"
+			alternateEnUrl="https://size.gg/terms"
+			alternateEsUrl="https://size.gg/es/terminos"
+		/>
+	</head>
+	<body>
+		<div class="layout">
+			<Navigation lang="es" />
+
+			<main class="main-content">
+				<div class="policy-card">
+					<h1 class="policy-title">T&eacute;rminos de Servicio</h1>
+					<p class="policy-updated">&Uacute;ltima actualizaci&oacute;n: 6 de agosto de 2026</p>
+
+					<section class="policy-section">
+						<h2>1. Aceptaci&oacute;n de los T&eacute;rminos</h2>
+						<p>
+							Al acceder o utilizar <strong>sizeGG</strong> en <a href="https://size.gg/es">size.gg/es</a>, usted acepta quedar vinculado por estos T&eacute;rminos de Servicio. Si no est&aacute; de acuerdo con alguna parte, por favor no contin&uacute;e utilizando el sitio.
+						</p>
+					</section>
+
+					<section class="policy-section">
+						<h2>2. Descripci&oacute;n del Servicio</h2>
+						<p>
+							sizeGG ofrece herramientas web gratuitas para redimensionar, recortar y convertir archivos de imagen para creadores de contenido en plataformas de streaming y redes sociales (como Twitch, Kick, Discord, YouTube, 7TV y BTTV). Todo el procesamiento se realiza localmente dentro del navegador web del usuario.
+						</p>
+					</section>
+
+					<section class="policy-section">
+						<h2>3. Propiedad Intelectual del Usuario</h2>
+						<p>
+							Usted conserva la plena propiedad y todos los derechos de autor sobre las im&aacute;genes o emotes que procese utilizando sizeGG. Nosotros no reclamamos ning&uacute;n derecho sobre su contenido. Usted garantiza que posee todos los permisos necesarios sobre los archivos que cargue en la herramienta.
+						</p>
+					</section>
+
+					<section class="policy-section">
+						<h2>4. Uso Aceptable</h2>
+						<p>Usted se compromete a no utilizar sizeGG con fines il&iacute;citos ni para procesar contenido que infrinja derechos de marca, propiedad intelectual o derechos de terceros.</p>
+					</section>
+
+					<section class="policy-section">
+						<h2>5. Exclusi&oacute;n de Garant&iacute;as</h2>
+						<p>
+							sizeGG se proporciona <strong>"TAL CUAL"</strong> y <strong>"SEG&Uacute;N DISPONIBILIDAD"</strong>, sin garant&iacute;as de ning&uacute;n tipo. No garantizamos un servicio ininterrumpido ni que los archivos procesados cumplan autom&aacute;ticamente si las plataformas de terceros modifican sus pol&iacute;ticas.
+						</p>
+					</section>
+
+					<section class="policy-section">
+						<h2>6. Limitaci&oacute;n de Responsabilidad</h2>
+						<p>
+							En ning&uacute;n caso sizeGG ni sus operadores ser&aacute;n responsables por da&ntilde;os directos, indirectos o incidentales derivados del uso o la imposibilidad de uso del servicio.
+						</p>
+					</section>
+
+					<section class="policy-section">
+						<h2>7. Contacto</h2>
+						<p>Para resolver dudas referentes a estos T&eacute;rminos, escriba a: <a href="mailto:contact@size.gg">contact@size.gg</a></p>
+					</section>
+				</div>
+			</main>
+
+			<Footer lang="es" />
+		</div>
+
+		<style>
+			:root {
+				--bg-body: #101216;
+				--surface-card: #17191e;
+				--surface-hover: #1f2229;
+				--border-color: #2b2f38;
+				--text-primary: #f1f3f5;
+				--text-muted: #8a93a0;
+				--accent-color: #9146ff;
+			}
+
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+				background-color: var(--bg-body);
+				color: var(--text-primary);
+				min-height: 100vh;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				padding: 2rem 1rem;
+			}
+
+			@media (max-width: 520px) {
+				body {
+					padding: 1.5rem 0.75rem;
+					align-items: flex-start;
+				}
+			}
+
+			.layout {
+				margin-top: 3rem;
+				width: 100%;
+				max-width: 820px;
+				display: flex;
+				flex-direction: column;
+				gap: 1.25rem;
+			}
+
+			.main-content {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				gap: 1rem;
+			}
+
+			.policy-card {
+				background-color: var(--surface-card);
+				border: 1px solid var(--border-color);
+				border-radius: 22px;
+				padding: 1.75rem;
+				display: flex;
+				flex-direction: column;
+				gap: 1.25rem;
+			}
+
+			.policy-title {
+				font-size: 1.5rem;
+				font-weight: 800;
+				color: var(--text-primary);
+				letter-spacing: -0.02em;
+			}
+
+			.policy-updated {
+				font-size: 0.8rem;
+				color: var(--text-muted);
+				margin-top: -0.75rem;
+			}
+
+			.policy-section {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+			}
+
+			.policy-section h2 {
+				font-size: 1.05rem;
+				font-weight: 700;
+				color: var(--text-primary);
+			}
+
+			.policy-section p {
+				font-size: 0.88rem;
+				color: var(--text-muted);
+				line-height: 1.6;
+			}
+
+			.policy-section a {
+				color: var(--accent-color);
+				text-decoration: none;
+			}
+
+			.policy-section a:hover {
+				text-decoration: underline;
+			}
+		</style>
+	</body>
+</html>
