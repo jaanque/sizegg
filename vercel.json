@@ -1,6 +1,11 @@
 {
     "redirects": [
         {
+            "source": "/ads.txt",
+            "destination": "https://srv.adstxtmanager.com/19390/sizegg.com",
+            "permanent": true
+        },
+        {
             "source": "/en",
             "destination": "/",
             "permanent": true
