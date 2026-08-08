@@ -2,7 +2,7 @@
   "name": "sizeGG - Free Emote Resizer",
   "short_name": "sizeGG",
   "description": "Free online emote resizer for Twitch, Kick, Discord, YouTube, 7TV and BTTV.",
-  "id": "https://sizegg.com/",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

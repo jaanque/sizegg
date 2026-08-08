@@ -341,6 +341,13 @@ const jsonLdSchema = {
     if (!cmpFrame) {
       addFrame();
       win.__tcfapi = tcfAPIHandler;
+      if (typeof win.__gpp !== 'function') {
+        win.__gpp = function() {
+          var args = arguments;
+          win.__gpp.q = win.__gpp.q || [];
+          win.__gpp.q.push(args);
+        };
+      }
       win.addEventListener('message', postMessageEventHandler, false);
     }
   };
