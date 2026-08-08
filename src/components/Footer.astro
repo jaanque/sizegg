@@ -105,11 +105,15 @@ const text = {
 		gap: 1.5rem;
 	}
 
-	@media (max-width: 640px) {
+	@media (max-width: 768px) {
 		.footer-main {
 			flex-direction: column;
-			align-items: flex-start;
+			align-items: stretch;
 			gap: 1.25rem;
+		}
+
+		.footer-left {
+			max-width: 100%;
 		}
 	}
 
@@ -117,7 +121,7 @@ const text = {
 		display: flex;
 		flex-direction: column;
 		gap: 0.35rem;
-		max-width: 290px;
+		max-width: 280px;
 	}
 
 	.brand-link {
@@ -127,14 +131,14 @@ const text = {
 	}
 
 	.footer-logo {
-		font-size: 1.05rem;
+		font-size: 1.1rem;
 		font-weight: 800;
 		color: var(--text-primary);
 		letter-spacing: -0.01em;
 	}
 
 	.footer-desc {
-		font-size: 0.78rem;
+		font-size: 0.8rem;
 		color: var(--text-muted);
 		line-height: 1.45;
 	}
@@ -142,17 +146,14 @@ const text = {
 	.footer-links {
 		display: flex;
 		align-items: center;
-		flex-wrap: nowrap;
-		gap: 0.35rem;
+		flex-wrap: wrap;
+		gap: 0.4rem;
 		justify-content: flex-end;
 	}
 
-	@media (max-width: 640px) {
+	@media (max-width: 768px) {
 		.footer-links {
 			justify-content: flex-start;
-			overflow-x: auto;
-			max-width: 100%;
-			padding-bottom: 0.2rem;
 		}
 	}
 
@@ -160,9 +161,9 @@ const text = {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.35rem;
-		padding: 0.35rem 0.55rem;
+		padding: 0.4rem 0.65rem;
 		border-radius: 22px;
-		font-size: 0.76rem;
+		font-size: 0.78rem;
 		font-weight: 600;
 		color: var(--text-muted);
 		text-decoration: none;
@@ -189,16 +190,24 @@ const text = {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 1rem;
+		gap: 0.75rem;
 		flex-wrap: wrap;
-		font-size: 0.75rem;
+		font-size: 0.78rem;
 		color: var(--text-muted);
+	}
+
+	@media (max-width: 600px) {
+		.footer-bottom {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.6rem;
+		}
 	}
 
 	.footer-legal-links {
 		display: flex;
 		align-items: center;
-		gap: 0.45rem;
+		gap: 0.5rem;
 		flex-wrap: wrap;
 	}
 

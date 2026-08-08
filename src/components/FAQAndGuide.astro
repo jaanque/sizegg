@@ -392,6 +392,12 @@ const slugMap: Record<'es' | 'en', Record<string, string>> = {
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
+		flex: 1;
+		min-width: 0;
+	}
+
+	.title-left span {
+		line-height: 1.35;
 	}
 
 	.title-left svg {
@@ -403,6 +409,18 @@ const slugMap: Record<'es' | 'en', Record<string, string>> = {
 		color: var(--text-muted);
 		transition: transform 0.2s ease, color 0.2s ease;
 		flex-shrink: 0;
+		margin-left: 0.5rem;
+	}
+
+	@media (max-width: 580px) {
+		.collapsible-header {
+			padding: 0.75rem 0.9rem;
+			font-size: 0.86rem;
+		}
+
+		.collapsible-content {
+			padding: 0.75rem 0.9rem 1rem 0.9rem;
+		}
 	}
 
 	.collapsible-section:hover .chevron-icon {
@@ -557,28 +575,22 @@ const slugMap: Record<'es' | 'en', Record<string, string>> = {
 	}
 
 	/* ── Responsive ── */
-	@media (max-width: 500px) {
+	@media (max-width: 580px) {
 		.steps-grid {
 			grid-template-columns: 1fr;
 		}
 
 		.seo-links-grid {
-			grid-template-columns: 1fr 1fr;
+			grid-template-columns: 1fr;
 		}
 
 		.section-title {
-			font-size: 0.95rem;
+			font-size: 0.9rem;
 		}
 
 		.accordion-header {
 			font-size: 0.82rem;
 			padding: 0.75rem 0.85rem;
-		}
-	}
-
-	@media (max-width: 360px) {
-		.seo-links-grid {
-			grid-template-columns: 1fr;
 		}
 	}
 </style>

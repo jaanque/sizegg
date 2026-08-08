@@ -179,12 +179,15 @@ const tableSchema = {
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
+		flex: 1;
+		min-width: 0;
 	}
 
 	.chevron-icon {
 		color: var(--text-muted);
 		transition: transform 0.2s ease, color 0.2s ease;
 		flex-shrink: 0;
+		margin-left: 0.5rem;
 	}
 
 	.guide-card:hover .chevron-icon {
@@ -214,6 +217,25 @@ const tableSchema = {
 		font-weight: 700;
 		color: var(--text-primary);
 		margin: 0;
+		line-height: 1.35;
+	}
+
+	@media (max-width: 580px) {
+		.guide-header {
+			padding: 0.75rem 0.9rem;
+		}
+
+		.guide-title {
+			font-size: 0.86rem;
+		}
+
+		.guide-body {
+			padding: 0.75rem 0.9rem 1rem 0.9rem;
+		}
+
+		.guide-text {
+			font-size: 0.85rem;
+		}
 	}
 
 	.guide-text {
