@@ -1131,6 +1131,14 @@ const specText = t.specs[platformId] || t.specs.twitch;
 				}
 
 				for (const file of validFiles) {
+					// Incrementar contador en Supabase cada vez que se selecciona/procesa una imagen
+					try {
+						const { supabase } = await import('../lib/supabase');
+						await supabase.rpc('increment_counter', { counter_id: 'image_uploads' });
+					} catch (e) {
+						// Ignorar en caso de error de red o configuración inicial
+					}
+
 					// Comprobar si la imagen es rectangular (relación de aspecto diferente a 1:1)
 					const isNonSquare = await checkIfNonSquare(file);
 

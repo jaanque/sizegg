@@ -1,0 +1,115 @@
+---
+export interface Props {
+	lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const labels = {
+	es: {
+		text: 'emotes procesados'
+	},
+	en: {
+		text: 'emotes processed'
+	}
+};
+
+const t = labels[lang];
+---
+
+<div class="counter-box" id="global-counter-wrapper">
+	<span class="counter-number" id="global-counter-val">0</span>
+	<span class="counter-text">{t.text}</span>
+</div>
+
+<style>
+	.counter-box {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 1.15rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		background-color: var(--surface-card);
+		border: 1px solid var(--border-color);
+		padding: 0.55rem 1.25rem;
+		border-radius: 22px;
+		margin-top: 0.75rem;
+	}
+
+	.counter-number {
+		color: #a970ff;
+		font-size: 1.35rem;
+		font-weight: 800;
+		font-variant-numeric: tabular-nums;
+		display: inline-block;
+		transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	.counter-number.bump {
+		transform: scale(1.18);
+	}
+
+	.counter-text {
+		color: var(--text-muted);
+		font-weight: 600;
+	}
+</style>
+
+<script>
+	function animateValue(el: HTMLElement, start: number, end: number, duration: number = 1200) {
+		if (start === end) {
+			el.textContent = end.toLocaleString();
+			return;
+		}
+
+		const startTime = performance.now();
+
+		function update(currentTime: number) {
+			const elapsed = currentTime - startTime;
+			const progress = Math.min(elapsed / duration, 1);
+			
+			// Easing out cubic
+			const easeOut = 1 - Math.pow(1 - progress, 3);
+			const current = Math.floor(start + (end - start) * easeOut);
+
+			el.textContent = current.toLocaleString();
+
+			if (progress < 1) {
+				requestAnimationFrame(update);
+			} else {
+				el.textContent = end.toLocaleString();
+				el.classList.add('bump');
+				setTimeout(() => el.classList.remove('bump'), 200);
+			}
+		}
+
+		requestAnimationFrame(update);
+	}
+
+	async function loadCounter() {
+		const el = document.getElementById('global-counter-val');
+		if (!el) return;
+
+		try {
+			const { supabase } = await import('../lib/supabase');
+			const { data, error } = await supabase
+				.from('counters')
+				.select('count')
+				.eq('id', 'image_uploads')
+				.single();
+
+			if (!error && data && data.count !== undefined && data.count !== null) {
+				const targetVal = Number(data.count);
+				animateValue(el, 0, targetVal, 1400);
+			} else {
+				el.textContent = '0';
+			}
+		} catch (e) {
+			el.textContent = '0';
+		}
+	}
+
+	loadCounter();
+	document.addEventListener('astro:page-load', loadCounter);
+</script>
