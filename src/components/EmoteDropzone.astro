@@ -5,8 +5,6 @@ export interface Props {
 	accentColor?: string;
 }
 
-import AdBanner from './AdBanner.astro';
-
 const { lang, platformId, accentColor = '#a970ff' } = Astro.props;
 
 const labels = {
@@ -170,7 +168,6 @@ const specText = t.specs[platformId] || t.specs.twitch;
 		<div class="results-list" id="results-list"></div>
 	</div>
 
-	<AdBanner />
 </div>
 
 <style>
