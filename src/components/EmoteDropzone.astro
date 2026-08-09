@@ -1139,6 +1139,30 @@ const specText = t.specs[platformId] || t.specs.twitch;
 						// Ignorar en caso de error de red o configuración inicial
 					}
 
+					// Evento clave para Google Analytics / Tag Manager
+					if (typeof window !== 'undefined') {
+						const w = window as any;
+						w.dataLayer = w.dataLayer || [];
+						w.dataLayer.push({
+							event: 'file_upload',
+							file_name: file.name,
+							file_extension: file.name.split('.').pop()?.toLowerCase() || '',
+							file_size: file.size,
+							platform: platformId,
+							file_count: validFiles.length
+						});
+
+						if (typeof w.gtag === 'function') {
+							w.gtag('event', 'file_upload', {
+								file_name: file.name,
+								file_extension: file.name.split('.').pop()?.toLowerCase() || '',
+								file_size: file.size,
+								platform: platformId,
+								file_count: validFiles.length
+							});
+						}
+					}
+
 					// Comprobar si la imagen es rectangular (relación de aspecto diferente a 1:1)
 					const isNonSquare = await checkIfNonSquare(file);
 
