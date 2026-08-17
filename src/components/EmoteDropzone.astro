@@ -68,22 +68,34 @@ const specText = t.specs[platformId] || t.specs.twitch;
 				<h2>{t.dragTitle}</h2>
 				<p>{t.dragOr}</p>
 			</div>
-			<div class="pills-group">
-				<div class="specs-pill">{specText}</div>
-				<div class="formats-pill">
-					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-						<circle cx="8.5" cy="8.5" r="1.5"></circle>
-						<polyline points="21 15 16 10 5 21"></polyline>
-					</svg>
-					<span>{t.supportedFormats}</span>
-				</div>
-			</div>
 		</div>
 
 		<div class="loader" id="loader" style="display: none;">
 			<div class="spinner"></div>
 			<p>{t.uploading}</p>
+		</div>
+	</div>
+
+	<div class="dropzone-info-card" style={`--accent-color: ${accentColor};`}>
+		<div class="info-card-item">
+			<div class="info-card-icon">
+				<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<rect x="3" y="3" width="18" height="18" rx="2"></rect>
+					<path d="M7 7h10"></path>
+					<path d="M7 12h10"></path>
+					<path d="M7 17h10"></path>
+				</svg>
+			</div>
+			<div class="info-card-text">{specText}</div>
+		</div>
+		<div class="info-card-item">
+			<div class="info-card-icon">
+				<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+					<polyline points="14 2 14 8 20 8"></polyline>
+				</svg>
+			</div>
+			<div class="info-card-text">{t.supportedFormats}</div>
 		</div>
 	</div>
 
@@ -261,35 +273,61 @@ const specText = t.specs[platformId] || t.specs.twitch;
 		font-weight: 500;
 	}
 
-	.pills-group {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.45rem;
-		margin-top: 0.25rem;
-	}
-
-	.specs-pill {
-		font-size: 0.8rem;
-		font-weight: 600;
-		color: var(--text-muted);
-		background-color: var(--bg-body);
-		padding: 0.4rem 0.9rem;
-		border-radius: 22px;
+	.dropzone-info-card {
+		margin: 0.9rem auto 0 auto;
+		padding: 0.55rem 1.1rem;
+		background-color: var(--surface-card);
 		border: 1px solid var(--border-color);
+		border-radius: 14px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		gap: 1.25rem;
+		width: fit-content;
+		max-width: 100%;
+		flex-wrap: wrap;
 	}
 
-	.formats-pill {
-		font-size: 0.78rem;
-		font-weight: 700;
-		color: var(--accent-color, #a970ff);
-		background-color: rgba(169, 112, 255, 0.08);
-		padding: 0.35rem 0.85rem;
-		border-radius: 22px;
-		border: 1px solid rgba(169, 112, 255, 0.25);
-		display: inline-flex;
+	.info-card-item {
+		display: flex;
 		align-items: center;
-		gap: 0.4rem;
+		gap: 0.5rem;
+	}
+
+	.info-card-icon {
+		width: 24px;
+		height: 24px;
+		border-radius: 7px;
+		background-color: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.06);
+		color: var(--accent-color, #a970ff);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	.info-card-text {
+		font-size: 0.82rem;
+		font-weight: 500;
+		color: var(--text-muted);
+		line-height: 1.3;
+		white-space: nowrap;
+	}
+
+	@media (max-width: 640px) {
+		.dropzone-info-card {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.45rem;
+			width: 100%;
+			padding: 0.7rem 1rem;
+		}
+
+		.info-card-text {
+			white-space: normal;
+		}
 	}
 
 	/* Loader */
