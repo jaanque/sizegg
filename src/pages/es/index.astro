@@ -116,15 +116,13 @@ import GlobalCounter from '../../components/GlobalCounter.astro';
 					<a href={p.href} class="platform-card" data-accent={p.accent} data-accent-bg={p.accentBg} style={`--card-accent: ${p.accent}; --card-accent-bg: ${p.accentBg};`}>
 						<div class="card-icon" set:html={p.svg} />
 						<div class="card-content">
-							<div class="card-title-row">
-								<h2>{p.name}</h2>
-								<svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-									<path d="M5 12h14"></path>
-									<path d="m12 5 7 7-7 7"></path>
-								</svg>
-							</div>
+							<h2>{p.name}</h2>
 							<span class="card-specs">{p.specs}</span>
 						</div>
+						<svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M5 12h14"></path>
+							<path d="m12 5 7 7-7 7"></path>
+						</svg>
 					</a>
 				))}
 			</main>
@@ -290,12 +288,12 @@ import GlobalCounter from '../../components/GlobalCounter.astro';
 
 			.grid-container {
 				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+				grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
 				gap: 1.1rem;
 				width: 100%;
 			}
 
-			@media (max-width: 520px) {
+			@media (max-width: 640px) {
 				.grid-container {
 					grid-template-columns: 1fr;
 				}
@@ -305,10 +303,11 @@ import GlobalCounter from '../../components/GlobalCounter.astro';
 				background-color: var(--surface-card);
 				border: 1px solid var(--border-color);
 				border-radius: 20px;
-				padding: 1.25rem 1.35rem;
+				padding: 1.1rem 1.25rem;
 				display: flex;
-				flex-direction: column;
-				gap: 1.1rem;
+				flex-direction: row;
+				align-items: center;
+				gap: 0.9rem;
 				text-decoration: none;
 				color: var(--text-primary);
 				transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -318,7 +317,6 @@ import GlobalCounter from '../../components/GlobalCounter.astro';
 			.platform-card:hover {
 				background-color: var(--surface-hover);
 				border-color: var(--card-accent);
-				transform: translateY(-2px);
 				box-shadow: 0 10px 30px -8px var(--card-accent-bg);
 			}
 
@@ -332,46 +330,42 @@ import GlobalCounter from '../../components/GlobalCounter.astro';
 				align-items: center;
 				justify-content: center;
 				border: 1px solid rgba(255, 255, 255, 0.06);
-				transition: transform 0.25s ease;
-			}
-
-			.platform-card:hover .card-icon {
-				transform: scale(1.04);
+				flex-shrink: 0;
 			}
 
 			.card-content {
 				display: flex;
-				flex-direction: column;
-				gap: 0.45rem;
-			}
-
-			.card-title-row {
-				display: flex;
+				flex-direction: row;
 				align-items: center;
-				justify-content: space-between;
+				gap: 0.65rem;
+				flex: 1;
+				min-width: 0;
 			}
 
-			.card-title-row h2 {
+			.card-content h2 {
 				font-size: 1.1rem;
 				font-weight: 700;
 				letter-spacing: -0.01em;
+				line-height: 1;
+				white-space: nowrap;
 			}
 
 			.arrow-icon {
 				color: var(--text-muted);
 				transition: all 0.25s ease;
 				opacity: 0.7;
+				flex-shrink: 0;
+				margin-left: auto;
 			}
 
 			.platform-card:hover .arrow-icon {
 				color: var(--card-accent);
-				transform: translateX(3px);
 				opacity: 1;
 			}
 
 			.card-specs {
 				display: inline-flex;
-				align-self: flex-start;
+				align-items: center;
 				font-size: 0.72rem;
 				font-weight: 600;
 				color: var(--text-muted);
@@ -380,6 +374,7 @@ import GlobalCounter from '../../components/GlobalCounter.astro';
 				padding: 0.22rem 0.6rem;
 				border-radius: 12px;
 				letter-spacing: 0.01em;
+				white-space: nowrap;
 				transition: color 0.2s ease, border-color 0.2s ease;
 			}
 
