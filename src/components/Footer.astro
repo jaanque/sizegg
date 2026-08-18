@@ -1,11 +1,11 @@
 ---
 export interface Props {
-	lang?: 'es' | 'en';
+	lang?: "es" | "en";
 }
 
-import Analytics from '@vercel/analytics/astro';
+import Analytics from "@vercel/analytics/astro";
 
-const { lang = 'es' } = Astro.props;
+const { lang = "es" } = Astro.props;
 
 const currentYear = new Date().getFullYear();
 
@@ -14,71 +14,116 @@ const platformSvgs: Record<string, string> = {
 	kick: `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h4v6.5L13.5 3H19l-7.2 8.5L19.5 21h-5.6L8 13.5V21H3V3z"/></svg>`,
 	discord: `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>`,
 	youtube: `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`,
-	'7tv': `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M2 4h20v3H9l-5 13H1v-3l3-10H2V4zm7 6h13v3H13l-4 10H6v-3l3-10z"/></svg>`,
-	bttv: `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8.293 2.293a1 1 0 0 1 1.414 0L12 4.586l2.293-2.293a1 1 0 1 1 1.414 1.414L13.414 6H18a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4v-8a4 4 0 0 1 4-4h4.586L8.293 3.707a1 1 0 0 1 0-1.414zM6 8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2H6zm2.5 3a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zm7 0a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zm-6.25 4.5a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1-.75-.75z"/></svg>`
+	"7tv": `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M2 4h20v3H9l-5 13H1v-3l3-10H2V4zm7 6h13v3H13l-4 10H6v-3l3-10z"/></svg>`,
+	bttv: `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8.293 2.293a1 1 0 0 1 1.414 0L12 4.586l2.293-2.293a1 1 0 1 1 1.414 1.414L13.414 6H18a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4v-8a4 4 0 0 1 4-4h4.586L8.293 3.707a1 1 0 0 1 0-1.414zM6 8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2H6zm2.5 3a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zm7 0a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zm-6.25 4.5a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1-.75-.75z"/></svg>`,
 };
 
-const platformLinks: Record<'es' | 'en', Array<{ id: string; name: string; href: string }>> = {
+const platformLinks: Record<
+	"es" | "en",
+	Array<{ id: string; name: string; href: string }>
+> = {
 	es: [
-		{ id: 'twitch', name: 'Twitch', href: '/es/redimensionar-emotes-twitch' },
-		{ id: 'kick', name: 'Kick', href: '/es/redimensionar-emotes-kick' },
-		{ id: 'discord', name: 'Discord', href: '/es/redimensionar-emotes-discord' },
-		{ id: 'youtube', name: 'YouTube', href: '/es/redimensionar-emotes-youtube' },
-		{ id: '7tv', name: '7TV', href: '/es/redimensionar-emotes-7tv' },
-		{ id: 'bttv', name: 'BTTV', href: '/es/redimensionar-emotes-bttv' }
+		{
+			id: "twitch",
+			name: "Twitch",
+			href: "/es/redimensionar-emotes-twitch",
+		},
+		{ id: "kick", name: "Kick", href: "/es/redimensionar-emotes-kick" },
+		{
+			id: "discord",
+			name: "Discord",
+			href: "/es/redimensionar-emotes-discord",
+		},
+		{
+			id: "youtube",
+			name: "YouTube",
+			href: "/es/redimensionar-emotes-youtube",
+		},
+		{ id: "7tv", name: "7TV", href: "/es/redimensionar-emotes-7tv" },
+		{ id: "bttv", name: "BTTV", href: "/es/redimensionar-emotes-bttv" },
 	],
 	en: [
-		{ id: 'twitch', name: 'Twitch', href: '/twitch-emote-resizer' },
-		{ id: 'kick', name: 'Kick', href: '/kick-emote-resizer' },
-		{ id: 'discord', name: 'Discord', href: '/discord-emote-resizer' },
-		{ id: 'youtube', name: 'YouTube', href: '/youtube-emote-resizer' },
-		{ id: '7tv', name: '7TV', href: '/7tv-emote-resizer' },
-		{ id: 'bttv', name: 'BTTV', href: '/bttv-emote-resizer' }
-	]
+		{ id: "twitch", name: "Twitch", href: "/twitch-emote-resizer" },
+		{ id: "kick", name: "Kick", href: "/kick-emote-resizer" },
+		{ id: "discord", name: "Discord", href: "/discord-emote-resizer" },
+		{ id: "youtube", name: "YouTube", href: "/youtube-emote-resizer" },
+		{ id: "7tv", name: "7TV", href: "/7tv-emote-resizer" },
+		{ id: "bttv", name: "BTTV", href: "/bttv-emote-resizer" },
+	],
 };
 
 const text = {
 	es: {
-		desc: 'Redimensionador rápido y gratuito de emotes para creadores de contenido.',
-		rights: 'Todos los derechos reservados.'
+		desc: "Redimensionador rápido y gratuito de emotes para creadores de contenido.",
+		rights: "Todos los derechos reservados.",
 	},
 	en: {
-		desc: 'Fast & free emote resizer for content creators.',
-		rights: 'All rights reserved.'
-	}
+		desc: "Fast & free emote resizer for content creators.",
+		rights: "All rights reserved.",
+	},
 }[lang];
 ---
 
 <footer class="footer">
 	<div class="footer-main">
 		<div class="footer-left">
-			<a href={lang === 'es' ? '/es' : '/'} class="brand-link">
-				<span class="footer-logo">sizeGG</span>
+			<a href={lang === "es" ? "/es" : "/"} class="brand-link">
+				<span class="footer-logo">SizeGG</span>
 			</a>
 			<p class="footer-desc">{text.desc}</p>
 		</div>
 
-		<nav class="footer-links" aria-label={lang === 'es' ? 'Navegación de plataformas' : 'Platform navigation'}>
-			{platformLinks[lang].map(link => (
-				<a 
-					href={link.href} 
-					class="footer-link" 
-					title={lang === 'es' ? `Redimensionar emotes para ${link.name}` : `Resize emotes for ${link.name}`}
-				>
-					<span class="link-icon" set:html={platformSvgs[link.id]} />
-					<span>{link.name}</span>
-				</a>
-			))}
+		<nav
+			class="footer-links"
+			aria-label={lang === "es"
+				? "Navegación de plataformas"
+				: "Platform navigation"}
+		>
+			{
+				platformLinks[lang].map((link) => (
+					<a
+						href={link.href}
+						class="footer-link"
+						title={
+							lang === "es"
+								? `Redimensionar emotes para ${link.name}`
+								: `Resize emotes for ${link.name}`
+						}
+					>
+						<span
+							class="link-icon"
+							set:html={platformSvgs[link.id]}
+						/>
+						<span>{link.name}</span>
+					</a>
+				))
+			}
 		</nav>
 	</div>
 
 	<div class="footer-bottom">
 		<div class="footer-legal-links">
-			<a href={lang === 'es' ? '/es/privacidad' : '/privacy'} class="legal-link">{lang === 'es' ? 'Política de Privacidad' : 'Privacy Policy'}</a>
+			<a
+				href={lang === "es" ? "/es/privacidad" : "/privacy"}
+				class="legal-link"
+				>{
+					lang === "es" ? "Política de Privacidad" : "Privacy Policy"
+				}</a
+			>
 			<span class="legal-dot">•</span>
-			<a href={lang === 'es' ? '/es/terminos' : '/terms'} class="legal-link">{lang === 'es' ? 'Términos de Servicio' : 'Terms of Service'}</a>
+			<a
+				href={lang === "es" ? "/es/terminos" : "/terms"}
+				class="legal-link"
+				>{
+					lang === "es" ? "Términos de Servicio" : "Terms of Service"
+				}</a
+			>
 			<span class="legal-dot">•</span>
-			<a href={lang === 'es' ? '/es/cookies' : '/cookies'} class="legal-link">{lang === 'es' ? 'Política de Cookies' : 'Cookie Policy'}</a>
+			<a
+				href={lang === "es" ? "/es/cookies" : "/cookies"}
+				class="legal-link"
+				>{lang === "es" ? "Política de Cookies" : "Cookie Policy"}</a
+			>
 		</div>
 		<p>© {currentYear} sizeGG. {text.rights}</p>
 	</div>
@@ -170,7 +215,10 @@ const text = {
 		background-color: var(--surface-hover);
 		border: 1px solid var(--border-color);
 		white-space: nowrap;
-		transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+		transition:
+			color 0.15s ease,
+			border-color 0.15s ease,
+			background-color 0.15s ease;
 	}
 
 	.footer-link:hover {

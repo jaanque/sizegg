@@ -6,6 +6,7 @@ export interface ResizedItem {
 	width: number;
 	height: number;
 	previewUrl: string;
+	category?: string;
 }
 
 export interface ProcessedFile {
@@ -16,7 +17,7 @@ export interface ProcessedFile {
 
 export interface PlatformConfig {
 	id: 'twitch' | 'kick' | 'discord' | 'youtube' | '7tv' | 'bttv';
-	sizes: { width: number; height: number; suffix?: string }[];
+	sizes: { width: number; height: number; suffix?: string; category?: string }[];
 	outputFormat?: 'png' | 'webp'; // default auto
 }
 
@@ -24,42 +25,48 @@ export const platformConfigs: Record<string, PlatformConfig> = {
 	twitch: {
 		id: 'twitch',
 		sizes: [
-			{ width: 112, height: 112, suffix: '_112x112' },
-			{ width: 56, height: 56, suffix: '_56x56' },
-			{ width: 28, height: 28, suffix: '_28x28' }
+			{ width: 112, height: 112, suffix: '_112x112', category: 'EMOTES' },
+			{ width: 56, height: 56, suffix: '_56x56', category: 'EMOTES' },
+			{ width: 28, height: 28, suffix: '_28x28', category: 'EMOTES' },
+			{ width: 72, height: 72, suffix: '_72x72', category: 'BADGES' },
+			{ width: 36, height: 36, suffix: '_36x36', category: 'BADGES' },
+			{ width: 18, height: 18, suffix: '_18x18', category: 'BADGES' }
 		]
 	},
 	kick: {
 		id: 'kick',
 		sizes: [
-			{ width: 500, height: 500, suffix: '_500x500' }
+			{ width: 500, height: 500, suffix: '_500x500', category: 'EMOTES' },
+			{ width: 72, height: 72, suffix: '_72x72', category: 'BADGES' },
+			{ width: 36, height: 36, suffix: '_36x36', category: 'BADGES' },
+			{ width: 18, height: 18, suffix: '_18x18', category: 'BADGES' }
 		]
 	},
 	discord: {
 		id: 'discord',
 		sizes: [
-			{ width: 128, height: 128, suffix: '_128x128' }
+			{ width: 128, height: 128, suffix: '_128x128', category: 'EMOTES' }
 		]
 	},
 	youtube: {
 		id: 'youtube',
 		sizes: [
-			{ width: 480, height: 480, suffix: '_480x480' }
+			{ width: 480, height: 480, suffix: '_480x480', category: 'EMOTES' }
 		]
 	},
 	'7tv': {
 		id: '7tv',
 		sizes: [
-			{ width: 128, height: 128, suffix: '_128x128' }
+			{ width: 128, height: 128, suffix: '_128x128', category: 'EMOTES' }
 		],
 		outputFormat: 'webp'
 	},
 	bttv: {
 		id: 'bttv',
 		sizes: [
-			{ width: 112, height: 112, suffix: '_112x112' },
-			{ width: 56, height: 56, suffix: '_56x56' },
-			{ width: 28, height: 28, suffix: '_28x28' }
+			{ width: 112, height: 112, suffix: '_112x112', category: 'EMOTES' },
+			{ width: 56, height: 56, suffix: '_56x56', category: 'EMOTES' },
+			{ width: 28, height: 28, suffix: '_28x28', category: 'EMOTES' }
 		]
 	}
 };
@@ -300,7 +307,8 @@ export async function processEmoteFile(
 				blob: file,
 				width: s.width,
 				height: s.height,
-				previewUrl
+				previewUrl,
+				category: s.category
 			});
 		}
 		return { file, items };
@@ -323,7 +331,8 @@ export async function processEmoteFile(
 				blob,
 				width: s.width,
 				height: s.height,
-				previewUrl
+				previewUrl,
+				category: s.category
 			});
 		} catch (err: any) {
 			return {

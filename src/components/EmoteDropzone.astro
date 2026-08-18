@@ -155,29 +155,17 @@ const specText = t.specs[platformId] || t.specs.twitch;
 
 	<!-- Resultados e imágenes generadas -->
 	<div class="results-wrapper" id="results-wrapper" style="display: none;">
-		<div class="results-banner">
-			<div class="results-banner-text">
-				<h3>{lang === 'es' ? '¡Emotes procesados con éxito!' : 'Emotes successfully processed!'}</h3>
-				<p>{lang === 'es' ? 'Descarga resoluciones individuales o el paquete completo en archivo .ZIP' : 'Download individual sizes or the complete package in a .ZIP file'}</p>
-			</div>
-			<button class="btn-download-all" id="btn-download-all" style={`--accent-color: ${accentColor};`}>
-				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-					<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-					<polyline points="7 10 12 15 17 10"></polyline>
-					<line x1="12" y1="15" x2="12" y2="3"></line>
-				</svg>
-				<span>{t.downloadAll}</span>
-			</button>
-		</div>
-
-		<div class="results-header">
-			<span class="results-count" id="results-count">0 {t.filesProcessed}</span>
-			<div class="results-actions">
-				<button class="btn-clear" id="btn-clear">{t.clearAll}</button>
-			</div>
-		</div>
-
 		<div class="results-list" id="results-list"></div>
+
+		<div class="results-footer-bar">
+			<span class="results-hint">{lang === 'es' ? 'Puedes hacer clic en cualquiera de las imágenes para guardarla en tu ordenador.' : 'You can click any of the images above to save it to your computer.'}</span>
+			<div class="results-actions">
+				<button class="btn-clear" id="btn-clear">{lang === 'es' ? 'Limpiar' : 'Clear'}</button>
+				<button class="btn-download-all" id="btn-download-all" style={`--accent-color: ${accentColor};`}>
+					<span>{lang === 'es' ? 'Guardar todo (.zip)' : 'Save all (.zip)'}</span>
+				</button>
+			</div>
+		</div>
 	</div>
 
 </div>
@@ -427,7 +415,7 @@ const specText = t.specs[platformId] || t.specs.twitch;
 		color: var(--text-primary);
 	}
 
-	/* Resultados */
+	/* Contenedor Card Principal de Resultados */
 	.results-wrapper {
 		background-color: var(--surface-card);
 		border: 1px solid var(--border-color);
@@ -435,92 +423,130 @@ const specText = t.specs[platformId] || t.specs.twitch;
 		padding: 1.5rem;
 		display: flex;
 		flex-direction: column;
+		gap: 1.5rem;
+		margin-top: 1.5rem;
+	}
+
+	.results-list {
+		display: flex;
+		flex-direction: column;
 		gap: 1.25rem;
 	}
 
-	.results-banner {
+	:global(.file-result-container) {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	:global(.category-block) {
+		display: flex;
+		flex-direction: column;
+		gap: 0.65rem;
+	}
+
+	:global(.category-title) {
+		font-size: 0.75rem;
+		font-weight: 800;
+		letter-spacing: 0.06em;
+		color: var(--text-muted);
+		text-transform: uppercase;
+	}
+
+	:global(.items-grid) {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+		gap: 1rem;
+		width: 100%;
+	}
+
+	:global(.item-card) {
+		background-color: var(--bg-body);
+		border: 1px solid var(--border-color);
+		border-radius: 18px;
+		overflow: hidden;
+		cursor: pointer;
+		display: flex;
+		flex-direction: column;
+		transition: border-color 0.15s ease, background-color 0.15s ease;
+	}
+
+	:global(.item-card:hover) {
+		border-color: var(--text-muted);
+		background-color: var(--surface-hover);
+	}
+
+	:global(.card-preview-area) {
+		height: 130px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 12px;
+		box-sizing: border-box;
+	}
+
+	:global(.card-preview-area img) {
+		max-width: 100%;
+		max-height: 100%;
+		object-fit: contain;
+		image-rendering: -webkit-optimize-contrast;
+		image-rendering: crisp-edges;
+	}
+
+	:global(.card-meta-bar) {
+		background-color: rgba(255, 255, 255, 0.04);
+		border-top: 1px solid var(--border-color);
+		padding: 0.55rem 0.75rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		color: var(--text-primary);
+		font-size: 0.78rem;
+		font-weight: 700;
+		box-sizing: border-box;
+	}
+
+	:global(.item-dim) {
+		font-weight: 700;
+		color: var(--text-primary);
+	}
+
+	:global(.item-size) {
+		font-weight: 600;
+		color: var(--text-muted);
+	}
+
+	/* Pie de resultados dentro de la Card */
+	.results-footer-bar {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		gap: 1rem;
-		padding: 1.1rem 1.35rem;
-		background: rgba(255, 255, 255, 0.03);
-		border: 1px solid var(--border-color);
-		border-radius: 22px;
+		padding-top: 1rem;
+		border-top: 1px solid var(--border-color);
+		flex-wrap: wrap;
 	}
 
-	@media (max-width: 580px) {
-		.results-banner {
-			flex-direction: column;
-			align-items: flex-start;
-			gap: 0.85rem;
-		}
-
-		.btn-download-all {
-			width: 100%;
-			justify-content: center;
-		}
-	}
-
-	.results-banner-text {
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-	}
-
-	.step-badge {
-		align-self: flex-start;
-		font-size: 0.68rem;
-		font-weight: 800;
-		color: var(--accent-color, #a970ff);
-		background-color: rgba(169, 112, 255, 0.1);
-		padding: 0.15rem 0.55rem;
-		border-radius: 22px;
-		border: 1px solid rgba(169, 112, 255, 0.3);
-		letter-spacing: 0.05em;
-	}
-
-	.results-banner-text h3 {
-		font-size: 1.1rem;
-		font-weight: 800;
-		color: var(--text-primary);
-		margin: 0;
-	}
-
-	.results-banner-text p {
-		font-size: 0.86rem;
+	.results-hint {
+		font-size: 0.88rem;
 		color: var(--text-muted);
-		margin: 0;
-	}
-
-	.results-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding-bottom: 0.6rem;
-		border-bottom: 1px solid var(--border-color);
-	}
-
-	.results-count {
-		font-size: 0.85rem;
-		font-weight: 700;
-		color: var(--text-muted);
+		font-weight: 500;
 	}
 
 	.results-actions {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
+		gap: 0.75rem;
 	}
 
 	.btn-clear {
-		background: transparent;
+		background-color: transparent;
 		border: 1px solid var(--border-color);
 		color: var(--text-muted);
 		font-family: inherit;
-		font-size: 0.8rem;
+		font-size: 0.85rem;
 		font-weight: 600;
-		padding: 0.4rem 0.75rem;
+		padding: 0.55rem 1.1rem;
 		border-radius: 22px;
 		cursor: pointer;
 		transition: all 0.15s ease;
@@ -532,16 +558,16 @@ const specText = t.specs[platformId] || t.specs.twitch;
 	}
 
 	.btn-download-all {
-		background-color: var(--accent-color);
-		border: none;
+		background-color: var(--accent-color, #a970ff);
 		color: #000000;
 		font-family: inherit;
-		font-size: 0.8rem;
-		font-weight: 700;
-		padding: 0.45rem 0.85rem;
+		font-size: 0.85rem;
+		font-weight: 800;
+		padding: 0.55rem 1.2rem;
 		border-radius: 22px;
+		border: none;
 		cursor: pointer;
-		display: flex;
+		display: inline-flex;
 		align-items: center;
 		gap: 0.4rem;
 		transition: opacity 0.15s ease;
@@ -549,134 +575,6 @@ const specText = t.specs[platformId] || t.specs.twitch;
 
 	.btn-download-all:hover {
 		opacity: 0.9;
-	}
-
-	@media (max-width: 480px) {
-		.results-header {
-			flex-direction: column;
-			align-items: flex-start;
-			gap: 0.75rem;
-		}
-
-		.results-actions {
-			width: 100%;
-		}
-
-		.btn-download-all {
-			flex: 1;
-			justify-content: center;
-		}
-	}
-
-	.results-list {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	:global(.file-result-card) {
-		background-color: transparent;
-		border: none;
-		border-radius: 0;
-		padding: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	:global(.items-grid) {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-		gap: 0.85rem;
-		align-items: stretch;
-	}
-
-	:global(.item-card) {
-		background-color: var(--surface-card);
-		border: 1px solid var(--border-color);
-		border-radius: 22px;
-		padding: 1rem 0.9rem;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.85rem;
-		text-align: center;
-		height: 100%;
-		box-sizing: border-box;
-		cursor: pointer;
-		transition: border-color 0.2s ease, background-color 0.2s ease;
-	}
-
-	:global(.item-card:hover) {
-		border-color: rgba(255, 255, 255, 0.2);
-		background-color: var(--surface-hover);
-	}
-
-	:global(.preview-box-wrapper) {
-		width: 100%;
-		height: 115px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex: 1;
-	}
-
-	:global(.preview-box-wrapper img) {
-		max-width: 100%;
-		max-height: 100%;
-		object-fit: contain;
-		image-rendering: -webkit-optimize-contrast;
-		image-rendering: crisp-edges;
-	}
-
-	:global(.card-meta-bar) {
-		width: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 0.4rem 0.1rem 0 0.1rem;
-		border-top: 1px solid var(--border-color);
-		margin-top: auto;
-	}
-
-	:global(.item-dim) {
-		font-size: 0.74rem;
-		font-weight: 700;
-		color: var(--text-primary);
-		letter-spacing: -0.01em;
-	}
-
-	:global(.item-size) {
-		font-size: 0.7rem;
-		font-weight: 600;
-		color: var(--text-muted);
-	}
-
-	:global(.btn-download-single) {
-		width: 100%;
-		background-color: var(--accent-color, #a970ff);
-		border: none;
-		color: #000000;
-		font-family: inherit;
-		font-size: 0.82rem;
-		font-weight: 800;
-		padding: 0.55rem 0.6rem;
-		border-radius: 22px;
-		cursor: pointer;
-		text-decoration: none;
-		text-align: center;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.35rem;
-		box-sizing: border-box;
-		transition: opacity 0.15s ease;
-	}
-
-	:global(.btn-download-single:hover) {
-		opacity: 0.9;
-		color: #000000;
 	}
 
 	/* Estilos Modal de Recorte Cuadrado (Crop Modal) */
@@ -1278,7 +1176,7 @@ const specText = t.specs[platformId] || t.specs.twitch;
 			}
 
 			function renderResults() {
-				if (!resultsWrapper || !resultsList || !resultsCount) return;
+				if (!resultsWrapper || !resultsList) return;
 
 				if (processedState.length === 0) {
 					resultsWrapper.style.display = 'none';
@@ -1291,72 +1189,72 @@ const specText = t.specs[platformId] || t.specs.twitch;
 				}
 
 				resultsWrapper.style.display = 'flex';
-				resultsCount.textContent = `${processedState.length} ${lang === 'es' ? 'archivos procesados' : 'files processed'}`;
 				resultsList.innerHTML = '';
 
-				// Desplazamiento suave automático hacia los resultados para máxima fluidez (2 clics: subir + descargar)
+				// Desplazamiento suave automático hacia los resultados
 				setTimeout(() => {
 					resultsWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				}, 50);
 
 				processedState.forEach((pf: ProcessedFile) => {
-					const fileCard = document.createElement('div');
-					fileCard.className = 'file-result-card';
+					const fileContainer = document.createElement('div');
+					fileContainer.className = 'file-result-container';
 
-					const grid = document.createElement('div');
-					grid.className = 'items-grid';
-
-					pf.items.forEach((item: ResizedItem) => {
-						const itemCard = document.createElement('div');
-						itemCard.className = 'item-card';
-
-						const formattedSize = item.blob.size > 1024 * 1024
-							? `${(item.blob.size / (1024 * 1024)).toFixed(2)} MB`
-							: `${(item.blob.size / 1024).toFixed(1)} KB`;
-						const previewBoxDim = Math.min(Math.max(item.width, 56), 112);
-
-						itemCard.innerHTML = `
-							<div class="preview-box-wrapper">
-								<img src="${item.previewUrl}" alt="Emote Preview" width="${item.width}" height="${item.height}" style="max-width: 100%; max-height: 100%; object-fit: contain;" />
-							</div>
-							<div class="card-meta-bar">
-								<span class="item-dim">${item.width} × ${item.height}px</span>
-								<span class="item-size">${formattedSize}</span>
-							</div>
-						`;
-
-						const btnDL = document.createElement('a');
-						btnDL.className = 'btn-download-single';
-						btnDL.style.setProperty('--accent-color', currentAccent);
-						btnDL.href = item.previewUrl;
-						btnDL.download = item.name;
-						btnDL.innerHTML = `
-							<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-								<polyline points="7 10 12 15 17 10"></polyline>
-								<line x1="12" y1="15" x2="12" y2="3"></line>
-							</svg>
-							<span>${lang === 'es' ? 'Descargar' : 'Download'}</span>
-						`;
-
-						itemCard.addEventListener('click', (e: MouseEvent) => {
-							if (e.target && (e.target as HTMLElement).closest('.btn-download-single')) {
-								return;
-							}
-							const a = document.createElement('a');
-							a.href = item.previewUrl;
-							a.download = item.name;
-							document.body.appendChild(a);
-							a.click();
-							document.body.removeChild(a);
-						});
-
-						itemCard.appendChild(btnDL);
-						grid.appendChild(itemCard);
+					// Agrupar elementos por categoría (EMOTES, BADGES, etc.)
+					const categories: Record<string, ResizedItem[]> = {};
+					pf.items.forEach((item) => {
+						const cat = item.category || 'EMOTES';
+						if (!categories[cat]) categories[cat] = [];
+						categories[cat].push(item);
 					});
 
-					fileCard.appendChild(grid);
-					resultsList.appendChild(fileCard);
+					Object.keys(categories).forEach((catName) => {
+						const categoryBlock = document.createElement('div');
+						categoryBlock.className = 'category-block';
+
+						const categoryTitle = document.createElement('div');
+						categoryTitle.className = 'category-title';
+						categoryTitle.textContent = catName;
+						categoryBlock.appendChild(categoryTitle);
+
+						const grid = document.createElement('div');
+						grid.className = 'items-grid';
+
+						categories[catName].forEach((item: ResizedItem) => {
+							const itemCard = document.createElement('div');
+							itemCard.className = 'item-card';
+
+							const formattedSize = item.blob.size > 1024 * 1024
+								? `${(item.blob.size / (1024 * 1024)).toFixed(2)}MB`
+								: `${(item.blob.size / 1024).toFixed(2)}KB`;
+
+							itemCard.innerHTML = `
+								<div class="card-preview-area">
+									<img src="${item.previewUrl}" alt="${item.name}" width="${item.width}" height="${item.height}" />
+								</div>
+								<div class="card-meta-bar">
+									<span class="item-dim">${item.width}px x ${item.height}px</span>
+									<span class="item-size">${formattedSize}</span>
+								</div>
+							`;
+
+							itemCard.addEventListener('click', () => {
+								const a = document.createElement('a');
+								a.href = item.previewUrl;
+								a.download = item.name;
+								document.body.appendChild(a);
+								a.click();
+								document.body.removeChild(a);
+							});
+
+							grid.appendChild(itemCard);
+						});
+
+						categoryBlock.appendChild(grid);
+						fileContainer.appendChild(categoryBlock);
+					});
+
+					resultsList.appendChild(fileContainer);
 				});
 			}
 
