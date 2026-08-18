@@ -1,10 +1,10 @@
 ---
-import Navigation from '../../components/Navigation.astro';
-import EmoteDropzone from '../../components/EmoteDropzone.astro';
+import Navigation from "../../components/Navigation.astro";
+import EmoteDropzone from "../../components/EmoteDropzone.astro";
 import FAQAndGuide from "../../components/FAQAndGuide.astro";
-import SEOContentSection from '../../components/SEOContentSection.astro';
-import SEO from '../../components/SEO.astro';
-import Footer from '../../components/Footer.astro';
+import SEOContentSection from "../../components/SEOContentSection.astro";
+import SEO from "../../components/SEO.astro";
+import Footer from "../../components/Footer.astro";
 ---
 
 <html lang="es">
@@ -12,22 +12,30 @@ import Footer from '../../components/Footer.astro';
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<SEO
-			title="Redimensionar Emotes YouTube - sizeGG"
-			description="Redimensiona emotes e insignias de miembros para YouTube gratis online. Convertidor automático a 480×480px en PNG estáticos y GIF animados."
+			title="Emote Resizer YouTube - Redimensionar Emotes y GIFs para YouTube Gratis | sizeGG"
+			description="Emote resizer online gratis para YouTube. Redimensiona emotes de chat e insignias de lealtad a la medida requerida de 480×480px en PNG y GIF."
 			lang="es"
 			canonicalUrl="https://sizegg.com/es/redimensionar-emotes-youtube"
 			alternateEsUrl="https://sizegg.com/es/redimensionar-emotes-youtube"
 			alternateEnUrl="https://sizegg.com/youtube-emote-resizer"
 			platformId="youtube"
 		/>
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
 	</head>
 	<body>
 		<!-- Google Tag Manager (noscript) -->
-		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQ5FN8ZQ"
-		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<noscript
+			><iframe
+				src="https://www.googletagmanager.com/ns.html?id=GTM-TQ5FN8ZQ"
+				height="0"
+				width="0"
+				style="display:none;visibility:hidden"></iframe></noscript
+		>
 		<!-- End Google Tag Manager (noscript) -->
 		<div class="layout">
 			<!-- Header -->
@@ -37,8 +45,14 @@ import Footer from '../../components/Footer.astro';
 
 			<!-- Contenido interactivo -->
 			<main class="main-content">
-				<h1 class="page-title">Redimensionar Emotes para YouTube</h1>
-				<EmoteDropzone lang="es" platformId="youtube" accentColor="#ff0000" />
+				<h1 class="page-title">
+					Redimensionar Emotes para YouTube y redimensionar GIFs
+				</h1>
+				<EmoteDropzone
+					lang="es"
+					platformId="youtube"
+					accentColor="#ff0000"
+				/>
 				<SEOContentSection lang="es" platformId="youtube" />
 
 				<!-- Miniguía y Preguntas Frecuentes (FAQ + Schema Markup) -->
@@ -67,7 +81,11 @@ import Footer from '../../components/Footer.astro';
 			}
 
 			body {
-				font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+				font-family:
+					"Plus Jakarta Sans",
+					system-ui,
+					-apple-system,
+					sans-serif;
 				background-color: var(--bg-body);
 				color: var(--text-primary);
 				min-height: 100vh;
@@ -97,7 +115,9 @@ import Footer from '../../components/Footer.astro';
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				padding: 0.75rem 1.25rem; box-sizing: border-box; width: 100%;
+				padding: 0.75rem 1.25rem;
+				box-sizing: border-box;
+				width: 100%;
 				background-color: var(--surface-card);
 				border: 1px solid var(--border-color);
 				border-radius: 22px;

@@ -1082,7 +1082,7 @@ const specText = t.specs[platformId] || t.specs.twitch;
 
 			if (!dropzone || !fileInput) return;
 
-			// Clic abre el explorador
+			// Clic en la dropzone abre el explorador de archivos
 			dropzone.addEventListener('click', (e: MouseEvent) => {
 				if (e.target !== fileInput) {
 					fileInput.click();
@@ -1185,10 +1185,13 @@ const specText = t.specs[platformId] || t.specs.twitch;
 				}
 
 				for (const file of validFiles) {
-					// Incrementar contador en Supabase cada vez que se selecciona/procesa una imagen
+					// Incrementar contador global y contador por plataforma en Supabase
 					try {
 						const { supabase } = await import('../lib/supabase');
-						await supabase.rpc('increment_counter', { counter_id: 'image_uploads' });
+						await Promise.all([
+							supabase.rpc('increment_counter', { counter_id: 'image_uploads' }),
+							supabase.rpc('increment_counter', { counter_id: platformId })
+						]);
 					} catch (e) {
 						// Ignorar en caso de error de red o configuración inicial
 					}
@@ -1243,6 +1246,7 @@ const specText = t.specs[platformId] || t.specs.twitch;
 
 				showLoader(false);
 				renderResults();
+				if (fileInput) fileInput.value = '';
 			}
 
 			function checkIfNonSquare(file: File): Promise<boolean> {

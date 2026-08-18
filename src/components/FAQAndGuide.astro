@@ -46,8 +46,12 @@ const pName = platformId ? (platformNames[platformId] || 'Twitch') : '';
 const faqs: FAQItem[] = lang === 'es' ? (
 	isGeneral || !platformId ? [
 		{
-			question: "¿Cómo redimensiono emotes para cualquier plataforma de streaming?",
-			answer: "Selecciona tu plataforma de destino (Twitch, Kick, Discord, YouTube, 7TV o BTTV) y sube tu archivo. sizeGG generará automáticamente todas las resoluciones oficiales en 1 clic."
+			question: "¿Cómo funciona este emote resizer online gratis para streaming?",
+			answer: "Selecciona tu plataforma de destino (Twitch, Kick, Discord, YouTube, 7TV o BTTV) y sube tu archivo. sizeGG es un emote resizer online gratuito que generará automáticamente todas las resoluciones oficiales en 1 clic."
+		},
+		{
+			question: "¿Puedo redimensionar GIFs animados y emotes de ranas (Pepe)?",
+			answer: "¡Sí! sizeGG es un emote resizer animado compatible con GIFs, WebP y PNGs. Puedes redimensionar fácilmente emotes de ranas (Pepe), memes y GIFs animadas para Twitch, Discord y Kick manteniendo la fluidez del fotograma y la transparencia alfa."
 		},
 		{
 			question: "¿Qué resoluciones y pesos soporta sizeGG?",
@@ -69,6 +73,16 @@ const faqs: FAQItem[] = lang === 'es' ? (
 		{
 			question: `¿Por qué mi emote de ${pName} se ve borroso al subirlo?`,
 			answer: `Normalmente sucede si el archivo original se escala con interpolación de baja calidad o sin relación 1:1. sizeGG aplica escalado de alta densidad e interpolación preservando la transparencia.`
+		},
+		{
+			question: `¿Cómo redimensionar GIFs animados para ${pName}?`,
+			answer: platformId === 'twitch'
+				? "sizeGG funciona como un emote resizer para Twitch GIF especializado. Sube tu GIF animado y obtendrás las 3 resoluciones oficiales (112×112, 56×56 y 28×28 px) conservando la animación."
+				: platformId === 'discord'
+				? "sizeGG es un emote resizer para Discord GIF que escala tus animaciones a 128×128 px optimizándolas por debajo de 256 KB."
+				: platformId === 'kick'
+				? "Con sizeGG puedes redimensionar GIFs animados para Kick a 500×500 px manteniendo el peso bajo 1 MB."
+				: `sizeGG ajusta automáticamente fotogramas y resolución para GIFs animados en ${pName}.`
 		},
 		{
 			question: `¿Cuál es el peso máximo y resolución requerida para ${pName}?`,
@@ -104,8 +118,12 @@ const faqs: FAQItem[] = lang === 'es' ? (
 ) : (
 	isGeneral || !platformId ? [
 		{
-			question: "How do I resize emotes for any streaming platform?",
-			answer: "Select your target platform (Twitch, Kick, Discord, YouTube, 7TV, or BTTV) and upload your file. sizeGG will automatically generate all official sizes in 1 click."
+			question: "How does this free online emote resizer work?",
+			answer: "Select your target platform (Twitch, Kick, Discord, YouTube, 7TV, or BTTV) and upload your file. sizeGG is a free online emote resizer that automatically generates all official dimensions in 1 click."
+		},
+		{
+			question: "Can I resize animated GIF emotes and frog (Pepe) emotes?",
+			answer: "Yes! sizeGG is an animated emote resizer built for GIFs, WebP, and PNGs. Easily resize frog emotes (Pepe), memes, and animated GIFs for Twitch, Discord, and Kick while keeping smooth frame rates and transparent backgrounds."
 		},
 		{
 			question: "What dimensions and file limits are supported?",
@@ -127,6 +145,16 @@ const faqs: FAQItem[] = lang === 'es' ? (
 		{
 			question: `Why does my ${pName} emote look blurry when uploaded?`,
 			answer: `This usually happens when low-quality scaling is used or when the ratio isn't 1:1. sizeGG applies high-density smoothing while preserving transparency.`
+		},
+		{
+			question: `How do I resize animated GIFs for ${pName}?`,
+			answer: platformId === 'twitch'
+				? "sizeGG acts as a dedicated Twitch emote resizer GIF tool. Upload your animated GIF to get all 3 official resolutions (112×112, 56×56 & 28×28 px) with original animation quality."
+				: platformId === 'discord'
+				? "sizeGG is an animated Discord emote resizer that scales your GIFs to 128×128 px and optimizes file size below 256 KB."
+				: platformId === 'kick'
+				? "With sizeGG you can resize animated GIF emotes for Kick to 500×500 px while keeping the file size under 1 MB."
+				: `sizeGG automatically adjusts resolution and frame rates for animated GIFs on ${pName}.`
 		},
 		{
 			question: `What is the maximum file size and resolution for ${pName}?`,
