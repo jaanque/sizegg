@@ -15,10 +15,25 @@ const labels = {
 };
 
 const t = labels[lang];
+
+let initialCount = 15449;
+try {
+	const res = await fetch('https://yotkdsnmcgpcwdygtpyi.supabase.co/rest/v1/counters?id=eq.image_uploads&select=count', {
+		headers: {
+			'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlvdGtkc25tY2dwY3dkeWd0cHlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxOTQ3OTYsImV4cCI6MjEwMTc3MDc5Nn0.WxRgm7yB-UxNe_kkaf4lk7_etS_9L8FXxLK0EAnS0LM'
+		}
+	});
+	if (res.ok) {
+		const json = await res.json();
+		if (json && json[0] && json[0].count) {
+			initialCount = Number(json[0].count);
+		}
+	}
+} catch (e) {}
 ---
 
 <div class="counter-box" id="global-counter-wrapper">
-	<span class="counter-number" id="global-counter-val">0</span>
+	<span class="counter-number" id="global-counter-val">{initialCount.toLocaleString()}</span>
 	<span class="counter-text">{t.text}</span>
 </div>
 
@@ -91,6 +106,12 @@ const t = labels[lang];
 		const el = document.getElementById('global-counter-val');
 		if (!el) return;
 
+		const currentRendered = parseInt(el.textContent?.replace(/[^0-9]/g, '') || '0', 10);
+		const cachedVal = localStorage.getItem('sizegg_counter_cache');
+		const startVal = Math.max(currentRendered, cachedVal ? parseInt(cachedVal, 10) || 0 : 0);
+
+		let fetchedCount: number | null = null;
+
 		try {
 			const { supabase } = await import('../lib/supabase');
 			const { data, error } = await supabase
@@ -100,16 +121,58 @@ const t = labels[lang];
 				.single();
 
 			if (!error && data && data.count !== undefined && data.count !== null) {
-				const targetVal = Number(data.count);
-				animateValue(el, 0, targetVal, 1400);
-			} else {
-				el.textContent = '0';
+				fetchedCount = Number(data.count);
 			}
-		} catch (e) {
-			el.textContent = '0';
+		} catch (e) {}
+
+		if (fetchedCount === null) {
+			try {
+				const res = await fetch('https://yotkdsnmcgpcwdygtpyi.supabase.co/rest/v1/counters?id=eq.image_uploads&select=count', {
+					headers: {
+						'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlvdGtkc25tY2dwY3dkeWd0cHlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxOTQ3OTYsImV4cCI6MjEwMTc3MDc5Nn0.WxRgm7yB-UxNe_kkaf4lk7_etS_9L8FXxLK0EAnS0LM'
+					}
+				});
+				if (res.ok) {
+					const json = await res.json();
+					if (json && json[0] && json[0].count !== undefined) {
+						fetchedCount = Number(json[0].count);
+					}
+				}
+			} catch (err) {}
+		}
+
+		if (fetchedCount !== null) {
+			localStorage.setItem('sizegg_counter_cache', fetchedCount.toString());
+			if (fetchedCount !== startVal) {
+				animateValue(el, startVal, fetchedCount, 1400);
+			} else {
+				el.textContent = fetchedCount.toLocaleString();
+			}
 		}
 	}
 
-	loadCounter();
-	document.addEventListener('astro:page-load', loadCounter);
+	function initCounter() {
+		loadCounter();
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initCounter);
+	} else {
+		initCounter();
+	}
+	window.addEventListener('load', initCounter);
+	document.addEventListener('astro:page-load', initCounter);
+
+	window.addEventListener('counter:incremented', () => {
+		const el = document.getElementById('global-counter-val');
+		if (el) {
+			const rawText = el.textContent?.replace(/[^0-9]/g, '') || '0';
+			const current = parseInt(rawText, 10) || 0;
+			const newVal = current + 1;
+			el.textContent = newVal.toLocaleString();
+			el.classList.add('bump');
+			setTimeout(() => el.classList.remove('bump'), 250);
+			localStorage.setItem('sizegg_counter_cache', newVal.toString());
+		}
+	});
 </script>

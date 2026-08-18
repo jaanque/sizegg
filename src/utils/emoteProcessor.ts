@@ -184,7 +184,7 @@ export async function resizeImage(
 		});
 	}
 
-	// PARA RASTERES (PNG, JPG, WebP, etc.): Escalado por etapas (Step-Down Resampling)
+	// PARA RASTERES (PNG, JPG, WebP, etc.): Escalado por etapas (Step-Down Resampling) sin recorte
 	return new Promise((resolve, reject) => {
 		const img = new Image();
 		const url = URL.createObjectURL(file);
@@ -195,30 +195,32 @@ export async function resizeImage(
 			const srcW = img.naturalWidth || img.width;
 			const srcH = img.naturalHeight || img.height;
 
-			// Recorte Cuadrado Automático 1:1 centrado para evitar deformaciones
-			const minDim = Math.min(srcW, srcH);
-			const sx = (srcW - minDim) / 2;
-			const sy = (srcH - minDim) / 2;
+			// Calcular proporción para ajustar la imagen rectangular sin recortar ni deformar
+			const scale = Math.min(targetWidth / srcW, targetHeight / srcH);
+			const fitW = Math.max(1, Math.round(srcW * scale));
+			const fitH = Math.max(1, Math.round(srcH * scale));
+			const offsetX = Math.round((targetWidth - fitW) / 2);
+			const offsetY = Math.round((targetHeight - fitH) / 2);
 
-			// Canvas inicial con recorte 1:1 de alta calidad
+			// Canvas inicial con la imagen original completa (sin recorte 1:1)
 			let currentCanvas = document.createElement('canvas');
-			currentCanvas.width = minDim;
-			currentCanvas.height = minDim;
+			currentCanvas.width = srcW;
+			currentCanvas.height = srcH;
 			let ctx = currentCanvas.getContext('2d');
 			if (!ctx) {
 				return reject(new Error('Canvas 2D context not available'));
 			}
 
-			ctx.clearRect(0, 0, minDim, minDim);
+			ctx.clearRect(0, 0, srcW, srcH);
 			ctx.imageSmoothingEnabled = true;
 			ctx.imageSmoothingQuality = 'high';
-			ctx.drawImage(img, sx, sy, minDim, minDim, 0, 0, minDim, minDim);
+			ctx.drawImage(img, 0, 0, srcW, srcH);
 
-			let currentW = minDim;
-			let currentH = minDim;
+			let currentW = srcW;
+			let currentH = srcH;
 
 			// Algoritmo por Etapas (Step-Down Scaling / Halving)
-			while (currentW / 2 >= targetWidth && currentH / 2 >= targetHeight) {
+			while (currentW / 2 >= fitW && currentH / 2 >= fitH) {
 				const nextW = Math.floor(currentW / 2);
 				const nextH = Math.floor(currentH / 2);
 
@@ -237,7 +239,7 @@ export async function resizeImage(
 				currentH = nextH;
 			}
 
-			// Paso final: Escalado fino al tamaño de píxel exacto exigido por la plataforma
+			// Paso final: Dibujar la imagen rectangular completa centrada en la resolución requerida
 			const finalCanvas = document.createElement('canvas');
 			finalCanvas.width = targetWidth;
 			finalCanvas.height = targetHeight;
@@ -249,7 +251,7 @@ export async function resizeImage(
 			finalCtx.clearRect(0, 0, targetWidth, targetHeight);
 			finalCtx.imageSmoothingEnabled = true;
 			finalCtx.imageSmoothingQuality = 'high';
-			finalCtx.drawImage(currentCanvas, 0, 0, currentW, currentH, 0, 0, targetWidth, targetHeight);
+			finalCtx.drawImage(currentCanvas, 0, 0, currentW, currentH, offsetX, offsetY, fitW, fitH);
 
 			finalCanvas.toBlob(
 				(blob) => {

@@ -575,83 +575,13 @@ const specText = t.specs[platformId] || t.specs.twitch;
 	}
 
 	:global(.file-result-card) {
-		background-color: var(--surface-card);
-		border: 1px solid var(--border-color);
-		border-radius: 22px;
-		padding: 1.25rem;
+		background-color: transparent;
+		border: none;
+		border-radius: 0;
+		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 1.25rem;
-	}
-
-	:global(.file-result-header) {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding-bottom: 0.75rem;
-		border-bottom: 1px solid var(--border-color);
-		gap: 0.5rem;
-	}
-
-	:global(.file-result-title) {
-		font-size: 0.9rem;
-		font-weight: 700;
-		color: var(--text-primary);
-		word-break: break-all;
-		display: flex;
-		align-items: center;
-		gap: 0.4rem;
-	}
-
-	:global(.file-result-actions) {
-		display: flex;
-		align-items: center;
-		gap: 0.4rem;
-	}
-
-	:global(.btn-file-action) {
-		background: var(--surface-hover);
-		border: 1px solid var(--border-color);
-		color: var(--text-primary);
-		font-family: inherit;
-		font-size: 0.75rem;
-		font-weight: 600;
-		padding: 0.3rem 0.6rem;
-		border-radius: 22px;
-		cursor: pointer;
-		display: inline-flex;
-		align-items: center;
-		gap: 0.35rem;
-		transition: all 0.15s ease;
-	}
-
-	:global(.btn-file-action:hover) {
-		border-color: var(--text-muted);
-		background-color: var(--border-color);
-	}
-
-	:global(.btn-file-action.delete) {
-		color: #ff4f4d;
-		border-color: rgba(255, 79, 77, 0.2);
-		background: rgba(255, 79, 77, 0.05);
-	}
-
-	:global(.btn-file-action.delete:hover) {
-		border-color: #ff4f4d;
-		background: rgba(255, 79, 77, 0.15);
-	}
-
-	:global(.result-body-layout) {
-		width: 100%;
-	}
-
-	:global(.result-section-title) {
-		font-size: 0.75rem;
-		font-weight: 700;
-		color: var(--text-muted);
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
-		margin-bottom: 0.6rem;
+		gap: 1rem;
 	}
 
 	:global(.items-grid) {
@@ -662,48 +592,37 @@ const specText = t.specs[platformId] || t.specs.twitch;
 	}
 
 	:global(.item-card) {
-		background-color: var(--bg-body);
+		background-color: var(--surface-card);
 		border: 1px solid var(--border-color);
 		border-radius: 22px;
-		padding: 0.85rem;
+		padding: 1rem 0.9rem;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: space-between;
-		gap: 0.75rem;
+		gap: 0.85rem;
 		text-align: center;
 		height: 100%;
 		box-sizing: border-box;
-		transition: border-color 0.15s ease, background-color 0.15s ease;
+		cursor: pointer;
+		transition: border-color 0.2s ease, background-color 0.2s ease;
 	}
 
 	:global(.item-card:hover) {
-		border-color: rgba(255, 255, 255, 0.15);
-		background-color: rgba(255, 255, 255, 0.02);
+		border-color: rgba(255, 255, 255, 0.2);
+		background-color: var(--surface-hover);
 	}
 
 	:global(.preview-box-wrapper) {
 		width: 100%;
-		height: 110px;
+		height: 115px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		flex: 1;
 	}
 
-	:global(.preview-box) {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: repeating-conic-gradient(rgba(255, 255, 255, 0.04) 0% 25%, transparent 0% 50%) 50% / 12px 12px;
-		border-radius: 22px;
-		border: 1px solid var(--border-color);
-		overflow: hidden;
-		box-sizing: border-box;
-		padding: 4px;
-	}
-
-	:global(.preview-box img) {
+	:global(.preview-box-wrapper img) {
 		max-width: 100%;
 		max-height: 100%;
 		object-fit: contain;
@@ -716,9 +635,8 @@ const specText = t.specs[platformId] || t.specs.twitch;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 0.2rem 0.1rem;
-		border-top: 1px solid rgba(255, 255, 255, 0.04);
-		padding-top: 0.45rem;
+		padding: 0.4rem 0.1rem 0 0.1rem;
+		border-top: 1px solid var(--border-color);
 		margin-top: auto;
 	}
 
@@ -741,9 +659,9 @@ const specText = t.specs[platformId] || t.specs.twitch;
 		border: none;
 		color: #000000;
 		font-family: inherit;
-		font-size: 0.8rem;
+		font-size: 0.82rem;
 		font-weight: 800;
-		padding: 0.5rem 0.6rem;
+		padding: 0.55rem 0.6rem;
 		border-radius: 22px;
 		cursor: pointer;
 		text-decoration: none;
@@ -753,11 +671,12 @@ const specText = t.specs[platformId] || t.specs.twitch;
 		justify-content: center;
 		gap: 0.35rem;
 		box-sizing: border-box;
-		transition: opacity 0.15s ease, filter 0.15s ease;
+		transition: opacity 0.15s ease;
 	}
 
 	:global(.btn-download-single:hover) {
 		opacity: 0.9;
+		color: #000000;
 	}
 
 	/* Estilos Modal de Recorte Cuadrado (Crop Modal) */
@@ -1195,7 +1114,29 @@ const specText = t.specs[platformId] || t.specs.twitch;
 							supabase.rpc('increment_counter', { counter_id: platformId })
 						]);
 					} catch (e) {
-						// Ignorar en caso de error de red o configuración inicial
+						// Fallback HTTP REST si el SDK tuviera algún problema de red
+						try {
+							const headers = {
+								'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlvdGtkc25tY2dwY3dkeWd0cHlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxOTQ3OTYsImV4cCI6MjEwMTc3MDc5Nn0.WxRgm7yB-UxNe_kkaf4lk7_etS_9L8FXxLK0EAnS0LM',
+								'Content-Type': 'application/json'
+							};
+							await Promise.all([
+								fetch('https://yotkdsnmcgpcwdygtpyi.supabase.co/rest/v1/rpc/increment_counter', {
+									method: 'POST',
+									headers,
+									body: JSON.stringify({ counter_id: 'image_uploads' })
+								}),
+								fetch('https://yotkdsnmcgpcwdygtpyi.supabase.co/rest/v1/rpc/increment_counter', {
+									method: 'POST',
+									headers,
+									body: JSON.stringify({ counter_id: platformId })
+								})
+							]);
+						} catch (err) {}
+					}
+
+					if (typeof window !== 'undefined') {
+						window.dispatchEvent(new CustomEvent('counter:incremented'));
 					}
 
 					// Evento clave para Google Analytics / Tag Manager
@@ -1222,27 +1163,12 @@ const specText = t.specs[platformId] || t.specs.twitch;
 						}
 					}
 
-					// Comprobar si la imagen es rectangular (relación de aspecto diferente a 1:1)
-					const isNonSquare = await checkIfNonSquare(file);
-
-					if (isNonSquare && cropModal && cropCanvas) {
-						showLoader(false);
-						const croppedFile = await openCropModal(file);
-						showLoader(true);
-						const res = await processEmoteFile(croppedFile || file, platformId);
-						if (res.error) {
-							showError(lang === 'es' ? 'Error de procesamiento' : 'Processing Error', res.error);
-						} else {
-							processedState.push(res);
-						}
+					showLoader(true);
+					const res = await processEmoteFile(file, platformId);
+					if (res.error) {
+						showError(lang === 'es' ? 'Error de procesamiento' : 'Processing Error', res.error);
 					} else {
-						showLoader(true);
-						const res = await processEmoteFile(file, platformId);
-						if (res.error) {
-							showError(lang === 'es' ? 'Error de procesamiento' : 'Processing Error', res.error);
-						} else {
-							processedState.push(res);
-						}
+						processedState.push(res);
 					}
 				}
 
@@ -1373,72 +1299,9 @@ const specText = t.specs[platformId] || t.specs.twitch;
 					resultsWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				}, 50);
 
-				processedState.forEach((pf: ProcessedFile, pfIndex: number) => {
+				processedState.forEach((pf: ProcessedFile) => {
 					const fileCard = document.createElement('div');
 					fileCard.className = 'file-result-card';
-
-					const header = document.createElement('div');
-					header.className = 'file-result-header';
-					
-					const title = document.createElement('div');
-					title.className = 'file-result-title';
-					title.innerHTML = `<span>📁</span><span>${pf.file.name}</span>`;
-
-					const actions = document.createElement('div');
-					actions.className = 'file-result-actions';
-
-					// Botón de descargar pack de esta imagen
-					const btnPack = document.createElement('button');
-					btnPack.className = 'btn-file-action';
-					btnPack.title = lang === 'es' ? 'Descargar pack (.ZIP)' : 'Download pack (.ZIP)';
-					btnPack.innerHTML = `
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-							<polyline points="7 10 12 15 17 10"></polyline>
-							<line x1="12" y1="15" x2="12" y2="3"></line>
-						</svg>
-						<span>${lang === 'es' ? 'Descargar pack' : 'Download pack'}</span>
-					`;
-					btnPack.addEventListener('click', (e: MouseEvent) => {
-						e.stopPropagation();
-						const baseName = pf.file.name.replace(/\.[^/.]+$/, '');
-						downloadAllAsZip([pf], `sizeGG-${platformId}-${baseName}.zip`);
-					});
-
-					// Botón de borrar esta imagen
-					const btnDel = document.createElement('button');
-					btnDel.className = 'btn-file-action delete';
-					btnDel.title = lang === 'es' ? 'Eliminar imagen' : 'Remove image';
-					btnDel.innerHTML = `
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<polyline points="3 6 5 6 21 6"></polyline>
-							<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-						</svg>
-					`;
-					btnDel.addEventListener('click', (e: MouseEvent) => {
-						e.stopPropagation();
-						processedState.splice(pfIndex, 1);
-						renderResults();
-					});
-
-					actions.appendChild(btnPack);
-					actions.appendChild(btnDel);
-
-					header.appendChild(title);
-					header.appendChild(actions);
-					fileCard.appendChild(header);
-
-					const bodyLayout = document.createElement('div');
-					bodyLayout.className = 'result-body-layout';
-
-					// Columna Izquierda: Rejilla de salidas redimensionadas
-					const colOutputs = document.createElement('div');
-					colOutputs.className = 'result-col';
-					
-					const titleOutputs = document.createElement('div');
-					titleOutputs.className = 'result-section-title';
-					titleOutputs.textContent = lang === 'es' ? 'Archivos Generados' : 'Generated Files';
-					colOutputs.appendChild(titleOutputs);
 
 					const grid = document.createElement('div');
 					grid.className = 'items-grid';
@@ -1454,9 +1317,7 @@ const specText = t.specs[platformId] || t.specs.twitch;
 
 						itemCard.innerHTML = `
 							<div class="preview-box-wrapper">
-								<div class="preview-box" style="width: ${previewBoxDim}px; height: ${previewBoxDim}px;">
-									<img src="${item.previewUrl}" alt="${item.name}" width="${item.width}" height="${item.height}" style="max-width: 100%; max-height: 100%; object-fit: contain;" />
-								</div>
+								<img src="${item.previewUrl}" alt="Emote Preview" width="${item.width}" height="${item.height}" style="max-width: 100%; max-height: 100%; object-fit: contain;" />
 							</div>
 							<div class="card-meta-bar">
 								<span class="item-dim">${item.width} × ${item.height}px</span>
@@ -1470,7 +1331,7 @@ const specText = t.specs[platformId] || t.specs.twitch;
 						btnDL.href = item.previewUrl;
 						btnDL.download = item.name;
 						btnDL.innerHTML = `
-							<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+							<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
 								<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
 								<polyline points="7 10 12 15 17 10"></polyline>
 								<line x1="12" y1="15" x2="12" y2="3"></line>
@@ -1478,13 +1339,23 @@ const specText = t.specs[platformId] || t.specs.twitch;
 							<span>${lang === 'es' ? 'Descargar' : 'Download'}</span>
 						`;
 
+						itemCard.addEventListener('click', (e: MouseEvent) => {
+							if (e.target && (e.target as HTMLElement).closest('.btn-download-single')) {
+								return;
+							}
+							const a = document.createElement('a');
+							a.href = item.previewUrl;
+							a.download = item.name;
+							document.body.appendChild(a);
+							a.click();
+							document.body.removeChild(a);
+						});
+
 						itemCard.appendChild(btnDL);
 						grid.appendChild(itemCard);
 					});
 
-					colOutputs.appendChild(grid);
-					bodyLayout.appendChild(colOutputs);
-					fileCard.appendChild(bodyLayout);
+					fileCard.appendChild(grid);
 					resultsList.appendChild(fileCard);
 				});
 			}
