@@ -33,7 +33,9 @@ try {
 ---
 
 <div class="counter-box" id="global-counter-wrapper">
-	<span class="counter-number" id="global-counter-val">{initialCount.toLocaleString()}</span>
+	<span class="counter-number-viewport" id="counter-viewport">
+		<span class="counter-number" id="global-counter-val">{initialCount.toLocaleString()}</span>
+	</span>
 	<span class="counter-text">{t.text}</span>
 </div>
 
@@ -41,28 +43,38 @@ try {
 	.counter-box {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.5rem;
+		gap: 0.65rem;
 		font-size: 1.15rem;
 		font-weight: 700;
 		color: var(--text-primary);
 		background-color: var(--surface-card);
 		border: 1px solid var(--border-color);
-		padding: 0.55rem 1.25rem;
+		padding: 0.6rem 1.35rem;
 		border-radius: 22px;
 		margin-top: 0.75rem;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+	}
+
+	.counter-number-viewport {
+		display: inline-flex;
+		position: relative;
+		overflow: hidden;
+		vertical-align: middle;
+		height: 1.8em;
+		align-items: center;
+		justify-content: center;
+		min-width: 4rem;
 	}
 
 	.counter-number {
 		color: #a970ff;
-		font-size: 1.35rem;
+		font-size: 1.45rem;
 		font-weight: 800;
 		font-variant-numeric: tabular-nums;
 		display: inline-block;
-		transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
-	}
-
-	.counter-number.bump {
-		transform: scale(1.18);
+		line-height: 1.8em;
+		will-change: transform, opacity, filter;
+		letter-spacing: -0.02em;
 	}
 
 	.counter-text {
@@ -72,7 +84,7 @@ try {
 </style>
 
 <script>
-	function animateValue(el: HTMLElement, start: number, end: number, duration: number = 1200) {
+	function animateValue(el: HTMLElement, start: number, end: number, duration: number = 2200) {
 		if (start === end) {
 			el.textContent = end.toLocaleString();
 			return;
@@ -84,8 +96,8 @@ try {
 			const elapsed = currentTime - startTime;
 			const progress = Math.min(elapsed / duration, 1);
 			
-			// Easing out cubic
-			const easeOut = 1 - Math.pow(1 - progress, 3);
+			// Easing out quintic para desaceleración extremadamente suave y elegante
+			const easeOut = 1 - Math.pow(1 - progress, 5);
 			const current = Math.floor(start + (end - start) * easeOut);
 
 			el.textContent = current.toLocaleString();
@@ -94,21 +106,53 @@ try {
 				requestAnimationFrame(update);
 			} else {
 				el.textContent = end.toLocaleString();
-				el.classList.add('bump');
-				setTimeout(() => el.classList.remove('bump'), 200);
 			}
 		}
 
 		requestAnimationFrame(update);
 	}
 
+	function slideUpdateValue(viewport: HTMLElement, oldEl: HTMLElement, endVal: number) {
+		const formattedNew = endVal.toLocaleString();
+		if (oldEl.textContent === formattedNew) return;
+
+		const newEl = document.createElement('span');
+		newEl.className = 'counter-number';
+		newEl.id = 'global-counter-val';
+		newEl.textContent = formattedNew;
+		newEl.style.position = 'absolute';
+		newEl.style.top = '0';
+		newEl.style.left = '0';
+		newEl.style.transform = 'translateY(120%) scale(0.88)';
+		newEl.style.opacity = '0';
+		newEl.style.filter = 'blur(4px)';
+
+		oldEl.removeAttribute('id');
+		oldEl.style.transition = 'transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, filter 0.5s ease';
+		newEl.style.transition = 'transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, filter 0.5s ease';
+
+		viewport.appendChild(newEl);
+
+		// Forzar reflow para desencadenar la animación
+		void newEl.offsetWidth;
+
+		oldEl.style.transform = 'translateY(-120%) scale(0.88)';
+		oldEl.style.opacity = '0';
+		oldEl.style.filter = 'blur(4px)';
+
+		newEl.style.transform = 'translateY(0) scale(1)';
+		newEl.style.opacity = '1';
+		newEl.style.filter = 'blur(0px)';
+
+		setTimeout(() => {
+			oldEl.remove();
+			newEl.style.position = 'relative';
+		}, 660);
+	}
+
 	async function loadCounter() {
 		const el = document.getElementById('global-counter-val');
 		if (!el) return;
-
-		const currentRendered = parseInt(el.textContent?.replace(/[^0-9]/g, '') || '0', 10);
-		const cachedVal = localStorage.getItem('sizegg_counter_cache');
-		const startVal = Math.max(currentRendered, cachedVal ? parseInt(cachedVal, 10) || 0 : 0);
 
 		let fetchedCount: number | null = null;
 
@@ -141,13 +185,9 @@ try {
 			} catch (err) {}
 		}
 
-		if (fetchedCount !== null) {
+		if (fetchedCount !== null && fetchedCount > 0) {
 			localStorage.setItem('sizegg_counter_cache', fetchedCount.toString());
-			if (fetchedCount !== startVal) {
-				animateValue(el, startVal, fetchedCount, 1400);
-			} else {
-				el.textContent = fetchedCount.toLocaleString();
-			}
+			animateValue(el, 0, fetchedCount, 1300);
 		}
 	}
 
@@ -163,15 +203,16 @@ try {
 	window.addEventListener('load', initCounter);
 	document.addEventListener('astro:page-load', initCounter);
 
-	window.addEventListener('counter:incremented', () => {
+	window.addEventListener('counter:incremented', (e: Event) => {
+		const viewport = document.getElementById('counter-viewport');
 		const el = document.getElementById('global-counter-val');
-		if (el) {
+		if (viewport && el) {
+			const detail = (e as CustomEvent)?.detail;
+			const amount = detail && typeof detail.amount === 'number' ? detail.amount : 1;
 			const rawText = el.textContent?.replace(/[^0-9]/g, '') || '0';
 			const current = parseInt(rawText, 10) || 0;
-			const newVal = current + 1;
-			el.textContent = newVal.toLocaleString();
-			el.classList.add('bump');
-			setTimeout(() => el.classList.remove('bump'), 250);
+			const newVal = current + amount;
+			slideUpdateValue(viewport, el, newVal);
 			localStorage.setItem('sizegg_counter_cache', newVal.toString());
 		}
 	});

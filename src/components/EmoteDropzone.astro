@@ -1034,7 +1034,7 @@ const specText = t.specs[platformId] || t.specs.twitch;
 					}
 
 					if (typeof window !== 'undefined') {
-						window.dispatchEvent(new CustomEvent('counter:incremented'));
+						window.dispatchEvent(new CustomEvent('counter:incremented', { detail: { amount: 1 } }));
 					}
 
 					// Evento clave para Google Analytics / Tag Manager
